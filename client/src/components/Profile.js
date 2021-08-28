@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import Card from "./UI/Card"
 
-export default function Dashboard() {  
+export default function Profile() {  
   const { currentUser } = useAuth()  
 
   return (

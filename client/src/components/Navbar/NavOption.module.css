@@ -5,12 +5,13 @@
     margin-right: 20px;
     color: grey;
     cursor: pointer;
-
 }
+
 
 .navOption:hover {
     color: black;
 }
+
 
 .navOption_icon {
     object-fit: contain;

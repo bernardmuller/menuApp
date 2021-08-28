@@ -10,7 +10,7 @@ import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import Nav from "./Navbar/Nav"
 import Container from "./UI/Container"
-import Dashboard from "./Profile"
+import Dashboard from "./Dashboard"
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
           <Container className="body">
             <div className="w-100" style={{ maxWidth: "400px" }}>                        
                   <Switch>
-                    {/* <Route exact path="/" component={Dashboard} /> */}
-                    <PrivateRoute exact path="/profile" component={Profile} />
+                    <Route exact path="/" component={Dashboard} />
+                    <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/update-profile" component={UpdateProfile} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/login" component={Login} />
