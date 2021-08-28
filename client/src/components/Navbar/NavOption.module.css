@@ -1,0 +1,25 @@
+.navOption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    color: grey;
+    cursor: pointer;
+
+}
+
+.navOption:hover {
+    color: black;
+}
+
+.navOption_icon {
+    object-fit: contain;
+    height: 25px !important;
+    width: 25px !important;
+}
+
+
+.navOption_title {
+    font-size: 12px;
+    font-weight: 400;
+}
