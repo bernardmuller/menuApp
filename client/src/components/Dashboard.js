@@ -13,7 +13,7 @@ export default function Dashboard() {
 
     return (
         <div>
-            Recipe:            
+                      
         </div>
     )
 }

@@ -52,7 +52,7 @@ export default function Login() {
           </div>
         </div>
       </Card>
-      <div className="w-100 text-center mt-2">
+      <div>
         Need an account? <Link to="/signup">Sign Up</Link>
       </div>
     </>
