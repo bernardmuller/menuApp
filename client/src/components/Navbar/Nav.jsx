@@ -67,3 +67,6 @@ export default function Nav() {
     </div>
   );
 }
+
+
+console.log('${value.doors[i].name} (${value.doors[i].status})' )

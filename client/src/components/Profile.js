@@ -19,3 +19,6 @@ export default function Profile() {
     </>
   )
 }
+
+
+console.log('${value.doors[i].name} (${value.doors[i].status})' )

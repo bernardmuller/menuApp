@@ -12,6 +12,10 @@
     background-color:#24252A;    
 }
 
+.nav > * {
+    flex-basis: 100%    
+}
+
 .nav::after {
     content: ' ';
     position: absolute;   
