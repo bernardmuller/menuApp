@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./Nav.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-
+import { ThemeContext } from "../../contexts/ThemeContext";
 import NavOption from "./NavOption";
+import { unstable_concurrentAct } from "react-dom/cjs/react-dom-test-utils.production.min";
 
 export default function Nav() {
+  const theme = useContext(ThemeContext)
+  const darkMode = theme.state.darkMode;
+
   const history = useHistory();
   const { logout, currentUser } = useAuth();
   const [error, setError] = useState("");
@@ -25,7 +29,7 @@ export default function Nav() {
   }
 
   return (
-    <div className={styles.nav}>
+    <div className={styles.nav}> 
       <div className={styles.nav_left}>
         <Link to="/" className={styles.header}>
           <div>Menu</div><div>Manager</div>

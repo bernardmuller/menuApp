@@ -1,19 +1,12 @@
 import React from 'react'
+import ThemeButton from './UI/themeButton/ThemeButton'
 
-export default function Dashboard() {
 
-    // const meals = [];
-    // fetch('https://www.themealdb.com/api/json/v1/1/random.php')
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         meals.push(res.meals[0])
-    //     });
-
-    
+export default function Dashboard() {    
 
     return (
         <div>
-                      
+             <ThemeButton />         
         </div>
     )
 }

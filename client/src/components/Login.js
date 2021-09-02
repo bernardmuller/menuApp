@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-import Card from "./UI/Card"
+import Card from "./UI/card/Card"
 import styles from './Login.module.css'
 
 export default function Login() {

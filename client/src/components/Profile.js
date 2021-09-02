@@ -2,7 +2,7 @@ import React from "react"
 
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
-import Card from "./UI/Card"
+import Card from "./UI/card/Card"
 
 export default function Profile() {  
   const { currentUser } = useAuth()  
@@ -20,5 +20,3 @@ export default function Profile() {
   )
 }
 
-
-console.log('${value.doors[i].name} (${value.doors[i].status})' )

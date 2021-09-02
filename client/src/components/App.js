@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import Signup from "./Signup"
 
 import { AuthProvider } from "../contexts/AuthContext"
+import { ThemeContext } from "../contexts/ThemeContext"
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Profile from "./Profile"
 import Login from "./Login"
@@ -9,17 +11,21 @@ import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import Nav from "./Navbar/Nav"
-import Container from "./UI/Container"
+import Container from "./UI/container/Container"
 import Dashboard from "./Dashboard"
 
 function App() {
+
+  const theme = useContext(ThemeContext);
+  const darkMode = theme.state.darkMode;
+
   return (
-    <div className="app">
+    <div className={`app`}>
       <AuthProvider>
         <Router> 
         <Nav />
           <Container className="body">
-            <div className="w-100" style={{ maxWidth: "400px" }}>                        
+            <div className="w-100" style={{ maxWidth: '75%' }}>                        
                   <Switch>
                     <Route exact path="/" component={Dashboard} />
                     <PrivateRoute path="/profile" component={Profile} />
