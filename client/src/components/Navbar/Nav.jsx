@@ -69,4 +69,3 @@ export default function Nav() {
 }
 
 
-console.log('${value.doors[i].name} (${value.doors[i].status})' )
