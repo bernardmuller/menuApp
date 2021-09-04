@@ -144,13 +144,9 @@
     text-decoration: none;
 }
 
-.nav_left_dark {
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-}
 
-.nav_left_light {
+.nav_left {
+    flex: 0.1;
     display: flex;
     justify-content: center;
     align-items: center;    
@@ -165,8 +161,9 @@
 
 
 .nav_right {
+    flex: 0.1;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 

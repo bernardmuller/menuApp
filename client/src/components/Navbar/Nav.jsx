@@ -4,11 +4,13 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import NavOption from "./NavOption";
+import ThemeButton from '../UI/themeButton/ThemeButton'
 
 
 export default function Nav() {
   const theme = useContext(ThemeContext)
-  const darkMode = theme.state.darkMode;
+  const darkMode = theme.state.darkMode; 
+
 
   const history = useHistory();
   const { logout, currentUser } = useAuth();
@@ -30,7 +32,7 @@ export default function Nav() {
 
   return (
     <div className={darkMode ? styles.nav_dark : styles.nav_light}> 
-      <div className={darkMode ? styles.nav_left_dark : styles.nav_left_light}>
+      <div className={styles.nav_left}>
         <Link to="/" className={darkMode ? styles.header_dark : styles.header_light}>
           <div>Menu</div><div>Manager</div>
         </Link>
@@ -67,6 +69,7 @@ export default function Nav() {
             <NavOption title="Log In" />
           </Link>
         )}
+        <ThemeButton />
       </div>
     </div>
   );

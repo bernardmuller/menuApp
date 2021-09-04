@@ -1,5 +1,28 @@
-.button {
-    display:flex;
-    justify-content: center;
-    align-items: center;
+.nav_Buttons button {
+    background: transparent;
+    border: none;
+}
+.nav_Buttons button:active {
+    outline: none;
+    border: none;
+    
+}
+
+.nav_Buttons button:focus {
+    outline: none;
+    border: none;
+    
+}
+
+.button_Icon {
+    color: #212121;
+    object-fit: contain;
+    height: 30px !important;
+    width: 30px !important;
+    cursor: pointer;
+}
+
+.button_Icon:hover {
+    color: #b93a3a;
+    cursor: pointer;
 }
