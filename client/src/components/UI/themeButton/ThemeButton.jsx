@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../contexts/ThemeContext";
-import "../../App.css";
+import "../../App.module.css";
 import './ThemeButton.module.css'
 
 export default function SwitchButton() {

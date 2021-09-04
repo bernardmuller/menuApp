@@ -11,11 +11,12 @@
     z-index: 999;     
 }
 
-/* .nav_dark {
+.nav_dark {
     display: flex;    
     justify-content: space-evenly;
     position: sticky;
-    top: 0;    
+    top: 0;  
+    
     width: 100%;
     height: 4em;
     z-index: 999;
@@ -30,14 +31,15 @@
     width: 100%;
     height: 4em;
     z-index: 999;
-    background-color:white;    
-} */
+    background-color:whitesmoke; 
+    
+}
 
 .nav_dark .nav_light > * {
     flex-basis: 100%    
 }
 
-.nav::after {
+.nav_dark::after {
     content: ' ';
     position: absolute;   
     background-color: gray;
@@ -47,7 +49,17 @@
     border-radius: 0.1em;
 }
 
-.header {
+.nav_light::after {
+    content: ' ';
+    position: absolute;   
+    background-color: gray;
+    height: 0.1em;
+    width: 80%;
+    bottom: 0;
+    border-radius: 0.1em;
+}
+
+.header_dark {
     display: flex;
     text-decoration: none;
     color: white;
@@ -57,7 +69,17 @@
     position:relative;
 }
 
-.header::after {
+.header_light {
+    display: flex;
+    text-decoration: none;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    position:relative;
+}
+
+.header_dark::after {
     content: '';
     position: absolute;
     display: block;
@@ -72,19 +94,48 @@
     transition: transform 250ms ease-in
 }
 
-.header:hover::after {
+.header_light::after {
+    content: '';
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #0088a9;
+    
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 250ms ease-in
+}
+
+.header_dark:hover::after {
+    
+    transform: scaleX(1);   
+    transform-origin: left;
+}
+
+.header_light:hover::after {
     
     transform: scaleX(1);   
     transform-origin: left;
 }
 
 
-.header div {
+.header_dark div {
     color:rgb(202, 202, 202);
 }
 
+.header_light div {
+    color:black;
+}
 
-.header div + div {
+
+.header_dark div + div {
+    color:#0088a9;
+}
+
+.header_light div + div {
     color:#0088a9;
 }
 
@@ -93,7 +144,13 @@
     text-decoration: none;
 }
 
-.nav_left {
+.nav_left_dark {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.nav_left_light {
     display: flex;
     justify-content: center;
     align-items: center;    
@@ -105,6 +162,7 @@
     justify-content: space-evenly;
     align-items: center;
 }
+
 
 .nav_right {
     display: flex;

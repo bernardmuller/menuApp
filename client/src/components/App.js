@@ -14,13 +14,15 @@ import Nav from "./Navbar/Nav"
 import Container from "./UI/container/Container"
 import Dashboard from "./Dashboard"
 
+import styles from './App.module.css'
+
 function App() {
 
   const theme = useContext(ThemeContext);
   const darkMode = theme.state.darkMode;
 
   return (
-    <div className={`app`}>
+    <div className={darkMode ? styles.app_dark : styles.app_light}>
       <AuthProvider>
         <Router> 
         <Nav />

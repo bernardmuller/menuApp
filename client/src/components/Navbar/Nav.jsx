@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import NavOption from "./NavOption";
-import { unstable_concurrentAct } from "react-dom/cjs/react-dom-test-utils.production.min";
+
 
 export default function Nav() {
   const theme = useContext(ThemeContext)
@@ -29,16 +29,16 @@ export default function Nav() {
   }
 
   return (
-    <div className={styles.nav}> 
-      <div className={styles.nav_left}>
-        <Link to="/" className={styles.header}>
+    <div className={darkMode ? styles.nav_dark : styles.nav_light}> 
+      <div className={darkMode ? styles.nav_left_dark : styles.nav_left_light}>
+        <Link to="/" className={darkMode ? styles.header_dark : styles.header_light}>
           <div>Menu</div><div>Manager</div>
         </Link>
       </div>
       <div className={styles.nav_middle}>
       {currentUser && (
           <Link to="/menus" className={styles.link}>
-            <NavOption title="Menus" />
+            <NavOption title="Menus" darkMOde={darkMode} />
           </Link>
         )}        
         {currentUser && (
