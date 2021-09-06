@@ -3,8 +3,8 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 import "../../App.module.css";
 import './ThemeButton.module.css'
 
-import Brightness5RoundedIcon from '@material-ui/icons/Brightness5Rounded';
-import Brightness2RoundedIcon from '@material-ui/icons/Brightness2Rounded';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 export default function SwitchButton() {
   const theme = useContext(ThemeContext);
@@ -22,8 +22,8 @@ export default function SwitchButton() {
   return (
     <div>
       {
-        darkMode ? <Brightness5RoundedIcon className='button_Icon' onClick={onClick} style={{fill: 'white'}} /> :
-        <Brightness2RoundedIcon className='button_Icon' onClick={onClick} style={{fill: 'black'}} />
+        darkMode ? <Brightness7Icon className='button_Icon' onClick={onClick} style={{fill: 'white'}} /> :
+        <Brightness4Icon className='button_Icon' onClick={onClick} style={{fill: 'black'}} />
       }     
       
     </div>

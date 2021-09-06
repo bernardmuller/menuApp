@@ -17,8 +17,8 @@
 .button_Icon {
     color: #212121;
     object-fit: contain;
-    height: 30px !important;
-    width: 30px !important;
+    height: 40px !important;
+    width: 40px !important;
     cursor: pointer;
 }
 
