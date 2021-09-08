@@ -13,6 +13,7 @@ import UpdateProfile from "./UpdateProfile"
 import Nav from "./Navbar/Nav"
 import Container from "./UI/container/Container"
 import Dashboard from "./Dashboard"
+import Splash from "./Splash"
 
 import styles from './App.module.css'
 
@@ -27,9 +28,10 @@ function App() {
         <Router> 
         <Nav />
           <Container className="body">
-            <div className="w-100" style={{ maxWidth: '75%' }}>                        
+            <div>                        
                   <Switch>
-                    <Route exact path="/" component={Dashboard} />
+                    <Route exact path="/" component={Splash} />
+                    <PrivateRoute path="/Dashboard" component={Dashboard} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/update-profile" component={UpdateProfile} />
                     <Route path="/signup" component={Signup} />

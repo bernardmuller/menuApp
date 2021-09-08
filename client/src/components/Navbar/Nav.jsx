@@ -33,9 +33,16 @@ export default function Nav() {
   return (
     <div className={darkMode ? styles.nav_dark : styles.nav_light}> 
       <div className={styles.nav_left}>
-        <Link to="/" className={darkMode ? styles.header_dark : styles.header_light}>
-          <div>Menu</div><div>Manager</div>
-        </Link>
+        {currentUser ? 
+          <Link to="/dashboard" className={darkMode ? styles.header_dark : styles.header_light}>
+            <div>Menu</div><div>Manager</div>
+          </Link>
+          :
+          <Link to="/" className={darkMode ? styles.header_dark : styles.header_light}>
+            <div>Menu</div><div>Manager</div>
+          </Link>
+        }    
+        
       </div>
       <div className={styles.nav_middle}>
       {currentUser && (
