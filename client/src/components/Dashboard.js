@@ -12,7 +12,7 @@ export default function Dashboard() {
     const theme = useContext(ThemeContext)
     const darkMode = theme.state.darkMode;
     return (
-        <Container>
+        <Container >
             <div className={styles.cards_container}>
                 <div className={styles.card_container}>                
                     <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
