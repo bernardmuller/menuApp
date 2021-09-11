@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
+import Button from './UI/button/Button'
+import Card from './UI/card/Card'
 
 export default function ForgotPassword() {
   const emailRef = useRef()
@@ -28,24 +30,22 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
+      <Card>        
           <h2 className="text-center mb-4">Password Reset</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
+          <form onSubmit={handleSubmit}>
+            <div id="email">
+              <label>Email</label>
+              <input type="email" ref={emailRef} required />
+            </div>
             <Button disabled={loading} className="w-100" type="submit">
               Reset Password
             </Button>
-          </Form>
+          </form>
           <div className="w-100 text-center mt-3">
             <Link to="/login">Login</Link>
-          </div>
-        </Card.Body>
+          </div>        
       </Card>
       <div className="w-100 text-center mt-2">
         Need an account? <Link to="/signup">Sign Up</Link>
