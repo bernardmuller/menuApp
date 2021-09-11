@@ -16,6 +16,7 @@ import Dashboard from "./Dashboard"
 import Splash from "./Splash"
 
 import styles from './App.module.css'
+import Footer from "./Footer/Footer"
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
       <AuthProvider>
         <Router> 
         <Nav />
-          <Container className="body">
+          <Container>
             <div>                        
                   <Switch>
                     <Route exact path="/" component={Splash} />
@@ -40,6 +41,7 @@ function App() {
                   </Switch>             
             </div>
           </Container>
+          <Footer />
         </Router>
       </AuthProvider>
     </div>

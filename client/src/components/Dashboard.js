@@ -33,6 +33,46 @@ export default function Dashboard() {
                     <h2 className={styles.heading}>New Recipe</h2>
                 </div>
             </div>
+            <div className={styles.cards_container}>
+                <div className={styles.card_container}>                
+                    <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
+                        <AddIcon className={styles.plus} style={{fill: 'gray'}}/>
+                    </Card>
+                    <h2 className={styles.heading}>New Menu</h2>
+                </div>
+                <div className={styles.card_container}>
+                    <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
+                        <AddIcon className={styles.plus} style={{fill: 'gray'}}/>
+                    </Card>
+                    <h2 className={styles.heading}>New Meal</h2>
+                </div>
+                <div className={styles.card_container}>
+                    <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
+                        <AddIcon className={styles.plus} style={{fill: 'gray'}}/>
+                    </Card>
+                    <h2 className={styles.heading}>New Recipe</h2>
+                </div>
+            </div>
+            <div className={styles.cards_container}>
+                <div className={styles.card_container}>                
+                    <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
+                        <AddIcon className={styles.plus} style={{fill: 'gray'}}/>
+                    </Card>
+                    <h2 className={styles.heading}>New Menu</h2>
+                </div>
+                <div className={styles.card_container}>
+                    <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
+                        <AddIcon className={styles.plus} style={{fill: 'gray'}}/>
+                    </Card>
+                    <h2 className={styles.heading}>New Meal</h2>
+                </div>
+                <div className={styles.card_container}>
+                    <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>
+                        <AddIcon className={styles.plus} style={{fill: 'gray'}}/>
+                    </Card>
+                    <h2 className={styles.heading}>New Recipe</h2>
+                </div>
+            </div>
         </Container>
     )
 }

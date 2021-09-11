@@ -24,3 +24,21 @@
   outline: none;
   border-color: #4f005f;
 }
+
+.invalidEmail:focus {
+  border: 2px solid red;
+  background-color: rgb(255, 194, 194);
+}
+
+.validEmail:focus {
+  border: 1px solid green;
+  background-color: rgb(184, 248, 184);
+}
+
+.invalid {
+  color: red
+}
+
+.valid {
+  color: green
+}

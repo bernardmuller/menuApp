@@ -76,6 +76,7 @@ export default function Login() {
 
   return (
     <>
+    {error && <h2>{error}</h2>}
       <Card className={styles.input}>
         <div>
           <h2>Log In</h2>
