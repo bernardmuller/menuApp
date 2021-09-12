@@ -28,6 +28,8 @@ export default function Login() {
       history.push("/dashboard");
     } catch (err) {
       setError(`Failed to log in`);
+      enteredEmail.current.value = ''
+      enteredPassword.current.value = ''
     }
 
     setLoading(false);
