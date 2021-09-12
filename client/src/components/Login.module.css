@@ -88,7 +88,7 @@ form {
 
 
 .message {
-  min-height: 40px;
+  min-height: 42px;
 }
 
 .login_card_dark {
@@ -108,7 +108,13 @@ form {
   transition: box-shadow 200ms ease-in;
 }
 
+.forgot_password {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
 .need_account {
+  text-align: center;
   margin-top: 0.5em;
   color: grey;
 }

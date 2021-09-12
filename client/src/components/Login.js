@@ -1,10 +1,8 @@
 import React, { useState, useContext, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import Card from "./UI/card/Card";
 import styles from "./Login.module.css";
 import Button from "./UI/button/Button";
-import Container from "./UI/container/Container";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Login() {
@@ -28,15 +26,15 @@ export default function Login() {
       history.push("/dashboard");
     } catch (err) {
       setError(`Failed to log in`);
-      enteredEmail.current.value = ''
-      enteredPassword.current.value = ''
+      enteredEmail.current.value = '';
+      enteredPassword.current.value = '';
     }
 
     setLoading(false);
   }  
 
   return (
-    <Container>
+    <React.Fragment>
       <div
         className={
           darkMode
@@ -71,13 +69,13 @@ export default function Login() {
             Log In
           </Button>
         </form>
-        <div>
+        <div className={styles.forgot_password}>
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
       </div>
       <div className={styles.need_account}>
         Need an account? <Link to="/signup">Sign Up</Link>
       </div>
-    </Container>
+    </React.Fragment>
   );
 }
