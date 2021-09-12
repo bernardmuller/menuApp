@@ -49,7 +49,7 @@ form {
   width: 100%;
   border: 1px solid #ccc;
   padding: 0.15rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .login_card input:focus {
@@ -88,7 +88,7 @@ form {
 
 
 .message {
-  min-height: 30px;
+  min-height: 40px;
 }
 
 .login_card_dark {

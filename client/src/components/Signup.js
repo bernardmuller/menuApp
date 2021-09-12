@@ -31,6 +31,44 @@ export default function Signup() {
     setLoading(false)
   }
 
+  // const emailChangeHandler = (e) => {
+  //   setEnteredEmail(e.target.value);
+
+  //   if (enteredEmail.length > 0) {
+  //     if (!enteredEmail.includes("@")) {
+  //       setEmailMessage("Must contain '@'. ");
+  //       setInvalidEmail(true);
+  //     } else if (/[!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/.test(enteredEmail)) {
+  //       setEmailMessage("Special characters not allowed.");
+  //       setInvalidEmail(true);
+  //     } else {
+  //       setEmailMessage("Looks good!");
+  //       setInvalidEmail(false);
+  //     }
+  //   } else {
+  //     setEmailMessage("");
+  //     setInvalidEmail(null);
+  //   }
+  // };
+
+  // const passwordChangeHandler = (e) => {
+  //   setEnteredPassword(e.target.value);
+
+  //   if (enteredPassword.length < 6) {
+  //     setPasswordMessage("Must be longer than 6 characters.");
+  //     setInvalidPassword(true);
+  //   } else if (!/\d/.test(enteredPassword)) {
+  //     setPasswordMessage("Must contain a number.");
+  //     setInvalidPassword(true);
+  //   } else if (!/[A-Z]/.test(enteredPassword)) {
+  //     setPasswordMessage("Must contain a capital letter.");
+  //     setInvalidPassword(true);
+  //   } else {
+  //     setPasswordMessage("Looks good!");
+  //     setInvalidPassword(false);
+  //   }
+  // };
+
   return (
     <>
       <Card>

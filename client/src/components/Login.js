@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Card from "./UI/card/Card";
@@ -11,12 +11,8 @@ export default function Login() {
   const theme = useContext(ThemeContext);
   const darkMode = theme.state.darkMode;
 
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [invalidEmail, setInvalidEmail] = useState();
-  const [invalidPassword, setInvalidPassword] = useState();
+  const enteredEmail = useRef();
+  const enteredPassword = useRef();
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,56 +21,17 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    try {
-      if (invalidEmail || invalidPassword) throw "Invalid username or password";
+    try {      
       setError("");
       setLoading(true);
-      await login(enteredEmail, enteredPassword);
+      await login(enteredEmail.current.value, enteredPassword.current.value);
       history.push("/dashboard");
     } catch (err) {
-      setError(`Failed to log in: ${err}`);
+      setError(`Failed to log in`);
     }
 
     setLoading(false);
-  }
-
-  const emailChangeHandler = (e) => {
-    setEnteredEmail(e.target.value);
-
-    if (enteredEmail.length > 0) {
-      if (!enteredEmail.includes("@")) {
-        setEmailMessage("Must contain '@'. ");
-        setInvalidEmail(true);
-      } else if (/[!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/.test(enteredEmail)) {
-        setEmailMessage("Special characters not allowed.");
-        setInvalidEmail(true);
-      } else {
-        setEmailMessage("Looks good!");
-        setInvalidEmail(false);
-      }
-    } else {
-      setEmailMessage("");
-      setInvalidEmail(null);
-    }
-  };
-
-  const passwordChangeHandler = (e) => {
-    setEnteredPassword(e.target.value);
-
-    if (enteredPassword.length < 6) {
-      setPasswordMessage("Must be longer than 6 characters.");
-      setInvalidPassword(true);
-    } else if (!/\d/.test(enteredPassword)) {
-      setPasswordMessage("Must contain a number.");
-      setInvalidPassword(true);
-    } else if (!/[A-Z]/.test(enteredPassword)) {
-      setPasswordMessage("Must contain a capital letter.");
-      setInvalidPassword(true);
-    } else {
-      setPasswordMessage("Looks good!");
-      setInvalidPassword(false);
-    }
-  };
+  }  
 
   return (
     <Container>
@@ -86,39 +43,27 @@ export default function Login() {
         }
       >
         <h2>Login</h2>
-        {error && <h2>{error}</h2>}
+        <div className={styles.message}>
+            {error && <h3 style={{color: "red", border: '1px solid red', }}>{error}</h3>}
+        </div>
         <form onSubmit={handleSubmit}>
           <div id="email">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
-              onChange={emailChangeHandler}
+              ref={enteredEmail}
               required
-            />
-            <div className={styles.message}>
-              {emailMessage && (
-                <p className={invalidEmail ? styles.invalid : styles.valid}>
-                  {emailMessage}
-                </p>
-              )}
-            </div>
+            />            
           </div>
           <div className={styles.password}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
-              onChange={passwordChangeHandler}
+              ref={enteredPassword}
               required
-            />
-            <div className={styles.message}>
-              {passwordMessage && (
-                <p className={invalidPassword ? styles.invalid : styles.valid}>
-                  {passwordMessage}
-                </p>
-              )}
-            </div>
+            />            
           </div>
           <Button disabled={loading} type="submit">
             Log In

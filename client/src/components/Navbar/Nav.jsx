@@ -73,7 +73,7 @@ export default function Nav() {
           </div>
         ) : (
           <Link to="/profile">
-            <NavOption title="Log In" />
+            <NavOption title="Login" />
           </Link>
         )}
         <ThemeButton />
