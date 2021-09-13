@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
@@ -70,33 +70,33 @@ export default function Signup() {
   // };
 
   return (
-    <>
+    <React.Fragment>
       <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+        <section>
+          <h2>Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
-            </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+          <form onSubmit={handleSubmit}>
+            <div id="email">
+              <label htmlFor="email">Email</Form.Label>
+              <input type="email" id="email" ref={emailRef} required />
+            </div>
+            <div id="password">
+              <label htmlFor="password">Password</label>
+              <input type="password" id="password" ref={passwordRef} required />
+            </div>
+            <div id="password-confirm">
+              <label htmlFor="passwordconfirm">Password Confirmation</label>
+              <input type="password" id="passwordconfirm" ref={passwordConfirmRef} required />
+            </div>
+            <button disabled={loading} type="submit">
               Sign Up
-            </Button>
-          </Form>
-        </Card.Body>
+            </button>
+          </form>
+        </section>
       </Card>
-      <div className="w-100 text-center mt-2">
+      <div>
         Already have an account? <Link to="/login">Log In</Link>
       </div>
-    </>
+    </React.Fragment>
   )
 }
