@@ -1,12 +1,12 @@
 import React, {useContext} from "react"
 
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import { Link } from "react-router-dom"
-import Card from "./UI/card/Card"
-import { ThemeContext } from '../contexts/ThemeContext'
+import Card from "../../components/UI/card/Card"
+import { ThemeContext } from '../../contexts/ThemeContext'
 
 import styles from './Profile.module.css'
-import Container from './UI/container/Container'
+import Container from '../../components/UI/container/Container'
 
 export default function Profile() {  
   const { currentUser } = useAuth()  

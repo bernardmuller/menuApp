@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react"
 import { Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+
+import Card from '../../components/UI/card/Card'
 
 export default function Signup() {
   const emailRef = useRef()
@@ -77,7 +79,7 @@ export default function Signup() {
           {error && <Alert variant="danger">{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <div id="email">
-              <label htmlFor="email">Email</Form.Label>
+              <label htmlFor="email">Email</label>
               <input type="email" id="email" ref={emailRef} required />
             </div>
             <div id="password">
