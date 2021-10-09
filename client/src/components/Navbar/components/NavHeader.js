@@ -4,17 +4,6 @@ import colors from 'utils/colors';
 import { Link, useHistory } from "react-router-dom";
 import { ThemeContext } from "contexts/ThemeContext";
 
-const HeaderContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-        cursor: pointer;
-    }
-    
-`
-
 const Header = styled.h1`
     display: flex;
     text-decoration: none !important;
@@ -56,7 +45,7 @@ const Header = styled.h1`
     }
 
     div + div {
-        color: ${colors.primary};
+        color: ${props => props.darkMode? colors.primary : colors.white};
     }
 `
 

@@ -5,18 +5,27 @@ import { AuthProvider } from "./contexts/AuthContext"
 import { ThemeContext } from "./contexts/ThemeContext"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import Profile from "./pages/profile/Profile"
-import Login from "./pages/login/Login"
-import PrivateRoute from "./components/PrivateRoute"
-import ForgotPassword from "./pages/forgot-password/ForgotPassword"
-import UpdateProfile from "./pages/profile/update-profile/UpdateProfile"
-import Nav from "./components/Navbar/Nav"
-import Container from "./components/UI/container/Container"
-import Dashboard from "./pages/dashboard/Dashboard"
-import Splash from "./pages/splash/Splash"
+import styled from 'styled-components';
+import colors from "utils/colors"
+import Profile from "./pages/profile/Profile";
+import Login from "./pages/login/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
+import UpdateProfile from "./pages/profile/update-profile/UpdateProfile";
+import Nav from "./components/Navbar/Nav";
+import Container from "./components/UI/container/Container";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Splash from "./pages/splash/Splash";
 
-import styles from './App.module.css'
-import Footer from "./components/Footer/Footer"
+import styles from './App.module.css';
+import Footer from "./components/Footer/Footer";
+
+const AppContainer = styled.div`
+  background-color: ${props => props.darkMode ? colors.black : colors.white} ;   
+  min-height: 100vh;
+  width: 100%;    
+  position: absolute;  
+`
 
 function App() {
 
@@ -24,7 +33,7 @@ function App() {
   const darkMode = theme.state.darkMode;
 
   return (
-    <div className={darkMode ? styles.app_dark : styles.app_light}>
+    <AppContainer darkMode={darkMode}>
       <AuthProvider>
         <Router> 
         <Nav />
@@ -44,7 +53,7 @@ function App() {
           <Footer />
         </Router>
       </AuthProvider>
-    </div>
+    </AppContainer>
   )
 }
 

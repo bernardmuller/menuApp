@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import colors from "utils/colors";
 
-import styles from "./Nav.module.css";
 import { useAuth } from "contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { ThemeContext } from "contexts/ThemeContext";
@@ -18,7 +17,7 @@ const NavContainer = styled.div`
   width: 100%;
   height: 80px;
   z-index: 999; 
-  background-color: ${props => props.darkMode ? colors.jetBlack : colors.tertiary };
+  background-color: ${props => props.darkMode ? colors.jetBlack : colors.dark.secondary };
   box-shadow: 0px 3px 10px ${props => props.darkMode? colors.transparent : colors.black};
 `
 
@@ -74,30 +73,31 @@ export default function Nav() {
       </NavLeft>
       <NavMiddle>
       {currentUser && (
-          <Link to="/menus" className={styles.link}>
-            <NavOption title="Menus" darkMOde={darkMode} />
-          </Link>
+          <div onClick= {() => {history.push('/menus')}}>
+            <NavOption 
+              title="Menus" 
+              darkMOde={darkMode} 
+            />
+          </div>
         )}        
         {currentUser && (
-          <Link to="/recipes" className={styles.link}>
+          <div onClick= {() => {history.push('/recipes')}}>
             <NavOption title="Recipes" />
-          </Link>
+          </div>
         )}        
         {currentUser && (
-          <Link to="/profile" className={styles.link}>
+          <div onClick= {() => {history.push('/profile')}}>
             <NavOption title="Profile" />
-          </Link>
+          </div>
         )}
-        
-          <Link to="/contact" className={styles.link}>
+          <div onClick= {() => {history.push('/contact')}}>
             <NavOption title="Contact" />
-          </Link>
-        
+          </div>
       </NavMiddle>
       <NavRight>
         {currentUser ? (
           <div onClick={handleLogout}>
-            <NavOption title="Log Out" className={styles.logout} />
+            <NavOption title="Log Out" />
           </div>
         ) : (
           <Link to="/profile">
