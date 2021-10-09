@@ -1,10 +1,47 @@
 import React, { useState, useContext } from "react";
+import styled from "styled-components";
+import colors from "utils/colors";
+
 import styles from "./Nav.module.css";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import NavOption from "./NavOption";
-import ThemeButton from '../UI/themeButton/ThemeButton'
+import { ThemeContext } from "contexts/ThemeContext";
+import NavOption from "./components/NavOption";
+import ThemeButton from '../UI/themeButton/ThemeButton';
+import NavHeader from "./components/NavHeader";
+
+const NavContainer = styled.div`
+  display: flex;    
+  justify-content: space-evenly;
+  position: fixed;
+  top: 0;    
+  width: 100%;
+  height: 80px;
+  z-index: 999; 
+  background-color: ${props => props.darkMode ? colors.jetBlack : colors.tertiary };
+  box-shadow: 0px 3px 10px ${props => props.darkMode? colors.transparent : colors.black};
+`
+
+const NavLeft = styled.div`
+  flex: 0.1;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+`
+
+const NavMiddle = styled.div`
+  display: flex;
+  flex: 0.3;
+  justify-content: space-evenly;
+  align-items: center;
+`
+
+const NavRight = styled.div`
+  flex: 0.1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 
 
 export default function Nav() {
@@ -31,20 +68,11 @@ export default function Nav() {
   }
 
   return (
-    <div className={darkMode ? styles.nav_dark : styles.nav_light}> 
-      <div className={styles.nav_left}>
-        {currentUser ? 
-          <Link to="/dashboard" className={darkMode ? styles.header_dark : styles.header_light}>
-            <div>Menu</div><div>Manager</div>
-          </Link>
-          :
-          <Link to="/" className={darkMode ? styles.header_dark : styles.header_light}>
-            <div>Menu</div><div>Manager</div>
-          </Link>
-        }    
-        
-      </div>
-      <div className={styles.nav_middle}>
+    <NavContainer darkMode={darkMode}> 
+      <NavLeft>
+          <NavHeader />
+      </NavLeft>
+      <NavMiddle>
       {currentUser && (
           <Link to="/menus" className={styles.link}>
             <NavOption title="Menus" darkMOde={darkMode} />
@@ -65,8 +93,8 @@ export default function Nav() {
             <NavOption title="Contact" />
           </Link>
         
-      </div>
-      <div className={styles.nav_right}>
+      </NavMiddle>
+      <NavRight>
         {currentUser ? (
           <div onClick={handleLogout}>
             <NavOption title="Log Out" className={styles.logout} />
@@ -77,8 +105,8 @@ export default function Nav() {
           </Link>
         )}
         <ThemeButton />
-      </div>
-    </div>
+      </NavRight>
+    </NavContainer>
   );
 }
 

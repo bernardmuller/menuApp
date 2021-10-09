@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-import "../../../App.module.css";
+import { ThemeContext } from "contexts/ThemeContext";
+import colors from 'utils/colors';
+import "App.module.css";
 import './ThemeButton.module.css'
 
 import Brightness7Icon from '@material-ui/icons/Brightness7';
@@ -22,8 +23,8 @@ export default function SwitchButton() {
   return (
     <div>
       {
-        darkMode ? <Brightness7Icon className='button_Icon' onClick={onClick} style={{fill: 'white'}} /> :
-        <Brightness4Icon className='button_Icon' onClick={onClick} style={{fill: 'black'}} />
+        darkMode ? <Brightness7Icon className='button_Icon' onClick={onClick} style={{fill: `${colors.white}`}} /> :
+        <Brightness4Icon className='button_Icon' onClick={onClick} style={{fill: `${colors.white}`}} />
       }     
       
     </div>
