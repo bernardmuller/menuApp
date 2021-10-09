@@ -71,13 +71,13 @@ export default function Signup() {
 
   return (
     <React.Fragment>
-      <Card>
+      <div>
         <section>
           <h2>Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <div id="email">
-              <label htmlFor="email">Email</Form.Label>
+              <label htmlFor="email">Email</label>
               <input type="email" id="email" ref={emailRef} required />
             </div>
             <div id="password">
@@ -93,7 +93,7 @@ export default function Signup() {
             </button>
           </form>
         </section>
-      </Card>
+      </div>
       <div>
         Already have an account? <Link to="/login">Log In</Link>
       </div>
