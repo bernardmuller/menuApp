@@ -1,18 +1,7 @@
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import colors from 'utils/colors';
 import { ThemeContext } from 'contexts/ThemeContext';
-import pizza_bg from 'assets/images/pizza_bg.jpg';
-import styled from 'styled-components';
-
-const Container = styled.div`
-    height: 30rem;
-    width: 100vw;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-`
 
 const SearchContainer = styled.div`
     z-index: 5;
@@ -60,45 +49,14 @@ const SearchContainer = styled.div`
     }
 `
 
-const BackgroundImg = styled.div`
-    height: 100%;
-    width: 100%;
-    position: relative;
-    z-index: 0;
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 100% 25%;
-    }
-
-    &:after {
-        content: '\A';
-        position: absolute;
-        width: 100%; 
-        height:100%;
-        top:0; 
-        left:0;
-        background:rgba(0,0,0,0.3);
-        opacity: 1;
-        z-index: 1;
-    }
-`
-
 const SearchBar = () => {
     const theme = useContext(ThemeContext)
     const darkMode = theme.state.darkMode;
     return (
-        <Container>
-            <BackgroundImg>
-                <img src={pizza_bg} />
-            </BackgroundImg>
-            <SearchContainer darkMode={darkMode}>
-                <input type="text" placeholder="Search Meal" />
-                <button>Search</button>
-            </SearchContainer>
-        </Container>
+        <SearchContainer darkMode={darkMode}>
+            <input type="text" placeholder="Search Meal" />
+            <button>Search</button>
+        </SearchContainer>
     )
 }
 

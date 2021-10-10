@@ -81,6 +81,11 @@ export default function Nav() {
           </div>
         )}        
         {currentUser && (
+          <div onClick= {() => {history.push('/my-meals')}}>
+            <NavOption title="My Meals" />
+          </div>
+        )}        
+        {currentUser && (
           <div onClick= {() => {history.push('/recipes')}}>
             <NavOption title="Recipes" />
           </div>

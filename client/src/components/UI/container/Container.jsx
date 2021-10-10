@@ -1,11 +1,20 @@
-import React from 'react'
-import styles from './Container.module.css'
+import React from 'react';
+import styled from 'styled-components';
+
+const ContainerContainer = styled.div`
+    display:flex;
+    flex-direction: column; 
+    align-items:center;   
+    width: 100vw;
+    min-height: 100vh;
+    position: relative;
+`
 
 const Container = (props) => {
     return (
-        <div className={`${styles.container} ${props.className}`}>            
+        <ContainerContainer>            
             {props.children}
-        </div>
+        </ContainerContainer>
     )
 }
 

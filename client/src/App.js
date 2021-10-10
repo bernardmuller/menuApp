@@ -15,6 +15,7 @@ import UpdateProfile from "./pages/profile/update-profile/UpdateProfile";
 import Nav from "./components/Navbar/Nav";
 import Container from "./components/UI/container/Container";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Menus from "./pages/menus/Menus";
 import Splash from "./pages/splash/Splash";
 
 import styles from './App.module.css';
@@ -42,6 +43,7 @@ function App() {
                   <Switch>
                     <Route exact path="/" component={Splash} />
                     <Route path="/Dashboard" component={Dashboard} />
+                    <Route path="/menus" component={Menus} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/update-profile" component={UpdateProfile} />
                     <Route path="/signup" component={Signup} />
