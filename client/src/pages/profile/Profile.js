@@ -1,12 +1,24 @@
-import React, {useContext} from "react"
+import React, {useContext} from "react";
+import styled from 'styled-components';
+import colors from "utils/colors";
 
-import { useAuth } from "../../contexts/AuthContext"
-import { Link } from "react-router-dom"
-import Card from "../../components/UI/card/Card"
-import { ThemeContext } from '../../contexts/ThemeContext'
+import { useAuth } from "contexts/AuthContext";
+import { Link } from "react-router-dom";
+import { ThemeContext } from 'contexts/ThemeContext';
 
-import styles from './Profile.module.css'
-import Container from '../../components/UI/container/Container'
+import Container from 'components/UI/container/Container';
+import ContentCard from "components/UI/card/ContentCard";
+import Header from "components/header/Header";
+
+import burger_bg from 'assets/images/burger_bg.jpg'
+
+const ProfileContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 22rem;
+`
 
 export default function Profile() {  
   const { currentUser } = useAuth()  
@@ -14,14 +26,17 @@ export default function Profile() {
   const darkMode = theme.state.darkMode;
   return (
     <Container>
-      <Card className={darkMode ? `${styles.card} ${styles.card_dark}` : `${styles.card} ${styles.card_light}`}>        
-          <h2>Profile</h2>          
-          <p><strong>Email:</strong> {currentUser.email}</p>
-          <Link to="/update-profile" className="btn btn-primary w-50 mt-3">
-            Update Profile
-          </Link>        
-      </Card>      
+      <Header backgroundImg={burger_bg} ObjPos={"100% 70%"} />
+      <ProfileContainer>    
+          <ContentCard darkMode={darkMode}>
+            <h2>Profile</h2>          
+            <p><strong>Email:</strong> {currentUser.email}</p>
+            <Link to="/update-profile">
+              Update Profile
+            </Link>  
+          </ContentCard>  
+      </ProfileContainer>      
     </Container>
   )
-}
+};
 
