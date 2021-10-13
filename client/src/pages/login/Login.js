@@ -1,9 +1,9 @@
 import React, { useState, useContext, useRef } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./Login.module.css";
-import Button from "./UI/button/Button";
-import { ThemeContext } from "../contexts/ThemeContext";
+import Button from "../../components/UI/button/Button";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export default function Login() {
   const theme = useContext(ThemeContext);

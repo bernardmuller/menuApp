@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react"
 import { Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+
+import Card from '../../components/UI/card/Card'
 
 export default function Signup() {
   const emailRef = useRef()
