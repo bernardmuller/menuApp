@@ -13,9 +13,9 @@ export default function Menus() {
     const darkMode = theme.state.darkMode;
     return (
         <div>
-            <Header backgroundImg={sushi_bg} ObjPos={'100% 90%'}>
+            {/* <Header backgroundImg={sushi_bg} ObjPos={'100% 90%'}>
                 <SearchBar />  
-            </Header> 
+            </Header>  */}
         </div>
     )
 }

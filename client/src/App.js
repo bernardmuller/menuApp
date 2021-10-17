@@ -52,7 +52,7 @@ function App() {
                   </Switch>             
             </div>
           </Container>
-          <Footer />
+          {/* <Footer /> */}
         </Router>
       </AuthProvider>
     </AppContainer>

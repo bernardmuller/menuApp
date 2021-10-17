@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from "styled-components"
 import colors from 'utils/colors'
 import { ThemeContext } from "contexts/ThemeContext";
+import { IconContext } from "react-icons";
 
 const NavOptionContainer = styled.div`
     display: flex;
@@ -20,41 +21,54 @@ const NavOptionContainer = styled.div`
     }
 `
 
-const NavOptionTitle = styled.h3`
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    margin: 0;
+const NavIcon = styled.div`
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
+    
 
-    &:after {
-        content: '';
+    span {        
+        z-index: 0;
+        opacity: 0;
         position: absolute;
-        display: block;
-        bottom: -2;
+        color: ${colors.black};
         left: 0;
-        height: 2px;
-        width: 100%;
-        background-color: ${colors.primary};
-        
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 200ms ease-in
+        margin-left: 2.5rem;
+        transition: opacity 400ms ease-in-out;        
+        transition: margin-left 200ms;
+        background-color: whitesmoke;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 16px;
+        font-weight: 400;
     }
-
-    &:hover::after {
-        transform: scaleX(1);   
-        transform-origin: left;
+    
+    &:hover span {
+        z-index: 0;
+        opacity: 1;
+        margin-left: 3rem;
     }
 `
 
-
-export default function NavOption({ title }) {
+export default function NavOption({ title, Icon }) {
     const theme = useContext(ThemeContext)
     const darkMode = theme.state.darkMode;
     return (
-        <NavOptionContainer darkMode={darkMode}>            
-            <NavOptionTitle darkMode={darkMode}>{title}</NavOptionTitle>
+        <NavOptionContainer darkMode={darkMode}>       
+            <IconContext.Provider value={{size: "26px"}}>
+                {Icon && 
+                    <NavIcon
+                        title={title}
+                    >
+                        <Icon />
+                        <span>{title}</span>
+                    </NavIcon>
+
+                }
+            </IconContext.Provider>
         </NavOptionContainer>
     )
 }
