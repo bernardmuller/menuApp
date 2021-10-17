@@ -38,8 +38,8 @@ export default function Login() {
       <div
         className={
           darkMode
-            ? `${styles.login_card} ${styles.login_card_dark}`
-            : `${styles.login_card} ${styles.login_card_light}`
+            ? `${styles.login_card} ${styles.login_card_light}`
+            : `${styles.login_card} ${styles.login_card_dark}`
         }
       >
         <h2>Login</h2>
@@ -73,9 +73,9 @@ export default function Login() {
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
       </div>
-      <div className={styles.need_account}>
+      {/* <div className={styles.need_account}>
         Need an account? <Link to="/signup">Sign Up</Link>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }

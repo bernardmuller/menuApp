@@ -13,9 +13,9 @@ export default function Dashboard() {
     const darkMode = theme.state.darkMode;
     return (
         <div>
-            <Header backgroundImg={pizza_bg} ObjPos={"100% 25%"}>
+            {/* <Header backgroundImg={pizza_bg} ObjPos={"100% 25%"}>
                 <Heading />
-            </Header> 
+            </Header>  */}
         </div>
     )
 }
