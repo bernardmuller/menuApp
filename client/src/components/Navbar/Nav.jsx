@@ -133,7 +133,7 @@ export default function Nav() {
               />
           </div>
         ) : (
-          <Link to="/profile">
+          <Link to="/login">
             <NavOption 
               title="Login" 
               Icon={IoLogIn}
