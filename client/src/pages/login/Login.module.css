@@ -92,10 +92,10 @@ form {
 }
 
 .login_card_dark {
-  color: whitesmoke;
+  color: black;
   background: trasparent;    
   border-radius: 10px;
-  border: 2px solid gray;
+  border: 1px solid gray;
   transition: box-shadow 200ms ease-in;
   transition: border 200ms ease-in;
 }
@@ -103,7 +103,7 @@ form {
 
 .login_card_light {
   background-color: rgb(230, 230, 230);
-  border: 2px solid grey;
+  border: 1px solid grey;
   border-radius: 10px;
   transition: box-shadow 200ms ease-in;
 }

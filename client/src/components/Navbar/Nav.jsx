@@ -15,7 +15,8 @@ import {
         IoSearch, 
         IoPersonCircle, 
         IoChatbubble,  
-        IoLogOut, 
+        IoLogOut,
+        IoSettings, 
         IoLogIn } from "react-icons/io5";
 
 
@@ -37,7 +38,7 @@ const NavContainer = styled.div`
 const NavOptions = styled.div`
   display: flex;
   flex-direction: column;
-  height: 30%;
+  height: 25%;
   /* flex: 0.3; */
   justify-content: space-evenly;
   align-items: center;
@@ -88,22 +89,9 @@ export default function Nav() {
               Icon={IoFastFood} 
               />
           </div>
-        )}        
+        )}   
         {currentUser && (
-          <div onClick= {() => {history.push('/planner')}}>
-            <NavOption 
-              title="Planner" 
-              Icon={IoCalendar}
-            />
-          </div>
-        )}        
-        {/* {currentUser && (
-          <div onClick= {() => {history.push('/recipes')}}>
-            <NavOption title="Recipes" />
-          </div>
-        )}         */}
-        {currentUser && (
-          <div onClick= {() => {history.push('/profile')}}>
+          <div onClick= {() => {history.push('/search')}}>
             <NavOption 
               title="Search" 
               Icon={IoSearch}
@@ -111,13 +99,13 @@ export default function Nav() {
           </div>
         )}
         {currentUser && (
-          <div onClick= {() => {history.push('/profile')}}>
+          <div onClick= {() => {history.push('/planner')}}>
             <NavOption 
-              title="Profile" 
-              Icon={IoPersonCircle}
+              title="Planner" 
+              Icon={IoCalendar}
             />
           </div>
-        )}
+        )}       
         {currentUser && (
           <div onClick= {() => {history.push('/contact')}}>
             <NavOption 
@@ -126,8 +114,17 @@ export default function Nav() {
             />
           </div>
         )}
+        
       </NavOptions>
       <Settings>
+      {currentUser && (
+          <div onClick= {() => {history.push('/settings')}}>
+            <NavOption 
+              title="Settings" 
+              Icon={IoSettings}
+            />
+          </div>
+        )}
         {currentUser ? (
           <div onClick={handleLogout}>
             <NavOption 

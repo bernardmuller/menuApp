@@ -44,7 +44,7 @@ function App() {
                     <Route exact path="/" component={Splash} />
                     <Route path="/Dashboard" component={Dashboard} />
                     <Route path="/menus" component={Menus} />
-                    <PrivateRoute path="/profile" component={Profile} />
+                    <PrivateRoute path="/settings" component={Profile} />
                     <PrivateRoute path="/update-profile" component={UpdateProfile} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/login" component={Login} />
