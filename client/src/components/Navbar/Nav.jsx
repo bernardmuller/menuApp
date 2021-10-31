@@ -9,35 +9,45 @@ import NavOption from "./components/NavOption";
 import ThemeButton from '../UI/themeButton/ThemeButton';
 import NavHeader from "./components/NavHeader";
 
+import { 
+        IoFastFood, 
+        IoCalendar,
+        IoSearch, 
+        IoPersonCircle, 
+        IoChatbubble,  
+        IoLogOut,
+        IoSettings, 
+        IoLogIn } from "react-icons/io5";
+
+
 const NavContainer = styled.div`
-  display: flex;    
-  justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: fixed;
-  top: 0;    
-  width: 100%;
-  height: 80px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  /* top: 0;     */
+  width: 60px;
+  height: 100%;
   z-index: 999; 
-  background-color: ${props => props.darkMode ? colors.jetBlack : colors.dark.secondary };
-  box-shadow: 0px 3px 10px ${props => props.darkMode? colors.transparent : colors.black};
+  background-color: ${colors.dark.grey};
+  /* box-shadow: 0px 3px 10px ${colors.black}; */
 `
 
-const NavLeft = styled.div`
-  flex: 0.1;
+const NavOptions = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;  
-`
-
-const NavMiddle = styled.div`
-  display: flex;
-  flex: 0.3;
+  flex-direction: column;
+  height: 25%;
+  /* flex: 0.3; */
   justify-content: space-evenly;
   align-items: center;
 `
 
-const NavRight = styled.div`
-  flex: 0.1;
+const Settings = styled.div`
+  /* flex: 0.1; */
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `
@@ -68,49 +78,70 @@ export default function Nav() {
 
   return (
     <NavContainer darkMode={darkMode}> 
-      <NavLeft>
+      {/* <NavLeft>
           <NavHeader />
-      </NavLeft>
-      <NavMiddle>
+      </NavLeft> */}
+      <NavOptions>
       {currentUser && (
-          <div onClick= {() => {history.push('/menus')}}>
+          <div onClick= {() => {history.push('/meals')}}>
             <NavOption 
-              title="Menus" 
-              darkMOde={darkMode} 
+              title="Meals" 
+              Icon={IoFastFood} 
+              />
+          </div>
+        )}   
+        {currentUser && (
+          <div onClick= {() => {history.push('/search')}}>
+            <NavOption 
+              title="Search" 
+              Icon={IoSearch}
             />
           </div>
-        )}        
+        )}
         {currentUser && (
-          <div onClick= {() => {history.push('/my-meals')}}>
-            <NavOption title="My Meals" />
+          <div onClick= {() => {history.push('/planner')}}>
+            <NavOption 
+              title="Planner" 
+              Icon={IoCalendar}
+            />
           </div>
-        )}        
+        )}       
         {currentUser && (
-          <div onClick= {() => {history.push('/recipes')}}>
-            <NavOption title="Recipes" />
-          </div>
-        )}        
-        {currentUser && (
-          <div onClick= {() => {history.push('/profile')}}>
-            <NavOption title="Profile" />
+          <div onClick= {() => {history.push('/contact')}}>
+            <NavOption 
+              title="Contact"
+              Icon={IoChatbubble}
+            />
           </div>
         )}
-          <div onClick= {() => {history.push('/contact')}}>
-            <NavOption title="Contact" />
+        
+      </NavOptions>
+      <Settings>
+      {currentUser && (
+          <div onClick= {() => {history.push('/settings')}}>
+            <NavOption 
+              title="Settings" 
+              Icon={IoSettings}
+            />
           </div>
-      </NavMiddle>
-      <NavRight>
+        )}
         {currentUser ? (
           <div onClick={handleLogout}>
-            <NavOption title="Log Out" />
+            <NavOption 
+              title="Logout" 
+              Icon={IoLogOut}
+              />
           </div>
         ) : (
-          <Link to="/profile">
-            <NavOption title="Login" />
+          <Link to="/login">
+            <NavOption 
+              title="Login" 
+              Icon={IoLogIn}
+            />
           </Link>
         )}
-        <ThemeButton />
-      </NavRight>
+        {/* <ThemeButton /> */}
+      </Settings>
     </NavContainer>
   );
 }

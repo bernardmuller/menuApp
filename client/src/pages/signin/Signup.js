@@ -73,7 +73,7 @@ export default function Signup() {
 
   return (
     <React.Fragment>
-      <Card>
+      <div>
         <section>
           <h2>Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -95,7 +95,7 @@ export default function Signup() {
             </button>
           </form>
         </section>
-      </Card>
+      </div>
       <div>
         Already have an account? <Link to="/login">Log In</Link>
       </div>

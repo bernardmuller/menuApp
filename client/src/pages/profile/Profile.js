@@ -26,7 +26,7 @@ export default function Profile() {
   const darkMode = theme.state.darkMode;
   return (
     <Container>
-      <Header backgroundImg={burger_bg} ObjPos={"100% 70%"} />
+      {/* <Header backgroundImg={burger_bg} ObjPos={"100% 70%"} /> */}
       <ProfileContainer>    
           <ContentCard darkMode={darkMode}>
             <h2>Profile</h2>          
