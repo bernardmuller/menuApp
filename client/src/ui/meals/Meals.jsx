@@ -2,16 +2,25 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
+import meal from 'assets/images/meal.png';
+
 import {
-    PrivateContainer
+    MealCard
+} from 'common/components';
+
+import {
+    PrivateContainer,
+    Images
 } from 'common';
+
 
 
 export const Meals = () => {    
     return (
 
         <PrivateContainer>
-            <h1>Meals</h1>
+            <MealCard img={meal} />           
+            
         </PrivateContainer>
 
     )

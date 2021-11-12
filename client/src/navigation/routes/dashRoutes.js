@@ -13,7 +13,7 @@ import {
     IoPersonCircle, 
     IoChatbubble,  
     IoLogOut,
-    IoSettings, 
+    IoSettingsSharp, 
     IoLogIn 
 } from "react-icons/io5";
 
@@ -49,7 +49,7 @@ export const dashRoutes = {
         title: 'Settings',
         component: Settings,
         path: '/settings',
-        icon: IoSettings,
+        icon: IoSettingsSharp,
         private: true
     },
 };

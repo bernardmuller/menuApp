@@ -33,3 +33,14 @@ export const FontSizes = {
     Biggest: '2.2rem',
     Huge: '2.5rem'
 };
+
+export const Images = {
+    Backgrounds: {
+      Meal: `assets/images/meal.png` 
+    },
+    Icons: {
+      
+    },
+    Logo: "",
+    LogoMobile: ``,
+};
