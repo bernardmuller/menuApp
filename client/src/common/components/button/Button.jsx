@@ -1,103 +1,194 @@
-import
-  React
-from 'react';
+import styled from "styled-components";
 
-import
-  styled
-from 'styled-components/macro';
-
-import {
-  colors,
-  FontSizes,
+import { 
+    colors,
+    FontSizes
 } from 'common';
 
-// import {
-//   Loader,
-// } from './Loader';
+import {
+    Loader,
+} from 'common/components';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: ${props => props.flexDirection || 'row'};
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: ${props => props.fontSize || FontSizes.Small};
-  height: ${props => props.height || '45px'};
-  line-height: ${props => props.height || '45px'};
-  border-radius: ${props => props.borderRadius || '22.5px'};
-  border: ${props => props.border || `1px solid ${colors.black}`};
-  width: ${props => props.width || '300px'};
-  user-select: none;
 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 0 5px;
+const ButtonBase = styled.button`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    width: ${(props) => props.width || "60%" };
+    height: ${(props) => props.height || "2.5rem" };
+    border-radius: ${props => props.borderRadius || "3rem" };
+    font-size: ${props => props.fontSize};
+    transition: transform 100ms ease-in-out;
+    margin: ${props => props.margin || ''};
+    box-shadow: rgba(104, 191, 80, 0.50) 0px 5px 15px;
 
-  ${props => props.margin && `margin: ${props.margin};`}
-
-  background-color: ${props => !props.disabled
-    ? props.backgroundColor || colors.white
-    : colors.gray};
-
-    color: ${props => !props.disabled
-      ? props.activeColor || colors.gray
-      : props.disabledColor || colors.gray};
-
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-
-  :hover {
-    background-color: ${props => !props.disabled
-      ? props.hoverBackgroundColor || colors.Tan
-      : colors.Gray5};
-
-     ${props => props.hoverBorder && `border: ${props.hoverBorder}`};
-  }
+    &:hover {
+        cursor: ${props => props.disabled ? "": "pointer"}; 
+        /* background-color: ${props => props.disabled ? `${colors.lightGrey}` : "#283361"}; */
+    }
 `;
 
-export const Button = props => {
+const Primary = styled(ButtonBase)`   
+    color: ${props => props.disabled? `${colors.black}` : `${colors.white}`};
+    border: ${colors.white};
+    background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.primary}` };
 
-  // const onClick = (e) => {
+    &:hover {
+        cursor: ${props => props.disabled ? "": "pointer"}; 
+        /* background-color: ${props => props.disabled ? `${colors.lightGrey}` : "#283361"}; */
+    }
 
-  //   if (props.disabled || props.showLoading) {
-  //     return;
-  //   }
+    &:active {
+        background-color: #283361; 
+    }
+`;
 
-  //   typeof props.onClick === 'function' && props.onClick(props.onClickArgs || e);
-  // };
+const Secondary = styled(ButtonBase)`    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};     
+    border-radius: 3rem;
+    border: none;
+    font-size: ${props => props.fontSize};
 
-  return (
+    color: ${props => props.disabled ? `${colors.white}` : `${colors.black}` };
+    border: ${props => props.disabled ? `${colors.black}` : `${colors.white}`};
+    background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.white}`};
 
-    <Container
-      activeColor={props.activeColor}
-      disabledColor={props.disabledColor}
-      backgroundColor={props.backgroundColor}
-      hoverBackgroundColor={props.hoverBackgroundColor}
-      flexDirection={props.flexDirection}
-      height={props.height}
-      width={props.width}
-      fontSize={props.fontSize}
-      borderRadius={props.borderRadius}
-      border={props.border}
-      hoverBorder={props.hoverBorder}
-      margin={props.margin}
-      // disabled={props.disabled || props.showLoading}
-      onClick={props.onClick}>
+    &:hover {
+        cursor: ${props => props.disabled ? "": "pointer"}; 
+        color: ${props => props.disabled ? "black" : "#fff" };
+        background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.white}`};
+    }
 
-        {/* { props.showLoading
+`;
 
-          ? <Loader
-              backgroundColor={colors.gray}
-              spinnerColor={colors.white}
-              size={35}
-            />
+const Tertiary = styled(ButtonBase)`    
+    color: ${colors.black};
+    border: 1px solid ${colors.grey};
+    background-color: ${colors.white};
 
-          : props.text || props.children || ''
-        } */}
+    &:hover {
+        cursor: ${props => props.disabled ? "": "pointer"}; 
+        color: ${props => props.disabled ? "black" : "black" };
+        background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.white}`};
+    }
+`;
 
-        {props.children}
+const Inline = styled.button`    
+    color: ${colors.black};
+    background: none;
+    font-size: ${props => props.fontSize || FontSizes.Regular};
+    font-weight: ${props => props.fontWeight || "Bold"};
+    border: none;
 
-    </Container>
-  );
+    &:hover {
+        cursor: ${props => props.disabled ? "": "pointer"}; 
+    };
+
+    &:active {
+        transform: scale(0.99);
+    };
+`;
+
+
+export const Button = (props) => {
+
+    
+
+    if (props.primary) {
+
+        return (
+
+            <Primary
+                fontSize={props.fontSize}
+                width={props.width}
+                height={props.height}
+                disabled={props.disabled}
+                onClick={props.onClick}
+                borderRadius={props.borderRadius}
+                margin={props.margin}
+            >
+
+                { props.showLoading ?
+                    <Loader
+                        backgroundColor={colors.Grey}
+                        spinnerColor={colors.white}
+                        size={50}
+                    />
+
+                    : props.children
+                }                
+
+            </Primary>
+
+        )
+
+    };
+
+    if (props.secondary) {
+
+        return (
+
+            <Secondary
+                fontSize={props.fontSize}
+                width={props.width}
+                height={props.height}
+                disabled={props.disabled}
+                onClick={props.onClick}
+                borderRadius={props.borderRadius}
+                margin={props.margin}
+            >
+                {props.children}
+            </Secondary>
+
+        )
+
+    };
+
+    if (props.tertiary) {
+
+        return (
+
+            <Tertiary
+                fontSize={props.fontSize}
+                width={props.width}
+                height={props.height}
+                disabled={props.disabled}
+                onClick={props.onClick}
+                borderRadius={props.borderRadius}
+                margin={props.margin}
+            >
+                {props.children}
+            </Tertiary>
+
+        )
+    };
+
+    if (props.inline) {
+
+        return (
+
+            <Inline
+                fontSize={props.fontSize}
+                width={props.width}
+                height={props.height}
+                disabled={props.disabled}
+                onClick={props.onClick}
+            >
+                {props.children}
+            </Inline>
+
+        )
+    }
+
+    return (
+
+        <button>{props.children}</button>
+
+    )
 };
