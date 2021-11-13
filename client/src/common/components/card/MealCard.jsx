@@ -16,13 +16,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
     width: 210px;
     height: 275px;
     position: relative;
+    margin: 0.2rem
 `
 
 const Background = styled.div`
-    height: 245px;
+    height: 90%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -32,7 +34,6 @@ const Background = styled.div`
     background-color: #1F1D2B;
     position: relative;
     bottom: 0; 
-    top: 30px;
     padding: 1.5rem;
 `
 
@@ -47,12 +48,11 @@ const ImageContainer = styled.div`
     z-index: 1;
     object-fit: contain;
     overflow: hidden;
-    /* border: 2px solid white; */
+    top: 0;
 `
+
 const Image = styled.img`
     height: 100%;
-    
-    
 `
 
 
@@ -72,23 +72,22 @@ export const MealCard = props => {
                     fontSize={FontSizes.Small}
                     textAlign='center'
                 >
-                    Beef dumpling in hot and sour soup
+                    {props.title}
                 </H4>
 
                 <Text
                     color="#50D1AA"
-
                     fontSize={FontSizes.Smaller}
 
                 >
-                    Season
+                    {props.tag}
                 </Text>
 
                 <Text
                     color="#ABBBC2"
                     fontSize={FontSizes.Smaller}
                 >
-                    Times eaten
+                    {`Times eaten: ${props.count}`}
                 </Text>
 
             </Background>

@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {
+    colors 
+} from 'common';
+
 const Page = styled.div`
     display:flex;
     width: 100%;
     height: 100%;
     position: relative;
+    background-color: ${colors.tertiary};
 `
 
 const Content = styled.div`
@@ -14,6 +19,8 @@ const Content = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
+    padding: 0 5%;
+    padding-top: 2rem;
 `
 
 const ContentCenter = styled.div`
@@ -24,6 +31,8 @@ const ContentCenter = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
+    padding: 0 5%;
+    padding-top: 2rem;
 `
 
 export const PageContainer = (props) => {

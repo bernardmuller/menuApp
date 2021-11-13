@@ -14,14 +14,20 @@ import {
     IoChatbubble,  
     IoLogOut,
     IoSettingsSharp, 
-    IoLogIn 
+    IoLogIn,
+    IoHomeSharp
 } from "react-icons/io5";
+
+import {
+    Images
+} from 'common';
 
 export const dashRoutes = {
     dashboard: {
         title: 'Dashboard',
         component: Dashboard,
         path: '/dashboard',
+        icon: IoHomeSharp,
         private: true
     },
     meals: {

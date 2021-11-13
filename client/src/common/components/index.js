@@ -4,3 +4,4 @@ export * from './PrivateRoute';
 export * from './button';
 export * from './text';
 export * from './card';
+export * from './header';
