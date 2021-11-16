@@ -17,12 +17,20 @@ import {
 } from "./common/components";
 
 import { 
-  AuthProvider 
-} from "./contexts/AuthContext";
+  colors
+} from "common";
+
+import { 
+  AuthProvider,
+  ActiveViewProvider,
+} from "contexts";
 
 const AppContainer = styled.div`
+  /* min-height: 100vh; */
   height: 100vh;
   width: 100vw;    
+  /* background-color: ${colors.tertiary}; */
+  z-index: -10;
 `
 
 function App() {
@@ -74,11 +82,15 @@ function App() {
 
       <AuthProvider>
 
-        <Router> 
-          <Switch>
-            {routes}
-          </Switch>             
-        </Router>
+        <ActiveViewProvider>
+
+          <Router> 
+            <Switch>
+              {routes}
+            </Switch>             
+          </Router>
+
+        </ActiveViewProvider>
 
       </AuthProvider>
 

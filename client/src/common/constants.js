@@ -1,7 +1,7 @@
 export const colors = {
     primary: "#68BF50",    
-    secondary: "#F27405",
-    tertiary: "#400101",
+    secondary: "#1F1D2B",
+    tertiary: "#252836",
     jetBlack: "#000000",
     black: "#0E0E0F",
     white: "#FFFFFF",
@@ -18,8 +18,9 @@ export const colors = {
     },
     light : {
         primary: "#7CD164",
-        grey: "#C4C4C4",
-        black: "#212020"
+        grey: "#ABBBC2",
+        black: "#212020",
+        green: "#50D1AA"
     },
 };
 
@@ -32,4 +33,20 @@ export const FontSizes = {
     Bigger: '1.8rem',
     Biggest: '2.2rem',
     Huge: '2.5rem'
+};
+
+export const FontFamilies = {
+    primary: "Roboto",
+    secondary: "Roboto"
+}
+
+export const Images = {
+    Backgrounds: {
+      Meal: `assets/images/meal.png` 
+    },
+    Icons: {
+      home: `assets/svg/home.svg`
+    },
+    Logo: "",
+    LogoMobile: ``,
 };

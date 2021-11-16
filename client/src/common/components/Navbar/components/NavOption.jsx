@@ -16,28 +16,24 @@ import {
 const NavOptionContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;    
-    color: ${colors.white};
+    align-items: flex-end;    
+    color: ${props => props.active? colors.white : colors.primary};
     cursor: pointer;
     text-decoration: none;
     margin: 0;
-    margin-left: 10px;
-    margin-right: 10px;
     transition: color ease-in 125ms;
-
-    &:hover {
-        color: ${props => props.darkMode ? colors.primary : colors.white};
-    }
+    width: 100%;
 `
 
 const NavIcon = styled.div`
-    height: 50px;
-    width: 50px;
+    padding: 15% 30%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    
+    background-color: ${props => props.active? colors.tertiary : colors.secondary};
+    border-radius: 1rem 0 0 1rem ;
+
 
     span {        
         z-index: 0;
@@ -55,26 +51,43 @@ const NavIcon = styled.div`
         font-weight: 400;
     }
     
-    &:hover span {
+    /* &:hover span {
         z-index: 0;
         opacity: 1;
         margin-left: 3rem;
-    }
+    } */
 `
 
-export const NavOption = ({ title, Icon, onClick, path }) => {
+const IconContianer = styled.div`
+    padding: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${props => props.active? colors.primary : colors.secondary};
+    border-radius: 0.75rem;
+    box-shadow: ${props => props.active ?`rgba(104, 191, 80, 0.60) 0px 5px 15px` : ``};
+
+`
+
+export const NavOption = ({ title, Icon, onClick, path, active }) => {
     const history = useHistory();
     return (
         <NavOptionContainer
             onClick={() => {history.push(path)}}
+            active={active}
         >       
             <IconContext.Provider value={{size: "26px"}}>
 
                 {Icon && 
                     <NavIcon
                         title={title}
+                        active={active}
                     >
-                        <Icon />
+                        <IconContianer
+                            active={active}
+                        >
+                            <Icon />
+                        </IconContianer>
                         <span>{title}</span>
                     </NavIcon>
                 }

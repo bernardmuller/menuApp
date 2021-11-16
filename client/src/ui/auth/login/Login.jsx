@@ -37,7 +37,7 @@ const LoginCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color: ${colors.white};
+  background-color: ${colors.secondary};
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   padding: 2rem;
@@ -50,7 +50,8 @@ const Header = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-
+  color: ${colors.primary};
+  text-shadow: rgba(104, 191, 80, 0.70) 0px 5px 20px;
 `
 
 const Form = styled.form`
@@ -69,7 +70,7 @@ const FormInputs = styled.div`
 
   input {
     height: 4rem;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.light.grey};
     border-radius: 0.5rem;
     padding: 0.5rem;
     margin-top: 1rem;
@@ -136,6 +137,7 @@ export const Login = () => {
                 />            
             </FormInputs>
             <Button  
+              primary
               type="submit"
               disabled={false}
               onClick={handleSubmit}
