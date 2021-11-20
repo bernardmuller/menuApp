@@ -48,7 +48,6 @@ const Container = styled.div`
     background-color: ${colors.secondary};
     border-radius: 1rem;
 `
-
 const ContentContainer = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -107,6 +106,9 @@ export const Meals = () => {
     const activeContext = useContext(ActiveViewContext);
     
     useEffect(() => {
+
+        fetch('http://localhost:8080/test')
+
         activeContext.dispatch({ type: "MEALS" });
     }, [])
 
