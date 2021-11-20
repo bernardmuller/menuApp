@@ -74,11 +74,11 @@ const MealContainer = styled.div`
 
 
 export const Meals = () => {
-    
+    const [meals, setMeals] = useState([])
     const [searchText, setSearchText] = useState('');
     const [filterText, setFilterText] = useState('');
 
-    let List = mealsData.map((meal) => (
+    let List = meals.map((meal) => (
         <MealCard 
             img={mealimg} 
             name={meal.name}
@@ -107,10 +107,13 @@ export const Meals = () => {
     
     useEffect(() => {
 
-        fetch('http://localhost:8080/test')
+        // fetch('http://localhost:8080/meals')
+        //     .then(response => response.json())
+        //     .then(data => setMeals(data))
 
         activeContext.dispatch({ type: "MEALS" });
     }, [])
+
 
     return (
 
