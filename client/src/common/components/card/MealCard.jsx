@@ -31,7 +31,7 @@ const Background = styled.div`
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    background-color: #1F1D2B;
+    background-color: ${colors.secondary};
     position: relative;
     bottom: 0; 
     padding: 1.5rem;
@@ -72,7 +72,7 @@ export const MealCard = props => {
                     fontSize={FontSizes.Small}
                     textAlign='center'
                 >
-                    {props.title}
+                    {props.name}
                 </H4>
 
                 <Text
@@ -80,7 +80,7 @@ export const MealCard = props => {
                     fontSize={FontSizes.Smaller}
 
                 >
-                    {props.tag}
+                    {props.season}
                 </Text>
 
                 <Text

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import {
     Text, 
     H2,
-    H3 
+    H3,
+    Searchbar
 } from 'common/components'
 
 import {
@@ -43,7 +44,16 @@ const Section2 = styled.div`
     }
 `
 
-export const MealsCollectionHeading = () => {
+export const MealsCollectionHeading = (props) => {
+
+    const handleSearch = (searchText) => {
+        props.onSearch(searchText)
+    };
+
+    const handleFilter = (filter) => {
+        props.onFilter(filter)
+    };
+
     return (
         <Header>
 
@@ -65,9 +75,8 @@ export const MealsCollectionHeading = () => {
                 </div>
 
                 {/* Turn into component */}
-                <input 
-                    type="text" 
-                    placeholder="Search meal"
+                <Searchbar
+                    onSearch={handleSearch}
                 />
 
             </Section1>
@@ -76,18 +85,36 @@ export const MealsCollectionHeading = () => {
 
                 <H3
                     color={colors.white}
-                    fontSize={FontSizes.Big}
+                    fontSize={FontSizes.Regular}
                     margin="0 0 0.5rem 0"
                 >
-                    Meals
+                    Total meals: {props.count}
                 </H3>
 
 
-                {/* Change to Component */}
-                <select name="grid-list" id="">
-                    <option value="">Grid</option>
-                    <option value="">List</option>
-                </select>
+
+                <div>
+
+                    {/* Change to Component */}
+                    <select 
+                        name="grid-list" id="" 
+                        style={{width: "120px"}}
+                        onChange={handleFilter}
+                    >
+                        <option value="All">All</option>
+                        <option value="Winter">Winter</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Autumn">Autumn</option>
+                    </select>
+
+                    {/* Change to Component */}
+                    <select name="grid-list" id="">
+                        <option value="">Grid</option>
+                        <option value="">List</option>
+                    </select>
+
+                </div>
 
             </Section2>
 

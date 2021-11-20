@@ -9,8 +9,7 @@ const Page = styled.div`
     display:flex;
     width: 100%;
     height: 100%;
-    position: relative;
-    background-color: ${colors.tertiary};
+    position: relatic;
 `
 
 const Content = styled.div`
@@ -45,7 +44,7 @@ export const PageContainer = (props) => {
 
 export const ContentContainer = (props) => {
     return (
-        <Content>            
+        <Content props>            
             {props.children}
         </Content>
     )
