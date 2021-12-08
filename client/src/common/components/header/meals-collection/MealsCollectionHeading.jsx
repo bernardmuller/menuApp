@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+
 
 import {
     Text, 
@@ -45,6 +46,7 @@ const Section2 = styled.div`
 `
 
 export const MealsCollectionHeading = (props) => {
+    
 
     const handleSearch = (searchText) => {
         props.onSearch(searchText)
@@ -53,6 +55,8 @@ export const MealsCollectionHeading = (props) => {
     const handleFilter = (filter) => {
         props.onFilter(filter)
     };
+
+    
 
     return (
         <Header>
@@ -70,8 +74,9 @@ export const MealsCollectionHeading = (props) => {
                         margin="0 0 3rem 0"
                         fontFamily='Roboto'
                     >
-                        Tuesday, 2 Feb 2021 - Sunday, 7 Feb 2021
+                        Tuesday, 3 Feb 2021 - Sunday, 7 Feb 2021
                     </Text>
+                    
                 </div>
 
                 {/* Turn into component */}

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
+import { useHistory } from 'react-router';
 
 import {
     Nav,
@@ -11,8 +13,13 @@ import {
 
 import {
     FontSizes,
-    colors
+    colors,
+    auth
 } from 'common';
+
+import {
+    Routes
+} from 'navigation';
 
 const Page = styled.div`
     width: 100%;
@@ -33,6 +40,35 @@ const TopBar = styled.div`
 `
 
 export const PrivateContainer = (props) => {
+    const history = useHistory()
+    
+    useEffect(() => {
+        const auth = async() => {
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            
+            await fetch('http://localhost:4001/auth', {
+                method: 'GET',
+                mode: 'cors',
+                redirect: 'follow',
+                credentials: 'include',
+                headers: headers,  
+            })
+            .then((res) => res.json())
+            .then((res) => {
+                if(res.auth === false) {
+                    history.push(Routes.login.path)
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
+        
+        auth()
+    }, [])
+
     return (
         <PageContainer>
             <Nav />

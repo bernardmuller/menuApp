@@ -88,13 +88,24 @@ export const Nav = () => {
 
   async function handleLogout() {
     setError("");
-
     try {
-      await logout();
-      history.push(Routes.login.path);
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+      await fetch('http://localhost:4001/logout', {
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+        withCredentials: true,
+        credentials: 'include',
+        headers: headers,
+      });
+      // history.push(Routes.login.path);
     } catch {
       setError("Failed to log out");
     }
+    history.push(Routes.login.path);
+
   }
 
 

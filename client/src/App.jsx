@@ -53,19 +53,6 @@ function App() {
 
     }
 
-    if(route.private) {
-
-      routes.push(
-        <PrivateRoute 
-          key={key}
-          exact={true}
-          path={route.path} 
-          component={route.component}  
-        />
-      )
-
-    }
-
     routes.push(
       <Route 
         key={key}

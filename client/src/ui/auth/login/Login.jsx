@@ -1,7 +1,11 @@
 import React, { useState, useContext, useRef } from "react";
 import styled from 'styled-components';
-import { useAuth } from "../../../contexts/AuthContext";
+// import { useAuth } from "../../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+
+import { 
+  login 
+} from 'actions'
 
 import bg from 'assets/images/login-bg.jpg'
 
@@ -32,7 +36,7 @@ const LoginCardContainer = styled.div`
   max-width: 400px;
   width: 80%;
   max-height: 500px;
-  height: 60%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,23 +90,55 @@ export const Login = () => {
 
   const enteredEmail = useRef();
   const enteredPassword = useRef();
-  const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  async function handleSubmit(e) {
+  async function handleSubmit (e) {
     e.preventDefault();
 
     try {      
       setError("");
       setLoading(true);
-      await login(enteredEmail.current.value, enteredPassword.current.value);
-      history.push("/dashboard");
+
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const res = await fetch('http://localhost:4001/login', {
+          method: 'POST',
+          mode: 'cors',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({
+              email: enteredEmail.current.value,
+              password: enteredPassword.current.value
+          })
+      });
+      const data = await res.json();
+      console.log(data);
+      if(data.errors) {
+        setEmailError(data.errors.email);
+        setPasswordError(data.errors.password);
+      }
+      if(data.user) {
+        history.push('/dashboard')
+      }
+
+      // const ret = await login(enteredEmail.current.value, enteredPassword.current.value);
+
+      // console.log(ret)
+
+      // history.push("/dashboard");
+
     } catch (err) {
-      setError(`Failed to log in`);
-      enteredEmail.current.value = '';
-      enteredPassword.current.value = '';
+      console.log(err)
+      // setError(`Failed to log in`);
+      // enteredEmail.current.value = '';
+      // enteredPassword.current.value = '';
     }
 
     setLoading(false);
@@ -110,32 +146,63 @@ export const Login = () => {
 
   return (
     <PublicContainer>
+
       <ContentCenterContainer>
+
         <BackgroundImage src={bg} />
+
         <LoginCardContainer>
+
           <Header>
+
             <H2
               margin="0"
-            >Login</H2>
+            >
+              Login
+              </H2>
+
               {error && <h4 style={{color: "red", border: '1px solid red', }}>{error}</h4>}
+
           </Header>
+
           <Form>
-            <FormInputs>              
+
+            <FormInputs>   
+
               <input
                 type="email"
                 id="email"
                 ref={enteredEmail}
                 placeholder="Email"
                 required
-              />          
+              />         
+
+              {emailError && 
+                <Text
+                  color={colors.danger}
+                >
+                  {emailError}
+                </Text>
+              }
+
               <input
                 type="password"
                 id="password"
                 ref={enteredPassword}
                 placeholder="Password"
                 required
-                />            
+              />    
+
+              {passwordError && 
+                <Text
+                  color={colors.danger}
+                >
+                  {passwordError}
+                </Text>
+              }
+
             </FormInputs>
+
             <Button  
               primary
               type="submit"
@@ -145,14 +212,17 @@ export const Login = () => {
             >
               Log In
             </Button>
+
           </Form>
+
           <Footer>
             <Link to="/forgot-password">Forgot Password?</Link>
           </Footer>
+
         </LoginCardContainer>
-        {/* <div className={styles.need_account}>
-          Need an account? <Link to="/signup">Sign Up</Link>
-        </div> */}
+        <div>
+          Need an account? <Link to="/auth/register">Register</Link>
+        </div>
         
       </ContentCenterContainer>
     </PublicContainer>
