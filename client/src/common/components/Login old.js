@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Card from "./card/Card";
 import styles from "./Login.module.css";

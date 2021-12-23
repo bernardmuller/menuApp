@@ -1,6 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
 import styled from 'styled-components';
-// import { useAuth } from "../../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
 import { 

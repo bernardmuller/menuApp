@@ -21,7 +21,6 @@ import {
 } from "common";
 
 import { 
-  AuthProvider,
   ActiveViewProvider,
 } from "contexts";
 
@@ -68,19 +67,15 @@ function App() {
   return (
     <AppContainer>
 
-      <AuthProvider>
+      <ActiveViewProvider>
 
-        <ActiveViewProvider>
+        <Router> 
+          <Switch>
+            {routes}
+          </Switch>             
+        </Router>
 
-          <Router> 
-            <Switch>
-              {routes}
-            </Switch>             
-          </Router>
-
-        </ActiveViewProvider>
-
-      </AuthProvider>
+      </ActiveViewProvider>
 
     </AppContainer>
   )

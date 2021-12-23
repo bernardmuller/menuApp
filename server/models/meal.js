@@ -83,7 +83,7 @@ const mealSchema = new Schema ({
 
 });
 
-schema.pre('save', function(next) {
+mealSchema.pre('save', function(next) {
 
     let now = Date.now;
     if (!this.createdAt) this.createdAt = now;

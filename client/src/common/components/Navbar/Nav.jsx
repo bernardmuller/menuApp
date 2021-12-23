@@ -18,9 +18,7 @@ import {
   IoLogOut,
 } from "react-icons/io5";
 
-import { 
-  useAuth 
-} from "contexts/AuthContext";
+
 
 import { 
   useHistory 
@@ -78,11 +76,6 @@ export const Nav = () => {
   const active = activeContext.state.active;  
 
   const history = useHistory();
-
-  const { 
-    logout, 
-    currentUser 
-  } = useAuth();
 
   const [error, setError] = useState("");
 

@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import styled from 'styled-components';
 import { colors } from 'common';
 
-import { useAuth } from "contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 import ContentCard from "common/components/card/ContentCard";
