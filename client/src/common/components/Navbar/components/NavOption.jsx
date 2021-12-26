@@ -34,7 +34,6 @@ const NavIcon = styled.div`
     background-color: ${props => props.active? colors.tertiary : colors.secondary};
     border-radius: 1rem 0 0 1rem ;
 
-
     span {        
         z-index: 0;
         opacity: 0;
@@ -50,12 +49,6 @@ const NavIcon = styled.div`
         font-size: 16px;
         font-weight: 400;
     }
-    
-    /* &:hover span {
-        z-index: 0;
-        opacity: 1;
-        margin-left: 3rem;
-    } */
 `
 
 const IconContianer = styled.div`

@@ -14,7 +14,6 @@ import {
 
 export const ForgotPassword = () => {
   const emailRef = useRef()
-  const { resetPassword } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
@@ -22,17 +21,16 @@ export const ForgotPassword = () => {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    try {
-      setMessage("")
-      setError("")
-      setLoading(true)
-      await resetPassword(emailRef.current.value)
-      setMessage("Check your inbox for further instructions")
-    } catch {
-      setError("Failed to reset password")
-    }
+    // try {
+    //   setMessage("")
+    //   setError("")
+    //   setLoading(true)
+    //   setMessage("Check your inbox for further instructions")
+    // } catch {
+    //   setError("Failed to reset password")
+    // }
 
-    setLoading(false)
+    // setLoading(false)
   }
 
   return (

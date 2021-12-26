@@ -21,6 +21,7 @@ const userSchema = Schema({
     },
     firstname: {
         type: String,
+        default: "user"
     },
     lastname: {
         type: String,

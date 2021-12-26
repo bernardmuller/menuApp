@@ -30,7 +30,7 @@ const mealSchema = new Schema ({
             ref:'Ingredient'
         }
     ],
-    cousine: {
+    cuisine: {
         type: Schema.Types.ObjectId,
         ref: 'Cuisine'
     },
@@ -66,30 +66,7 @@ const mealSchema = new Schema ({
         ref: 'User'
 
     },
-    createdAt: {
 
-        type: String,
-        required: true
-
-    },
-    updatedAt: {
-
-        type: String,
-        required: true
-
-    },
-    image: String,
-    URL: String, 
-
-});
-
-mealSchema.pre('save', function(next) {
-
-    let now = Date.now;
-    if (!this.createdAt) this.createdAt = now;
-    this.updatedAt = now;
-
-    next();
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("Meal", mealSchema);

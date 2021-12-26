@@ -4,6 +4,7 @@ import {
     Settings,
     Search,
     Planner,
+    CreateMeal
 } from 'ui';
 
 import { 
@@ -34,6 +35,13 @@ export const dashRoutes = {
         title: 'Meals',
         component: Meals,
         path: '/meals',
+        icon: IoFastFood,
+        private: true
+    },
+    creatMeal: {
+        title: 'Create Meal',
+        component: CreateMeal,
+        path: '/meals/create',
         icon: IoFastFood,
         private: true
     },

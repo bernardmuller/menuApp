@@ -15,7 +15,9 @@ import {
 
 import {
     MealCard,
-    MealsCollectionHeading
+    MealsCollectionHeading,
+    Text,
+    H3
 } from 'common/components';
 
 import {
@@ -27,6 +29,7 @@ import {
 import {
     mealsData
 } from 'variables';
+import { useHistory } from 'react-router';
 
 
 const MealsContainer = styled.div`
@@ -72,11 +75,35 @@ const MealContainer = styled.div`
     }
 `
 
+const AddMeal = styled.button`
+    width: 210px;
+    height: 275px;
+    padding: 2.5rem;
+    border: 5px dashed #50D1AA;
+    border-radius: 1rem;
+    background: none;
+    color:#ABBBC2;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        /* border: 2px dashed ${colors.primary}; */
+        cursor: pointer;
+        /* border-box: none; */
+    }
+`
+
 
 export const Meals = () => {
     const [meals, setMeals] = useState([])
     const [searchText, setSearchText] = useState('');
     const [filterText, setFilterText] = useState('');
+    const history = useHistory();
 
     let List = meals.map((meal) => (
         <MealCard 
@@ -106,14 +133,16 @@ export const Meals = () => {
     const activeContext = useContext(ActiveViewContext);
     
     useEffect(() => {
+        setMeals(mealsData)
 
-        // fetch('http://localhost:8080/meals')
+        // fetch('http://localhost:4001/meals')
         //     .then(response => response.json())
         //     .then(data => setMeals(data))
 
         activeContext.dispatch({ type: "MEALS" });
     }, [])
 
+    console.log(meals)
 
     return (
 
@@ -129,6 +158,21 @@ export const Meals = () => {
                     />
 
                     <MealsContainer>
+
+                        <AddMeal
+                            onClick={() => {
+                                history.push('/meals/create')
+                            }}
+                        >
+
+                            <H3
+                                fontSize="4rem"
+                                color="#50D1AA"
+                            >+</H3>
+                            
+                            Add new meal
+                            
+                        </AddMeal>
 
                         {MealsList}
                         

@@ -17,11 +17,12 @@ const ButtonBase = styled.button`
     align-items: center; 
     width: ${(props) => props.width || "60%" };
     height: ${(props) => props.height || "2.5rem" };
-    border-radius: ${props => props.borderRadius || "3rem" };
+    border-radius: ${props => props.borderRadius || "6px" };
     font-size: ${props => props.fontSize};
     transition: transform 100ms ease-in-out;
     margin: ${props => props.margin || ''};
     box-shadow: rgba(104, 191, 80, 0.50) 0px 5px 15px;
+    align-self: ${props => props.alignSelf || "" };
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 

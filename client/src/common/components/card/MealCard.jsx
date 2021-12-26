@@ -20,7 +20,7 @@ const Container = styled.div`
     width: 210px;
     height: 275px;
     position: relative;
-    margin: 0.2rem
+    margin: 0.2rem;
 `
 
 const Background = styled.div`

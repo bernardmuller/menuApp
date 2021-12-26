@@ -20,6 +20,7 @@
   "homepage": "https://github.com/bernardmuller/menuApp#readme",
   "dependencies": {
     "concurrently": "^6.4.0",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "react-hook-form": "^7.22.5"
   }
 }

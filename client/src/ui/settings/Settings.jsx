@@ -19,14 +19,13 @@ const ProfileContainer = styled.div`
 `
 
 export const Settings = () => {  
-  const { currentUser } = useAuth()  
   return (
     <PrivateContainer>
       {/* <Header backgroundImg={burger_bg} ObjPos={"100% 70%"} /> */}
       <ProfileContainer>    
           <ContentCard>
             <h2>Profile</h2>          
-            <p><strong>Email:</strong> {currentUser.email}</p>
+            <p><strong>Email:</strong> (working on it)</p>
             <Link to="/update-profile">
               Update Profile
             </Link>  
