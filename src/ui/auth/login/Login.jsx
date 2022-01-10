@@ -13,6 +13,7 @@ import {
   ContentCenterContainer,
   H2,
   Text,
+  Input,
  } from "common/components";
 
 import {
@@ -37,7 +38,7 @@ const Container = styled.div`
     background-color: black;
 
 
-    img {
+    &>img {
       position: absolute;
       left: 0;
       z-index: 0;
@@ -49,37 +50,102 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
   z-index: 1;
-  background-color: #08090D;
-  opacity: 0.85;
+  background-color: #080d08;
+  /* background-image: linear-gradient(to right, #000000, #242424); */
+  opacity: 0.9;
 `
 
 const LoginCardContainer = styled.div`
-  background-color: #08090D;
+  background-color: white;
   height: 100vh;
-  width: 40%;
+  width: 33.333%;
   padding: 4rem 6rem;
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  justify-content: space-between;
 `
 
 const Header = styled.div`
  
 `
 
-const Form = styled.form`
-    background-color: red;
-    display: grid;
-    grid-template-columns: 1;
+const GoogleButton = styled.button`
+  width: 100%;
+  height: 3.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background: none;
+  border-radius: 4px;
+  border: none;
+  color: grey;
+  font-size: ${FontSizes.Regular};
+  padding: 0.4rem;
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+
+  &>img {
+    height: 90%;
+    position: relative;
+    left: 0;
+    top: 0;
+    align-self: center;
+  }
+
+  &> span {
+    vertical-align: middle;
+  }
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
 `
 
-const FormInputs = styled.div`
-  
+const Form = styled.form`
+    display: grid;
+    grid-template-columns: 1;
+    gap: 1.5rem;
+`
+
+const Label = styled.label`
+  font-size: ${FontSizes.Big};
+  padding: 0 0 0.7rem 0;
 `
 
 const Footer = styled.div`
+  text-align: center;
 
+  a {
+    text-decoration: none;
+    color: grey;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+  }
+`
+
+const Heading = styled.h1`
+  position: Fixed;
+  color: white;
+  font-weight: bold;
+  font-size: 2.5rem;
+  top: 3rem;
+  left: 4rem;
+  z-index: 3;
+  font-family: ;
+`
+
+const Or = styled.div`
+  display: flex;
+  align-items: center;
+  &> div {
+    border-top: 1px solid grey;
+    width: 100%;
+  }
+
+  &> span {
+    padding: 0 0.5rem;
+  }
 `
 
 export const Login = () => {
@@ -146,6 +212,8 @@ export const Login = () => {
   return (
     <Container>
 
+        <Heading>MUNCHIES</Heading>
+
         <Background />
 
         <LoginCardContainer>
@@ -154,25 +222,46 @@ export const Login = () => {
 
             <H2
               margin="0"
+              fontSize="3.5rem"
             >
-              Login
-              </H2>
+              <strong>Log</strong> in
+            </H2>
 
               {error && <h4 style={{color: "red", border: '1px solid red', }}>{error}</h4>}
 
           </Header>
 
+          <GoogleButton>
+
+            <img 
+              src="https://img.icons8.com/color/50/000000/google-logo.png" 
+              alt="google icon"
+            />
+            <Text>Use Google Account</Text>
+          </GoogleButton>
+
+          <Or>
+            <div></div>
+              <span>OR</span>
+            <div></div>
+          </Or>
+
           <Form>
 
-            <FormInputs>   
+              <div>
 
-              <input
-                type="email"
-                id="email"
-                ref={enteredEmail}
-                placeholder="Email"
-                required
-              />         
+                <Label>Email</Label>
+
+                <Input
+                  type="email"
+                  id="email"
+                  ref={enteredEmail}
+                  placeholder="eg. email@email.com"
+                  required
+                />         
+
+              </div>
+
 
               {emailError && 
                 <Text
@@ -182,13 +271,17 @@ export const Login = () => {
                 </Text>
               }
 
-              <input
-                type="password"
-                id="password"
-                ref={enteredPassword}
-                placeholder="Password"
-                required
-              />    
+              <div>
+                <Label>Password</Label>
+
+                <Input
+                  type="password"
+                  id="password"
+                  ref={enteredPassword}
+                  placeholder="*******"
+                  required
+                />    
+              </div>
 
               {passwordError && 
                 <Text
@@ -198,14 +291,16 @@ export const Login = () => {
                 </Text>
               }
 
-            </FormInputs>
 
             <Button  
               primary
+              height="3rem"
               type="submit"
               disabled={false}
               onClick={handleSubmit}
-              width="90%"
+              width="100%"
+              margin="1rem 0 0 0"
+              fontSize="1.2rem"
             >
               Log In
             </Button>
@@ -217,8 +312,9 @@ export const Login = () => {
           </Footer>
 
           <div>
-          Need an account? <Link to="/auth/register">Register</Link>
-        </div>
+            Need an account? <Link to="/auth/register">Register</Link>
+          </div>
+          
 
         </LoginCardContainer>
         
