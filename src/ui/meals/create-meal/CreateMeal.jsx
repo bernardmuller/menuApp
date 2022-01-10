@@ -218,7 +218,6 @@ export const CreateMeal = () => {
     }, [tags])
     
     const onSubmit = data => {
-        debugger;
         setMealData(prev => ({
             ...prev,
             ...data
@@ -229,10 +228,8 @@ export const CreateMeal = () => {
             return;
         }
 
-        console.log(mealData)
+        console.log({ ...mealData})
     }
-
-    console.log(errors)
 
     return (
         <PrivateContainer>

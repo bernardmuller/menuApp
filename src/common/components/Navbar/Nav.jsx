@@ -85,7 +85,7 @@ export const Nav = () => {
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
-      await fetch('http://localhost:4001/logout', {
+      await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/logout', {
         method: 'POST',
         mode: 'cors',
         redirect: 'follow',

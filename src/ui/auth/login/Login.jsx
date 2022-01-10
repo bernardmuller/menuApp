@@ -6,7 +6,7 @@ import {
   login 
 } from 'actions'
 
-import bg from 'assets/images/login-bg.jpg'
+import bg from 'assets/images/login_bg.jpg'
 
 import { 
   Button,
@@ -21,68 +21,65 @@ import {
   FontSizes, 
 } from 'common';
 
-const BackgroundImage = styled.img`
+import { 
+  DataStore
+} from 'common/dataStore'
+
+const Container = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background-image: url(${bg});
+    background-size: 750px;
+    background-color: black;
+
+
+    img {
+      position: absolute;
+      left: 0;
+      z-index: 0;
+    }
+`
+
+const Background = styled.div`
+  position: absolute;
   width: 100%;
   height: 100%;
-  position: fixed;
-  z-index: -100;
-  object-fit: cover;
-  filter: blur(6px);
-  transform: scale(1.1);
+  z-index: 1;
+  background-color: #08090D;
+  opacity: 0.85;
 `
 
 const LoginCardContainer = styled.div`
-  max-width: 400px;
-  width: 80%;
-  max-height: 500px;
-  height: 70%;
+  background-color: #08090D;
+  height: 100vh;
+  width: 40%;
+  padding: 4rem 6rem;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  background-color: ${colors.secondary};
-  border-radius: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  padding: 2rem;
+  gap: 1rem;
 `
 
 const Header = styled.div`
-  width: 100%;
-  height: 7rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  color: ${colors.primary};
-  text-shadow: rgba(104, 191, 80, 0.70) 0px 5px 20px;
+ 
 `
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 80%;
-  width: 100%;
-  justify-content: space-between;
+    background-color: red;
+    display: grid;
+    grid-template-columns: 1;
 `
 
 const FormInputs = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;    
-
-  input {
-    height: 4rem;
-    border: 1px solid ${colors.light.grey};
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin-top: 1rem;
-    font-size: ${FontSizes.Regular};
-  }
+  
 `
 
 const Footer = styled.div`
-  padding-top: 1rem;
+
 `
 
 export const Login = () => {
@@ -106,7 +103,7 @@ export const Login = () => {
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
 
-      const res = await fetch('http://localhost:4001/login', {
+      const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth/login', {
           method: 'POST',
           mode: 'cors',
           redirect: 'follow',
@@ -119,6 +116,9 @@ export const Login = () => {
       });
       const data = await res.json();
       console.log(data);
+
+      DataStore.set("LOGGED_IN_USER", data)
+
       if(data.errors) {
         setEmailError(data.errors.email);
         setPasswordError(data.errors.password);
@@ -144,11 +144,9 @@ export const Login = () => {
   }  
 
   return (
-    <PublicContainer>
+    <Container>
 
-      <ContentCenterContainer>
-
-        <BackgroundImage src={bg} />
+        <Background />
 
         <LoginCardContainer>
 
@@ -218,12 +216,12 @@ export const Login = () => {
             <Link to="/forgot-password">Forgot Password?</Link>
           </Footer>
 
-        </LoginCardContainer>
-        <div>
+          <div>
           Need an account? <Link to="/auth/register">Register</Link>
         </div>
+
+        </LoginCardContainer>
         
-      </ContentCenterContainer>
-    </PublicContainer>
+    </Container>
   );
 }

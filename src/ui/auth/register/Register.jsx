@@ -6,7 +6,7 @@ import {
   register 
 } from 'actions'
 
-import bg from 'assets/images/login-bg.jpg'
+import bg from 'assets/images/login_bg.jpg'
 
 import { 
   Button,
