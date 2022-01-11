@@ -49,10 +49,12 @@ const ImageContainer = styled.div`
     object-fit: contain;
     overflow: hidden;
     top: 0;
-`
 
-const Image = styled.img`
-    height: 100%;
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 `
 
 
@@ -61,7 +63,7 @@ export const MealCard = props => {
         <Container>
             
             <ImageContainer>
-                <Image src={props.img} alt="meal" />
+                <img src={props.img} alt="meal" />
             </ImageContainer>
 
             <Background>

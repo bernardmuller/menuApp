@@ -6,7 +6,7 @@ if (env === 'development') {
 
   envConfig = {
     name: 'Development',
-    uiHost: 'http://localhost:3000/',
+    uiHost: 'https://munchies-api-5fqmkwna4q-nw.a.run.app',
     apiHost: '/',
     assetBase: '/assets',
   };
