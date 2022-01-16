@@ -224,7 +224,8 @@ export const Login = () => {
               margin="0"
               fontSize="3.5rem"
             >
-              <strong>Log</strong> in
+              <strong
+              >Log</strong> In
             </H2>
 
               {error && <h4 style={{color: "red", border: '1px solid red', }}>{error}</h4>}
