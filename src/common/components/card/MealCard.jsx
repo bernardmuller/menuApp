@@ -78,7 +78,7 @@ export const MealCard = props => {
                 </H4>
 
                 <Text
-                    color="#50D1AA"
+                    color="#B4DFA8"
                     fontSize={FontSizes.Smaller}
 
                 >

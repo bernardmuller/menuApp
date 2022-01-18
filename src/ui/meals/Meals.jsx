@@ -37,7 +37,152 @@ import {
 } from 'common/dataStore';
 
 import { useHistory } from 'react-router';
+import { MealDetail } from './detail';
 
+
+
+
+async function getData(url) {
+    const response = await fetch(url, {
+    //   method: 'GET', 
+      mode: 'cors', 
+      cache: 'no-cache', 
+      credentials: 'same-origin', 
+      headers: {
+        // Accept: 'application/json',
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', 
+      referrerPolicy: 'no-referrer',
+    });
+    return response.json();
+  }
+
+
+export const Meals = () => {
+    const [loading, setLoading] = useState(true)
+    const [meals, setMeals] = useState([])
+    const [searchText, setSearchText] = useState('');
+    const [filterText, setFilterText] = useState('');
+    const history = useHistory();
+    const activeContext = useContext(ActiveViewContext);
+    const [viewMeal, setViewMeal] = useState(false)
+    const [mealId, setMealId] = useState("")
+
+    useEffect(async() => {
+        const currentUser = await DataStore.get("LOGGED_IN_USER")
+
+        await getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals')
+        .then(data => setMeals(data))
+        .finally(() => {
+            setLoading(false)
+        })
+
+        activeContext.dispatch({ type: "MEALS" });
+    }, [])
+
+    const handleViewMeal = id => {
+        setViewMeal(true)
+        setMealId(id)
+    }
+    
+    return (
+
+        <PrivateContainer>
+            <ContentContainer>
+
+                {
+                    
+                    !loading ? ( 
+                    
+                        <Container>
+
+                            {!viewMeal ? (
+                                <>
+                                    <MealsCollectionHeading 
+                                        onSearch={(text) => {setSearchText(text)}}
+                                        onFilter={(filter) => {setFilterText(filter)}}
+                                        // count={meals.length}
+                                    />
+
+                                    <MealsContainer>
+
+                                        <AddMeal
+                                            onClick={() => {
+                                                history.push('/meals/create')
+                                            }}
+                                        >
+
+                                            <H3
+                                                fontSize="4rem"
+                                                color="#B4DFA8"
+                                            >+</H3>
+                                            
+                                            Add new meal
+                                            
+                                        </AddMeal>
+                                        
+                                            {
+                                                meals.map((meal, index) => (
+                                                    <MealContainer
+                                                        key={index}
+                                                        onClick={() => handleViewMeal(meal._id)}
+                                                    >
+                                                        <MealCard 
+                                                            img={meal.image || mealimg} 
+                                                            name={meal.name}
+                                                            season={meal.season}
+                                                            count={meal.eaten}
+                                                        />
+                                                    </MealContainer>
+
+                                                ))
+                                                .filter((meal) => {if (searchText === "") {
+                                                    return meal;
+                                                } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
+                                                    return meal;
+                                                }})
+                                                // .filter((meal) => {if (filterText === "All") {
+                                                //     return meal;
+                                                // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
+                                                //     return meal;
+                                                // }})
+                                            }
+                                        
+                                    </MealsContainer>
+                                </>
+
+                            ) : (
+                                <MealDetail 
+                                    mealId={mealId}
+                                    onClose={() => setViewMeal(false)}
+                                />
+                            )}
+
+                        </Container>
+
+                    ) : (
+                        <div
+                            style={{ display: 'flex', alignItems: 'center'}}
+                        >
+                            <Loader />
+                            <Text
+                                color="white"
+                                fontSize={FontSizes.Smaller}
+                            >
+                                Loading...
+                            </Text>
+                        </div>
+                    )
+
+                }
+
+            </ContentContainer>
+        </PrivateContainer>
+
+    )
+};
 
 const MealsContainer = styled.div`
     display: Flex;
@@ -86,7 +231,7 @@ const AddMeal = styled.button`
     width: 210px;
     height: 275px;
     padding: 2.5rem;
-    border: 5px dashed #50D1AA;
+    border: 5px dashed #B4DFA8;
     border-radius: 1rem;
     background: none;
     color:#ABBBC2;
@@ -104,128 +249,3 @@ const AddMeal = styled.button`
         /* border-box: none; */
     }
 `
-
-async function getData(url) {
-    const response = await fetch(url, {
-    //   method: 'GET', 
-      mode: 'cors', 
-      cache: 'no-cache', 
-      credentials: 'same-origin', 
-      headers: {
-        // Accept: 'application/json',
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: 'follow', 
-      referrerPolicy: 'no-referrer',
-    });
-    return response.json();
-  }
-
-
-export const Meals = () => {
-    const [loading, setLoading] = useState(true)
-    const [meals, setMeals] = useState([])
-    const [searchText, setSearchText] = useState('');
-    const [filterText, setFilterText] = useState('');
-    const history = useHistory();
-    const activeContext = useContext(ActiveViewContext);
-
-    useEffect(async() => {
-        const currentUser = await DataStore.get("LOGGED_IN_USER")
-
-        await getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals')
-        .then(data => setMeals(data))
-        .finally(() => {
-            setLoading(false)
-        })
-
-        activeContext.dispatch({ type: "MEALS" });
-    }, [])
-    
-    return (
-
-        <PrivateContainer>
-            <ContentContainer>
-
-                {
-                    
-                    !loading ? ( 
-                    
-                        <Container>
-
-                            <MealsCollectionHeading 
-                                onSearch={(text) => {setSearchText(text)}}
-                                onFilter={(filter) => {setFilterText(filter)}}
-                                // count={meals.length}
-                            />
-
-                            <MealsContainer>
-
-                                <AddMeal
-                                    onClick={() => {
-                                        history.push('/meals/create')
-                                    }}
-                                >
-
-                                    <H3
-                                        fontSize="4rem"
-                                        color="#50D1AA"
-                                    >+</H3>
-                                    
-                                    Add new meal
-                                    
-                                </AddMeal>
-                                
-                                    {
-                                        meals.map((meal, index) => (
-                                            <MealContainer
-                                                key={index}
-                                            >
-                                                <MealCard 
-                                                    img={meal.image || mealimg} 
-                                                    name={meal.name}
-                                                    season={meal.season}
-                                                    count={meal.eaten}
-                                                />
-                                            </MealContainer>
-
-                                        ))
-                                        .filter((meal) => {if (searchText === "") {
-                                            return meal;
-                                        } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
-                                            return meal;
-                                        }})
-                                        // .filter((meal) => {if (filterText === "All") {
-                                        //     return meal;
-                                        // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
-                                        //     return meal;
-                                        // }})
-                                    }
-                                
-                            </MealsContainer>
-
-                        </Container>
-
-                    ) : (
-                        <div
-                            style={{ display: 'flex', alignItems: 'center'}}
-                        >
-                            <Loader />
-                            <Text
-                                color="white"
-                                fontSize={FontSizes.Smaller}
-                            >
-                                Loading...
-                            </Text>
-                        </div>
-                    )
-
-                }
-
-            </ContentContainer>
-        </PrivateContainer>
-
-    )
-};
-

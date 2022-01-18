@@ -205,7 +205,7 @@ export const Register = () => {
 
 const Container = styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
     position: relative;
@@ -307,7 +307,7 @@ const Heading = styled.h1`
   font-weight: bold;
   font-size: 2.5rem;
   top: 3rem;
-  left: 4rem;
+  right: 4rem;
   z-index: 3;
   font-family: ;
 `

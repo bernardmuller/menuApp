@@ -4,7 +4,8 @@ import {
     Settings,
     Search,
     Planner,
-    CreateMeal
+    CreateMeal,
+    MealDetail
 } from 'ui';
 
 import { 
