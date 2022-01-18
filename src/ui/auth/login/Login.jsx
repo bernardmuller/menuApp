@@ -26,6 +26,192 @@ import {
   DataStore
 } from 'common/dataStore'
 
+
+
+export const Login = () => {
+
+  const enteredEmail = useRef();
+  const enteredPassword = useRef();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  async function handleSubmit (e) {
+    e.preventDefault();
+
+    try {      
+      setError("");
+      setLoading(true);
+
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth/login', {
+          method: 'POST',
+          mode: 'cors',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({
+              email: enteredEmail.current.value,
+              password: enteredPassword.current.value
+          })
+      });
+      const data = await res.json();
+      console.log(data);
+
+      DataStore.set("LOGGED_IN_USER", data)
+
+      if(data.errors) {
+        setEmailError(data.errors.email);
+        setPasswordError(data.errors.password);
+      }
+      if(data.user) {
+        history.push('/dashboard')
+      }
+
+      // const ret = await login(enteredEmail.current.value, enteredPassword.current.value);
+
+      // console.log(ret)
+
+      // history.push("/dashboard");
+
+    } catch (err) {
+      console.log(err)
+      // setError(`Failed to log in`);
+      // enteredEmail.current.value = '';
+      // enteredPassword.current.value = '';
+    }
+
+    setLoading(false);
+  }  
+
+  return (
+    <Container>
+
+        <Heading>MUNCHIES</Heading>
+
+        <Background />
+
+        <LoginCardContainer>
+
+          <Header>
+
+            <H2
+              margin="0"
+              fontSize="3.5rem"
+            >
+              <strong>Log</strong> in
+            </H2>
+
+              {error && <h4 style={{color: "red", border: '1px solid red', }}>{error}</h4>}
+
+          </Header>
+
+          <GoogleButton>
+
+            <img 
+              src="https://img.icons8.com/color/50/000000/google-logo.png" 
+              alt="google icon"
+            />
+            <Text>Use Google Account</Text>
+          </GoogleButton>
+
+          <Or>
+            <div></div>
+              <span>OR</span>
+            <div></div>
+          </Or>
+
+          <Form>
+
+              <div>
+
+                <Label
+                  htmlFor="email"
+                >
+                  Email
+                </Label>
+
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  ref={enteredEmail}
+                  placeholder="eg. email@email.com"
+                  required
+                />         
+
+              </div>
+
+
+              {emailError && 
+                <Text
+                  color={colors.danger}
+                >
+                  {emailError}
+                </Text>
+              }
+
+              <div>
+                <Label
+                  htmlFor="password"
+                >
+                  Password
+                </Label>
+
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  ref={enteredPassword}
+                  placeholder="*******"
+                  required
+                />    
+              </div>
+
+              {passwordError && 
+                <Text
+                  color={colors.danger}
+                >
+                  {passwordError}
+                </Text>
+              }
+
+
+            <Button  
+              primary
+              height="3rem"
+              type="submit"
+              disabled={false}
+              onClick={handleSubmit}
+              width="100%"
+              margin="1rem 0 0 0"
+              fontSize="1.2rem"
+            >
+              Log In
+            </Button>
+
+          </Form>
+
+          <Footer>
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </Footer>
+
+          <div>
+            Need an account? <Link to="/auth/register">Register</Link>
+          </div>
+          
+
+        </LoginCardContainer>
+        
+    </Container>
+  );
+}
+
 const Container = styled.div`
     display: flex;
     justify-content: flex-end;
@@ -147,177 +333,3 @@ const Or = styled.div`
     padding: 0 0.5rem;
   }
 `
-
-export const Login = () => {
-
-  const enteredEmail = useRef();
-  const enteredPassword = useRef();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
-  async function handleSubmit (e) {
-    e.preventDefault();
-
-    try {      
-      setError("");
-      setLoading(true);
-
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Accept', 'application/json');
-
-      const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth/login', {
-          method: 'POST',
-          mode: 'cors',
-          redirect: 'follow',
-          credentials: 'include', // Don't forget to specify this if you need cookies
-          headers: headers,
-          body: JSON.stringify({
-              email: enteredEmail.current.value,
-              password: enteredPassword.current.value
-          })
-      });
-      const data = await res.json();
-      console.log(data);
-
-      DataStore.set("LOGGED_IN_USER", data)
-
-      if(data.errors) {
-        setEmailError(data.errors.email);
-        setPasswordError(data.errors.password);
-      }
-      if(data.user) {
-        history.push('/dashboard')
-      }
-
-      // const ret = await login(enteredEmail.current.value, enteredPassword.current.value);
-
-      // console.log(ret)
-
-      // history.push("/dashboard");
-
-    } catch (err) {
-      console.log(err)
-      // setError(`Failed to log in`);
-      // enteredEmail.current.value = '';
-      // enteredPassword.current.value = '';
-    }
-
-    setLoading(false);
-  }  
-
-  return (
-    <Container>
-
-        <Heading>MUNCHIES</Heading>
-
-        <Background />
-
-        <LoginCardContainer>
-
-          <Header>
-
-            <H2
-              margin="0"
-              fontSize="3.5rem"
-            >
-              <strong>Log</strong> in
-            </H2>
-
-              {error && <h4 style={{color: "red", border: '1px solid red', }}>{error}</h4>}
-
-          </Header>
-
-          <GoogleButton>
-
-            <img 
-              src="https://img.icons8.com/color/50/000000/google-logo.png" 
-              alt="google icon"
-            />
-            <Text>Use Google Account</Text>
-          </GoogleButton>
-
-          <Or>
-            <div></div>
-              <span>OR</span>
-            <div></div>
-          </Or>
-
-          <Form>
-
-              <div>
-
-                <Label>Email</Label>
-
-                <Input
-                  type="email"
-                  id="email"
-                  ref={enteredEmail}
-                  placeholder="eg. email@email.com"
-                  required
-                />         
-
-              </div>
-
-
-              {emailError && 
-                <Text
-                  color={colors.danger}
-                >
-                  {emailError}
-                </Text>
-              }
-
-              <div>
-                <Label>Password</Label>
-
-                <Input
-                  type="password"
-                  id="password"
-                  ref={enteredPassword}
-                  placeholder="*******"
-                  required
-                />    
-              </div>
-
-              {passwordError && 
-                <Text
-                  color={colors.danger}
-                >
-                  {passwordError}
-                </Text>
-              }
-
-
-            <Button  
-              primary
-              height="3rem"
-              type="submit"
-              disabled={false}
-              onClick={handleSubmit}
-              width="100%"
-              margin="1rem 0 0 0"
-              fontSize="1.2rem"
-            >
-              Log In
-            </Button>
-
-          </Form>
-
-          <Footer>
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </Footer>
-
-          <div>
-            Need an account? <Link to="/auth/register">Register</Link>
-          </div>
-          
-
-        </LoginCardContainer>
-        
-    </Container>
-  );
-}
