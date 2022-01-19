@@ -39,9 +39,9 @@ const NavContainer = styled.div`
   align-items: center;
   position: fixed;
   padding-top: 2rem;
-  width: 5%;
+  width:100px;
   min-width: 60px;
-  max-width: 90px;
+  max-width: 80px;
   min-height: 100%;
   z-index: 999; 
   background-color: ${colors.secondary};

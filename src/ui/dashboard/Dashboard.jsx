@@ -12,7 +12,8 @@ import {
 
 // import { ThemeContext } from 'contexts/ThemeContext';
 import { 
-    PrivateContainer
+    PrivateContainer,
+    colors
 } from 'common';
 
 export const Dashboard = () => {  
@@ -25,9 +26,26 @@ export const Dashboard = () => {
 
     return (
         <PrivateContainer>
-            <h1>Dashboard</h1>
+            <LeftWrapper>
+                <h1
+                    style={{color: "white"}}
+                >Dashboard Left</h1>
+            </LeftWrapper>
+            <RightWrapper>
+                <h1
+                    style={{color: "white"}}
+                >Dashboard Right</h1>
+            </RightWrapper>
         </PrivateContainer>
     )
 };
 
-
+const LeftWrapper = styled.div`
+    height: 100%;
+    width: 30%;
+    background-color: ${colors.tertiary};
+`
+const RightWrapper = styled.div`
+    height: 100%;
+    width: auto;
+`

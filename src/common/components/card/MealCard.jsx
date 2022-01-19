@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import { 
@@ -17,10 +17,15 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    width: 210px;
-    height: 275px;
+    width: 150px;
+    height: 200px;
     position: relative;
-    margin: 0.2rem;
+    margin: 0 0 1rem 0;
+    
+
+    &:hover {
+        cursor: pointer;
+    }
 `
 
 const Background = styled.div`
@@ -31,15 +36,22 @@ const Background = styled.div`
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    background-color: ${colors.secondary};
+    background-color: #1B221A;
     position: relative;
     bottom: 0; 
     padding: 1.5rem;
+    transition: box-shadow 0.4 ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-0.05rem);
+        box-shadow: ${props => props.hover ? "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px" : ""};
+    }
 `
 
 const ImageContainer = styled.div`
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -59,18 +71,26 @@ const ImageContainer = styled.div`
 
 
 export const MealCard = props => {
+    const [hover, setHover] = useState(false)
     return (
-        <Container>
+        <Container
+            onClick={() => props.onClick()}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            
+        >
             
             <ImageContainer>
                 <img src={props.img} alt="meal" />
             </ImageContainer>
 
-            <Background>
+            <Background
+                hover={hover}
+            >
 
                 <H4
                     color="white"
-                    margin="115px 0 0 0"
+                    margin="80px 0 0 0"
                     fontSize={FontSizes.Small}
                     textAlign='center'
                 >
@@ -89,7 +109,7 @@ export const MealCard = props => {
                     color="#ABBBC2"
                     fontSize={FontSizes.Smaller}
                 >
-                    {`Times eaten: ${props.count}`}
+                    {`Times eaten: 1`}
                 </Text>
 
             </Background>

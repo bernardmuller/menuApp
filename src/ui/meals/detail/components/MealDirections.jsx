@@ -15,22 +15,6 @@ export const MealDirections = props => {
     return (
         <Container>
 
-            <DirectionContainer>
-
-                <H3
-                    color="white"
-                >
-                    Directions
-                </H3>
-
-                <Text
-                    color="#ABBBC2"
-                    fontSize={FontSizes.Small}
-                >
-                    {props.meal.directions}
-                </Text>
-            </DirectionContainer>
-
             <IngredientsContainer>
 
                 <H3
@@ -48,6 +32,24 @@ export const MealDirections = props => {
                 </ul>
 
             </IngredientsContainer>
+
+            <DirectionContainer>
+
+                <H3
+                    color="white"
+                >
+                    Directions
+                </H3>
+
+                <Text
+                    color="#ABBBC2"
+                    fontSize={FontSizes.Small}
+                >
+                    {props.meal.directions}
+                </Text>
+            </DirectionContainer>
+
+            
 
         </Container>
     )

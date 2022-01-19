@@ -18,9 +18,7 @@ export const MealInfo = props => {
     return (
         <Container>
 
-            <MealImageContainer>
-                <img src={props.meal.image} alt="Meal Image" />
-            </MealImageContainer>
+            
 
             <InfoContainer>
                 <Header>
@@ -31,16 +29,6 @@ export const MealInfo = props => {
                     >
                         {props.meal.name || "meal name"}
                     </H2>
-
-                    <Button
-                        inline
-                        onClick={props.onClose}
-                    >
-                        <IoCloseOutline 
-                            size={50}
-                            color="white"
-                        />
-                    </Button>
                 </Header>
 
                 <ButtonsContainer>
@@ -79,6 +67,10 @@ export const MealInfo = props => {
                 />
 
             </InfoContainer>
+
+            <MealImageContainer>
+                <img src={props.meal.image} alt="Meal Image" />
+            </MealImageContainer>
 
         </Container>
     )
@@ -170,13 +162,14 @@ const Stat = styled.div`
 const Container = styled.div`
     width: 100%;
     display: flex;
+
 `
 
 const MealImageContainer = styled.div`
     width: 50%;
     height: 20rem;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 10px;
 
     img {
         width: 100%;
@@ -186,7 +179,7 @@ const MealImageContainer = styled.div`
 `
 
 const InfoContainer = styled.div`
-    padding: 0 0 0 1.5rem;
+    padding: 0 1.5rem 0 0;
     width: 50%;
     display: grid;
     align-items: space-between;
@@ -196,17 +189,19 @@ const InfoContainer = styled.div`
 const Header = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-between;
 `
 
 const ButtonsContainer = styled.div`
     display:flex;
     width: 100%;
     gap: 1rem;
+
 `
 
 const TagsContainer = styled.div`
-
+    display:flex;
+    width: 100%;
+    gap: 1rem;
 ` 
 const TagWrapper = styled.div`
     height: 2rem;

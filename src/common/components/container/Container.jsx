@@ -14,12 +14,11 @@ const Page = styled.div`
 
 const Content = styled.div`
     display:flex;
-    flex-direction: column; 
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: relative;
-    padding: 0 5%;
-    padding-top: 2rem;
+    background-color: ${colors.secondary};
+    padding-left: 80px;
 `
 
 const ContentCenter = styled.div`
@@ -30,8 +29,8 @@ const ContentCenter = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
-    padding: 0 5%;
-    padding-top: 2rem;
+    /* padding: 0 5%; */
+    /* padding-top: 2rem; */
 `
 
 export const PageContainer = (props) => {
