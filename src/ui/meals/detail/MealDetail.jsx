@@ -52,7 +52,7 @@ export const MealDetail = props => {
     }, [])
 
     return (
-        <>
+        <Container>
             {!loading ? ( 
                     <>
                         <MealInfo 
@@ -79,6 +79,10 @@ export const MealDetail = props => {
                         </Text>
                     </div>
             )}
-        </>
+        </Container>
     )
-}
+};
+
+const Container = styled.div`
+    width: 100%;
+`

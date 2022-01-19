@@ -72,14 +72,14 @@ export const PrivateContainer = (props) => {
     return (
         <PageContainer>
             <Nav />
-            <TopBar>
+            {/* <TopBar>
                 <H1
                     color={colors.light.grey}
                     fontSize={FontSizes.Smaller}
                 >
                     MUNCHIE MANAGER
                 </H1>
-            </TopBar>
+            </TopBar> */}
             <ContentContainer>
                 {props.children}
             </ContentContainer>

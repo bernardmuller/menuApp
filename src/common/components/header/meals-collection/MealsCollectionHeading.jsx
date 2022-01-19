@@ -64,13 +64,13 @@ export const MealsCollectionHeading = (props) => {
             <Section1>
                 <div>
                     <H2
-                        color={colors.white}
+                        color={colors.secondary}
                         margin="0 0 0.5rem 0"
                     >
                         Meals Collection
                     </H2>
                     <Text
-                        color='#E0E6E9'
+                        color={colors.secondary}
                         margin="0 0 3rem 0"
                         fontFamily='Roboto'
                     >
@@ -89,7 +89,7 @@ export const MealsCollectionHeading = (props) => {
             <Section2>
 
                 <H3
-                    color={colors.white}
+                    color={colors.secondary}
                     fontSize={FontSizes.Regular}
                     margin="0 0 0.5rem 0"
                 >

@@ -68,7 +68,7 @@ export const Meals = () => {
     const history = useHistory();
     const activeContext = useContext(ActiveViewContext);
     const [viewMeal, setViewMeal] = useState(false)
-    const [mealId, setMealId] = useState("")
+    const [mealId, setMealId] = useState(meals._id)
 
     useEffect(async() => {
         const currentUser = await DataStore.get("LOGGED_IN_USER")
@@ -92,75 +92,68 @@ export const Meals = () => {
     return (
 
         <PrivateContainer>
-            <ContentContainer>
 
+            {/* <ContentContainer> */}
+                <LeftWrapper>
                 {
                     
                     !loading ? ( 
                     
                         <Container>
 
-                            {!viewMeal ? (
-                                <>
-                                    <MealsCollectionHeading 
-                                        onSearch={(text) => {setSearchText(text)}}
-                                        onFilter={(filter) => {setFilterText(filter)}}
-                                        // count={meals.length}
-                                    />
+                            <MealsCollectionHeading 
+                                onSearch={(text) => {setSearchText(text)}}
+                                onFilter={(filter) => {setFilterText(filter)}}
+                                // count={meals.length}
+                            />
 
-                                    <MealsContainer>
+                            <MealsContainer>
 
-                                        <AddMeal
-                                            onClick={() => {
-                                                history.push('/meals/create')
-                                            }}
-                                        >
+                                <AddMeal
+                                    onClick={() => {
+                                        history.push('/meals/create')
+                                    }}
+                                >
 
-                                            <H3
-                                                fontSize="4rem"
-                                                color="#B4DFA8"
-                                            >+</H3>
-                                            
-                                            Add new meal
-                                            
-                                        </AddMeal>
-                                        
-                                            {
-                                                meals.map((meal, index) => (
-                                                    <MealContainer
-                                                        key={index}
-                                                        onClick={() => handleViewMeal(meal._id)}
-                                                    >
-                                                        <MealCard 
-                                                            img={meal.image || mealimg} 
-                                                            name={meal.name}
-                                                            season={meal.season}
-                                                            count={meal.eaten}
-                                                        />
-                                                    </MealContainer>
+                                    <H3
+                                        fontSize="4rem"
+                                        color={colors.dark.grey}
+                                    >+</H3>
+                                    
+                                    Add new meal
+                                    
+                                </AddMeal>
+                                
+                                    {
+                                        meals.map((meal, index) => (
+                                            // <MealContainer
+                                            //     key={index}
+                                            //     onClick={() => handleViewMeal(meal._id)}
+                                            // >
+                                                <MealCard 
+                                                    img={meal.image || mealimg} 
+                                                    name={meal.name}
+                                                    season={meal.season}
+                                                    count={meal.eaten}
+                                                    key={index}
+                                                    onClick={() => handleViewMeal(meal._id)}
+                                                />
+                                            // </MealContainer>
 
-                                                ))
-                                                .filter((meal) => {if (searchText === "") {
-                                                    return meal;
-                                                } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
-                                                    return meal;
-                                                }})
-                                                // .filter((meal) => {if (filterText === "All") {
-                                                //     return meal;
-                                                // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
-                                                //     return meal;
-                                                // }})
-                                            }
-                                        
-                                    </MealsContainer>
-                                </>
-
-                            ) : (
-                                <MealDetail 
-                                    mealId={mealId}
-                                    onClose={() => setViewMeal(false)}
-                                />
-                            )}
+                                        ))
+                                        .filter((meal) => {if (searchText === "") {
+                                            return meal;
+                                        } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
+                                            return meal;
+                                        }})
+                                        // .filter((meal) => {if (filterText === "All") {
+                                        //     return meal;
+                                        // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
+                                        //     return meal;
+                                        // }})
+                                    }
+                                
+                            </MealsContainer>
 
                         </Container>
 
@@ -170,7 +163,7 @@ export const Meals = () => {
                         >
                             <Loader />
                             <Text
-                                color="white"
+                                color="black"
                                 fontSize={FontSizes.Smaller}
                             >
                                 Loading...
@@ -179,8 +172,20 @@ export const Meals = () => {
                     )
 
                 }
+                </LeftWrapper>
+                <RightWrapper>
 
-            </ContentContainer>
+                    {viewMeal && 
+                        <MealDetail 
+                            mealId={mealId}
+                            onClose={() => setViewMeal(false)}
+                        />
+                    }
+                    
+                </RightWrapper>
+                
+
+            {/* </ContentContainer> */}
         </PrivateContainer>
 
     )
@@ -189,21 +194,21 @@ export const Meals = () => {
 const MealsContainer = styled.div`
     display: Flex;
     justify-content: space-evenly;
-    align-items: center;
+    /* align-items: center; */
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     flex-wrap: wrap;
     /* overflow-y: scroll; */
-    
 `
 const Container = styled.div`
     display: Flex;
     flex-direction: column;
     top: 0;
-    width: 60%;
-    padding: 2.5rem;
-    background-color: ${colors.secondary};
-    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+    padding: 1.2rem;
+    background-color: ${colors.tertiary};
+    /* overflow-y: scroll; */
 `
 const ContentContainer = styled.div`
     margin-top: 1rem;
@@ -230,14 +235,14 @@ const MealContainer = styled.div`
 `
 
 const AddMeal = styled.button`
-    width: 210px;
-    height: 275px;
-    padding: 2.5rem;
-    border: 5px dashed #B4DFA8;
+    width: 150px;
+    height: 200px;
+    padding: 1rem 1rem 2.5rem 1rem;
+    border: 3px dashed ${colors.secondary};
     border-radius: 1rem;
     background: none;
-    color:#ABBBC2;
-    font-size: 1.1rem;
+    color:${colors.dark.grey};
+    font-size: ${FontSizes.Small};
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -245,9 +250,21 @@ const AddMeal = styled.button`
     align-items: center;
 
     &:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        transform: translateY(-0.05rem);
+        box-shadow:  rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset;
         /* border: 2px dashed ${colors.primary}; */
         cursor: pointer;
         /* border-box: none; */
     }
+`
+
+const LeftWrapper = styled.div`
+    height: 100%;
+    width: 30%;
+    background-color: ${colors.tertiary};
+`
+const RightWrapper = styled.div`
+    height: 100%;
+    width: calc(100% - 30%);
+    padding: 1.5rem;
 `
