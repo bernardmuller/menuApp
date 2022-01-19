@@ -37,10 +37,10 @@ export const Dropdown = ({heading, options, onOptionChange, margin, height, widt
     const List = optionsList.map((option) => (
 
         <option 
-            value={option.name} 
+            value={option.name || option} 
         >
 
-            {option.name}
+            {option.name || option}
 
         </option>
 

@@ -86,6 +86,8 @@ export const Meals = () => {
         setViewMeal(true)
         setMealId(id)
     }
+
+    console.log(meals)
     
     return (
 

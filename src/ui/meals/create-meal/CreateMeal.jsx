@@ -154,7 +154,7 @@ const Close = styled.button`
 export const CreateMeal = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const history = useHistory();
-
+    const [loading, setLoading] = useState(false);
     const activeContext = useContext(ActiveViewContext);
 
     const [input, setInput] = useState('');
@@ -216,8 +216,53 @@ export const CreateMeal = () => {
             setIngredientsError(false)
         }
     }, [tags])
+
+    const [submit, setSubmit] = useState(false)
+
+    
+    useEffect(async() => {
+        if(!submit) return;
+
+        try {      
+            // setError("");
+            setLoading(true);
+      
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            headers.append('Access-Control-Allow-Origin', '*');
+      
+            console.log(headers)
+
+            const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/create', {
+                method: 'POST',
+                mode: 'cors',
+                redirect: 'follow',
+                credentials: 'include',
+                headers: headers,
+                body: mealData
+            });
+            const data = await res.json();
+            console.log(data);
+      
+      
+            if(data.errors) {
+              console.log(data.errors)
+            }
+            
+            history.push('/meals');
+      
+        } catch (err) {
+            console.log(err)
+        }
+
+        setSubmit(false);
+
+    }, [submit])
+
     
     const onSubmit = data => {
+
         setMealData(prev => ({
             ...prev,
             ...data
@@ -227,9 +272,11 @@ export const CreateMeal = () => {
             setIngredientsError(true) 
             return;
         }
-
-        console.log({ ...mealData})
+        
+        setSubmit(true)
     }
+
+    console.log(mealData)
 
     return (
         <PrivateContainer>
@@ -277,19 +324,19 @@ export const CreateMeal = () => {
                                 type="text"
                                 height="3rem"
                                 placeholder="Meal name"
-                                {...register("mealName", {
+                                {...register("name", {
                                     required: "Please provide a meal name.",
                                 })}
                             />
 
-                            {errors.mealName &&
+                            {errors.name &&
                                 <Text
                                     fontSize={FontSizes.Small}
                                     color="red"
                                     margin="0.5rem 0 0 0"
                                     fontFamily=""
                                 >
-                                    {errors.mealName.message}
+                                    {errors.name.message}
                                 </Text>
                             }
 
