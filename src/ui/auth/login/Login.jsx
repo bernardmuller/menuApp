@@ -101,6 +101,13 @@ export const Login = () => {
 
           <Header>
 
+            <Munchies
+              margin="0"
+              fontSize="3.5rem"
+            >
+              <strong>M</strong>UNCHIES
+            </Munchies>
+
             <H2
               margin="0"
               fontSize="3.5rem"
@@ -263,14 +270,18 @@ const LoginCardContainer = styled.div`
     }
 
     @media (max-width: 767px) {
-      padding: 4rem 10%;
+      padding: 2rem 10%;
       width: 100%;
       min-width: 375px;
     }
 `
 
 const Header = styled.div`
- 
+  @media (max-width: 767px) {
+    h2 {
+      font-size: 2.25rem;
+    }
+  }
 `
 
 const GoogleButton = styled.button`
@@ -333,9 +344,9 @@ const Heading = styled.h1`
   top: 3rem;
   right: 4rem;
   z-index: 3;
-  font-family: ;
 
   @media (max-width: 767px) {
+      text-align: center;
       display: none;
   }
 `
@@ -350,5 +361,20 @@ const Or = styled.div`
 
   &> span {
     padding: 0 0.5rem;
+  }
+`
+
+const Munchies = styled.h1`
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 767px) {
+      display: none;
+  }
+
+  strong {
+    font-weight: bold;
+    font-size: 3.2rem;
   }
 `

@@ -95,6 +95,13 @@ export const Register = () => {
 
           <Header>
 
+            <Munchies
+              margin="0"
+              fontSize="3.5rem"
+            >
+              <strong>M</strong>UNCHIES
+            </Munchies>
+
             <H2
               margin="0"
               fontSize="3.5rem"
@@ -223,7 +230,6 @@ const Container = styled.div`
     background-size: 750px;
     background-color: black;
 
-
     &>img {
       position: absolute;
       left: 0;
@@ -239,29 +245,48 @@ const Background = styled.div`
   background-color: #080d08;
   /* background-image: linear-gradient(to right, #000000, #242424); */
   opacity: 0.9;
+
+  @media (max-width: 767px) {
+      display: none;
+  }
 `
 
 const LoginCardContainer = styled.div`
-  background-color: white;
-  height: 100vh;
-  width: 33.333%;
-  padding: 4rem 6rem;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  justify-content: space-between;
+    background-color: white;
+    height: 100vh;
+    width: 33.333%;
+    padding: 4rem 5%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+    min-width: 375px;
+
+    @media (max-width: 1280px) {
+      padding: 4rem 5%;
+      min-width: 450px;
+    }
+
+    @media (max-width: 767px) {
+      padding: 2rem 10%;
+      width: 100%;
+      min-width: 375px;
+    }
 `
 
 const Header = styled.div`
- 
+  @media (max-width: 767px) {
+    h2 {
+      font-size: 2.25rem;
+    }
+  }
 `
 
 const GoogleButton = styled.button`
   width: 100%;
   height: 3.5rem;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background: none;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border-radius: 4px;
   border: none;
   color: grey;
@@ -284,7 +309,7 @@ const GoogleButton = styled.button`
   }
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
   }
 `
 
@@ -318,7 +343,11 @@ const Heading = styled.h1`
   top: 3rem;
   right: 4rem;
   z-index: 3;
-  font-family: ;
+
+  @media (max-width: 767px) {
+      text-align: center;
+      display: none;
+  }
 `
 
 const Or = styled.div`
@@ -331,5 +360,20 @@ const Or = styled.div`
 
   &> span {
     padding: 0 0.5rem;
+  }
+`
+
+const Munchies = styled.h1`
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 767px) {
+      display: none;
+  }
+
+  strong {
+    font-weight: bold;
+    font-size: 3.2rem;
   }
 `
