@@ -48,7 +48,7 @@ export const PrivateContainer = (props) => {
             headers.append('Content-Type', 'application/json');
             headers.append('Accept', 'application/json');
             
-            await fetch('http://localhost:4001/auth', {
+            await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth', {
                 method: 'GET',
                 mode: 'cors',
                 redirect: 'follow',
