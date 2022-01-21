@@ -194,7 +194,7 @@ export const Register = () => {
 
           <Footer>
             <Text
-              color="#e3e3e3"
+              color="#f3f3f3"
               fontSize={FontSizes.Small}
             >
               LOL.. You can't see this.

@@ -203,7 +203,7 @@ export const Login = () => {
           </Footer>
 
           <div>
-            Need an account? <Link to="/auth/register">Register</Link>
+            Need an account? <Link to="/auth/register">Sign up</Link>
           </div>
           
 
@@ -265,6 +265,7 @@ const LoginCardContainer = styled.div`
     @media (max-width: 767px) {
       padding: 4rem 10%;
       width: 100%;
+      min-width: 375px;
     }
 `
 
