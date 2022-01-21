@@ -192,6 +192,15 @@ export const Register = () => {
 
           </Form>
 
+          <Footer>
+            <Text
+              color="#e3e3e3"
+              fontSize={FontSizes.Small}
+            >
+              LOL.. You can't see this.
+            </Text>
+          </Footer>
+
           <div>
             Already have an account? <Link to="/auth/login">Login</Link>
           </div>
