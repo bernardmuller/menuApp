@@ -20,7 +20,8 @@ import {
   PublicContainer,
   colors,
   FontSizes, 
-  DeviceMedia
+  DeviceMedia,
+  appVersion
 } from 'common';
 
 import { 
@@ -212,6 +213,15 @@ export const Login = () => {
           <div>
             Need an account? <Link to="/auth/register">Sign up</Link>
           </div>
+
+          <Version>
+            <Text
+              fontSize={FontSizes.Small}
+              color={colors.lightGrey}
+            >
+              {appVersion}
+            </Text>
+          </Version>
           
 
         </LoginCardContainer>
@@ -219,6 +229,12 @@ export const Login = () => {
     </Container>
   );
 }
+
+const Version = styled.div`
+  position: absolute;
+  bottom: 0.6rem;
+  left: 1rem;
+`
 
 const Container = styled.div`
     display: flex;
@@ -263,6 +279,7 @@ const LoginCardContainer = styled.div`
     gap: 1rem;
     justify-content: space-between;
     min-width: 375px;
+    position:relative;
 
     @media (max-width: 1280px) {
       padding: 4rem 5%;

@@ -1,3 +1,5 @@
+export const appVersion = "v0.1.1"
+
 export const colors = {
     primary: "#68BF50",    
     secondary: "#181C18",
