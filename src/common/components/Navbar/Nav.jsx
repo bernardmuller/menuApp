@@ -18,8 +18,6 @@ import {
   IoLogOut,
 } from "react-icons/io5";
 
-
-
 import { 
   useHistory 
 } from "react-router-dom";
@@ -31,6 +29,8 @@ import {
 import { 
   ActiveViewContext
 } from "contexts/ActiveViewContext";
+
+import { DataStore } from "common/dataStore";
 
 const NavContainer = styled.div`
   display: flex;
@@ -93,13 +93,15 @@ export const Nav = () => {
         credentials: 'include',
         headers: headers,
       });
-      // history.push(Routes.login.path);
-    } catch {
-      setError("Failed to log out");
-    }
-    history.push(Routes.login.path);
+      
+      await DataStore.clear("LOGGED_IN_USER");
 
-  }
+    } catch (err) {
+      setError("Failed to log out", err);
+    }
+
+    history.push(Routes.login.path);
+  };
 
 
   useEffect(() => {        

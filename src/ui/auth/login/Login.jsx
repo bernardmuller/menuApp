@@ -51,11 +51,11 @@ export const Login = () => {
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
 
-      const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth/login', {
+      const res = await fetch('http://localhost:4001/auth/login', {
           method: 'POST',
           mode: 'cors',
           redirect: 'follow',
-          credentials: 'include', // Don't forget to specify this if you need cookies
+          credentials: 'include', 
           headers: headers,
           body: JSON.stringify({
               email: enteredEmail.current.value,
@@ -69,23 +69,14 @@ export const Login = () => {
         setPasswordError(data.errors.password);
       }
 
-      DataStore.set("LOGGED_IN_USER", data)
+      await DataStore.set("LOGGED_IN_USER", data)
       
       if(data.user) {
         history.push('/dashboard')
       }
 
-      // const ret = await login(enteredEmail.current.value, enteredPassword.current.value);
-
-      // console.log(ret)
-
-      // history.push("/dashboard");
-
     } catch (err) {
       console.log(err)
-      // setError(`Failed to log in`);
-      // enteredEmail.current.value = '';
-      // enteredPassword.current.value = '';
     }
 
     setLoading(false);

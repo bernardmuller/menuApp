@@ -10,9 +10,6 @@ import {
 } from 'common/components';
 
 import {
-    PrivateContainer,
-    Images,
-    colors,
     FontSizes
 } from 'common';
 
@@ -25,34 +22,32 @@ import {
     DataStore
 } from 'common/dataStore';
 
-async function getMeal(url) {
-    const user = DataStore.get("LOGGED_IN_USER")
-
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', 'true');
-    headers.append('Authorization', `Bearer ${user.token}`);
-
-    const response = await fetch(url, {
-      method: 'GET', 
-      mode: 'cors', 
-      cache: 'no-cache', 
-      credentials: 'include', 
-      headers: headers,
-      redirect: 'follow', 
-      referrerPolicy: 'no-referrer',
-    });
-    return response.json();
-  }
-
 export const MealDetail = props => {
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useState({})
     
-    useEffect(async() => {
+    useEffect(() => {
+        async function getMeal(url) {
+            const user = DataStore.get("LOGGED_IN_USER")
+        
+            let headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            headers.append('Access-Control-Allow-Origin', 'true');
+            headers.append('Authorization', `Bearer ${user.token}`);
+        
+            const response = await fetch(url, {
+              method: 'GET', 
+              mode: 'cors', 
+              credentials: 'include', 
+              headers: headers,
+              redirect: 'follow', 
+              referrerPolicy: 'no-referrer',
+            });
+            return response.json();
+          }
         setLoading(true);
-        await getMeal(`https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${props.mealId}`)
+        getMeal(`https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${props.mealId}`)
         .then(data => setMeal(data))
         .finally(() => {
             setLoading(false);

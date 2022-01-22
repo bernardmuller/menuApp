@@ -49,29 +49,11 @@ export const PrivateContainer = (props) => {
     useEffect(() => {
         const auth = async() => {
             const user = DataStore.get("LOGGED_IN_USER")
-
-            let headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            headers.append('Accept', 'application/json');
-            headers.append('Access-Control-Allow-Origin', 'true');
-            headers.append('Authorization', `Bearer ${user.token}`);
             
-            await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth', {
-                method: 'GET',
-                mode: 'cors',
-                redirect: 'follow',
-                credentials: 'include',
-                headers: headers,  
-            })
-            .then((res) => res.json())
-            .then((res) => {
-                if(res.auth === false) {
-                    history.push(Routes.login.path)
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+            if(!user.token) {
+              console.log("no token")
+                history.push(Routes.login.path)
+            }
         }
         
         auth()
@@ -80,14 +62,6 @@ export const PrivateContainer = (props) => {
     return (
         <PageContainer>
             <Nav />
-            {/* <TopBar>
-                <H1
-                    color={colors.light.grey}
-                    fontSize={FontSizes.Smaller}
-                >
-                    MUNCHIE MANAGER
-                </H1>
-            </TopBar> */}
             <ContentContainer>
                 {props.children}
             </ContentContainer>

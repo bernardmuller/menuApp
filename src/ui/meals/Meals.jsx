@@ -29,10 +29,6 @@ import {
 } from 'common';
 
 import {
-    mealsData
-} from 'variables';
-
-import {
     DataStore
 } from 'common/dataStore';
 
@@ -40,56 +36,43 @@ import { useHistory } from 'react-router';
 import { MealDetail } from './detail';
 
 
-
-
-async function getData(url) {
-    const response = await fetch(url, {
-    //   method: 'GET', 
-      mode: 'cors', 
-      cache: 'no-cache', 
-      credentials: 'same-origin', 
-      headers: {
-        // Accept: 'application/json',
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: 'follow', 
-      referrerPolicy: 'no-referrer',
-    });
-    return response.json();
-  }
-
-
 export const Meals = () => {
-    const [loading, setLoading] = useState(true)
-    const [meals, setMeals] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [meals, setMeals] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [filterText, setFilterText] = useState('');
     const history = useHistory();
     const activeContext = useContext(ActiveViewContext);
-    const [viewMeal, setViewMeal] = useState(false)
-    const [mealId, setMealId] = useState(meals._id)
+    const [viewMeal, setViewMeal] = useState(false);
+    const [mealId, setMealId] = useState(meals._id);
+    const [user, setUser] = useState(DataStore.get("LOGGED_IN_USER"))
 
-    useEffect(async() => {
-        const user = await DataStore.get("LOGGED_IN_USER");
-
+    useEffect(() => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
         headers.append('Access-Control-Allow-Origin', 'true');
         headers.append('Authorization', `Bearer ${user.token}`);
 
-        await getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals'{
-            method: 'GET',
-            mode: 'cors',
-            redirect: 'follow',
-            credentials: 'include',
-            headers: headers,  
-        })
+        async function getData(url) {
+            const response = await fetch(url, {
+                method: 'GET',
+                mode: 'cors',
+                redirect: 'follow',
+                credentials: 'include',
+                headers: headers,  
+            })
+            return response.json();
+        }
+
+        setLoading(true);
+        getData('http://localhost:4001/meals')
         .then(data => setMeals(data))
         .finally(() => {
             setLoading(false)
         })
+        .catch(err => console.log(err))
+        
 
         activeContext.dispatch({ type: "MEALS" });
     }, [])
@@ -222,29 +205,6 @@ const Container = styled.div`
     background-color: ${colors.tertiary};
     /* overflow-y: scroll; */
 `
-const ContentContainer = styled.div`
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-
-`
-
-const MealContainer = styled.div`
-    transition: all 150ms ease-in-out;
-    margin: 0.5rem;
-    border-radius: 1rem;
-    padding-top: 1rem;
-
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        /* border: 2px dashed ${colors.primary}; */
-        cursor: pointer;
-        /* border-box: none; */
-    }
-`
 
 const AddMeal = styled.button`
     width: 150px;
@@ -264,9 +224,7 @@ const AddMeal = styled.button`
     &:hover {
         transform: translateY(-0.05rem);
         box-shadow:  rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset;
-        /* border: 2px dashed ${colors.primary}; */
         cursor: pointer;
-        /* border-box: none; */
     }
 `
 
