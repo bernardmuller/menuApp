@@ -66,7 +66,7 @@ export const Meals = () => {
         }
 
         setLoading(true);
-        getData('http://localhost:4001/meals')
+        getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals')
         .then(data => setMeals(data))
         .finally(() => {
             setLoading(false)

@@ -51,7 +51,7 @@ export const Login = () => {
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
 
-      const res = await fetch('http://localhost:4001/auth/login', {
+      const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth/login', {
           method: 'POST',
           mode: 'cors',
           redirect: 'follow',
