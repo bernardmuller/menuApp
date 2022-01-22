@@ -1,4 +1,4 @@
-const STORE_KEY = 'ZOLT_STORAGE';
+const STORE_KEY = 'MUNCHIES';
 
 export class DataStore {
 
@@ -8,12 +8,12 @@ export class DataStore {
       return;
     }
 
-    let zoltstorage = sessionStorage.getItem(STORE_KEY) || '{}';
+    let munchiesStorage = sessionStorage.getItem(STORE_KEY) || '{}';
 
-    zoltstorage = JSON.parse(zoltstorage);
-    zoltstorage[key] = value;
+    munchiesStorage = JSON.parse(munchiesStorage);
+    munchiesStorage[key] = value;
 
-    sessionStorage.setItem(STORE_KEY, JSON.stringify(zoltstorage));
+    sessionStorage.setItem(STORE_KEY, JSON.stringify(munchiesStorage));
   }
 
   static get(key) {
@@ -22,17 +22,17 @@ export class DataStore {
       return;
     }
 
-    let zoltstorage = sessionStorage.getItem(STORE_KEY) || '{}';
-    zoltstorage = JSON.parse(zoltstorage);
+    let munchiesStorage = sessionStorage.getItem(STORE_KEY) || '{}';
+    munchiesStorage = JSON.parse(munchiesStorage);
     
-    let val = zoltstorage[key];
+    let val = munchiesStorage[key];
 
     if (val === undefined || val === null) {
 
-      let zoltstorage = localStorage.getItem(STORE_KEY) || '{}';
-      zoltstorage = JSON.parse(zoltstorage);
+      let munchiesStorage = localStorage.getItem(STORE_KEY) || '{}';
+      munchiesStorage = JSON.parse(munchiesStorage);
 
-      val = zoltstorage[key];
+      val = munchiesStorage[key];
     }
 
     return val;
@@ -44,12 +44,12 @@ export class DataStore {
       return;
     }
 
-    let zoltstorage = sessionStorage.getItem(STORE_KEY) || '{}';
-    zoltstorage = JSON.parse(zoltstorage);
+    let munchiesStorage = sessionStorage.getItem(STORE_KEY) || '{}';
+    munchiesStorage = JSON.parse(munchiesStorage);
 
-    delete zoltstorage[key];
+    delete munchiesStorage[key];
 
-    sessionStorage.setItem(STORE_KEY, JSON.stringify(zoltstorage));
+    sessionStorage.setItem(STORE_KEY, JSON.stringify(munchiesStorage));
   }
 
   static clearAll() {

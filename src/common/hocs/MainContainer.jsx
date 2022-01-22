@@ -47,6 +47,7 @@ export const PrivateContainer = (props) => {
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Accept', 'application/json');
+            headers.append('Access-Control-Allow-Origin', 'true');
             
             await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth', {
                 method: 'GET',

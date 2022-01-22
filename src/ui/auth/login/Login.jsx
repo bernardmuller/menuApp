@@ -62,14 +62,14 @@ export const Login = () => {
           })
       });
       const data = await res.json();
-      console.log(data);
-
-      DataStore.set("LOGGED_IN_USER", data)
-
+      
       if(data.errors) {
         setEmailError(data.errors.email);
         setPasswordError(data.errors.password);
       }
+
+      DataStore.set("LOGGED_IN_USER", data)
+      
       if(data.user) {
         history.push('/dashboard')
       }
