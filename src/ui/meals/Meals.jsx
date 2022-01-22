@@ -71,9 +71,21 @@ export const Meals = () => {
     const [mealId, setMealId] = useState(meals._id)
 
     useEffect(async() => {
-        const currentUser = await DataStore.get("LOGGED_IN_USER")
+        const user = await DataStore.get("LOGGED_IN_USER");
 
-        await getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals')
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        headers.append('Access-Control-Allow-Origin', 'true');
+        headers.append('Authorization', `Bearer ${user.token}`);
+
+        await getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals'{
+            method: 'GET',
+            mode: 'cors',
+            redirect: 'follow',
+            credentials: 'include',
+            headers: headers,  
+        })
         .then(data => setMeals(data))
         .finally(() => {
             setLoading(false)

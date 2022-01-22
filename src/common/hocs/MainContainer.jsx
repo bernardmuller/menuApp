@@ -21,6 +21,10 @@ import {
     Routes
 } from 'navigation';
 
+import {
+    DataStore
+} from 'common/dataStore';
+
 const Page = styled.div`
     width: 100%;
     height: 100%;
@@ -44,10 +48,13 @@ export const PrivateContainer = (props) => {
     
     useEffect(() => {
         const auth = async() => {
-            var headers = new Headers();
+            const user = DataStore.get("LOGGED_IN_USER")
+
+            let headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Accept', 'application/json');
             headers.append('Access-Control-Allow-Origin', 'true');
+            headers.append('Authorization', `Bearer ${user.token}`);
             
             await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth', {
                 method: 'GET',

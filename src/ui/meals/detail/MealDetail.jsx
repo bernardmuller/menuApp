@@ -21,17 +21,25 @@ import {
     MealDirections
 } from './components';
 
+import {
+    DataStore
+} from 'common/dataStore';
+
 async function getMeal(url) {
+    const user = DataStore.get("LOGGED_IN_USER")
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    headers.append('Access-Control-Allow-Origin', 'true');
+    headers.append('Authorization', `Bearer ${user.token}`);
+
     const response = await fetch(url, {
-    //   method: 'GET', 
+      method: 'GET', 
       mode: 'cors', 
       cache: 'no-cache', 
-      credentials: 'same-origin', 
-      headers: {
-        // Accept: 'application/json',
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      credentials: 'include', 
+      headers: headers,
       redirect: 'follow', 
       referrerPolicy: 'no-referrer',
     });
@@ -49,6 +57,7 @@ export const MealDetail = props => {
         .finally(() => {
             setLoading(false);
         })
+        .catch(err => console.log(err))
     }, [])
 
     return (
