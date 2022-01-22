@@ -232,7 +232,7 @@ export const Login = () => {
 
 const Version = styled.div`
   position: absolute;
-  bottom: 0.6rem;
+  bottom: 0.5rem;
   left: 1rem;
 `
 
