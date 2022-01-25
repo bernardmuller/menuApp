@@ -1,9 +1,9 @@
 import {
-    Dashboard,
+    Menus,
     Meals,
     Settings,
     Search,
-    Planner,
+    Profile,
     CreateMeal,
     MealDetail
 } from 'ui';
@@ -17,7 +17,9 @@ import {
     IoLogOut,
     IoSettingsSharp, 
     IoLogIn,
-    IoHomeSharp
+    IoHomeSharp,
+    IoToday,
+    IoPersonSharp
 } from "react-icons/io5";
 
 import {
@@ -25,11 +27,11 @@ import {
 } from 'common';
 
 export const dashRoutes = {
-    dashboard: {
-        title: 'Dashboard',
-        component: Dashboard,
-        path: '/dashboard',
-        icon: IoHomeSharp,
+    menus: {
+        title: 'Menus',
+        component: Menus,
+        path: '/menus',
+        icon: IoToday,
         private: true
     },
     meals: {
@@ -46,18 +48,11 @@ export const dashRoutes = {
         icon: IoFastFood,
         private: true
     },
-    search: {
-        title: 'Search',
-        component: Search,
-        path: '/search',
-        icon: IoSearch,
-        private: true
-    },
-    planner: {
-        title: 'Planner',
-        component: Planner,
-        path: '/planner',
-        icon: IoCalendar,
+    profile: {
+        title: 'Profile',
+        component: Profile,
+        path: '/profile',
+        icon: IoPersonSharp,
         private: true
     },
     settings: {
@@ -67,4 +62,18 @@ export const dashRoutes = {
         icon: IoSettingsSharp,
         private: true
     },
+    // search: {
+    //     title: 'Search',
+    //     component: Search,
+    //     path: '/search',
+    //     icon: IoSearch,
+    //     private: true
+    // },
+    // planner: {
+    //     title: 'Planner',
+    //     component: Planner,
+    //     path: '/planner',
+    //     icon: IoCalendar,
+    //     private: true
+    // },
 };

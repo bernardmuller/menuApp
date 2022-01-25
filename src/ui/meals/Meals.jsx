@@ -18,7 +18,8 @@ import {
     MealsCollectionHeading,
     Text,
     H3,
-    Loader
+    Loader,
+    Button
 } from 'common/components';
 
 import {
@@ -32,6 +33,8 @@ import {
     DataStore
 } from 'common/dataStore';
 
+import {CreateMeal} from './create-meal'
+
 import { useHistory } from 'react-router';
 import { MealDetail } from './detail';
 
@@ -44,8 +47,9 @@ export const Meals = () => {
     const history = useHistory();
     const activeContext = useContext(ActiveViewContext);
     const [viewMeal, setViewMeal] = useState(false);
-    const [mealId, setMealId] = useState(meals._id);
+    const [mealId, setMealId] = useState();
     const [user, setUser] = useState(DataStore.get("LOGGED_IN_USER"))
+    const [createMeal, setCreateMeal] = useState(false);
 
     useEffect(() => {
         let headers = new Headers();
@@ -78,11 +82,13 @@ export const Meals = () => {
     }, [])
 
     const handleViewMeal = id => {
-        setViewMeal(true)
+        setViewMeal(false)
         setMealId(id)
+        setViewMeal(true)
+
     }
 
-    console.log(meals)
+    // console.log(mealId)
     
     return (
 
@@ -104,78 +110,87 @@ export const Meals = () => {
 
                             <MealsContainer>
 
-                                <AddMeal
-                                    onClick={() => {
-                                        history.push('/meals/create')
-                                    }}
-                                >
-
-                                    <H3
-                                        fontSize="4rem"
-                                        color={colors.dark.grey}
-                                    >+</H3>
-                                    
-                                    Add new meal
-                                    
-                                </AddMeal>
-                                
-                                    {
-                                        meals.map((meal, index) => (
-                                            // <MealContainer
-                                            //     key={index}
-                                            //     onClick={() => handleViewMeal(meal._id)}
-                                            // >
-                                                <MealCard 
-                                                    img={meal.image || mealimg} 
-                                                    name={meal.name}
-                                                    season={meal.season}
-                                                    count={meal.eaten}
-                                                    key={index}
-                                                    onClick={() => handleViewMeal(meal._id)}
-                                                />
-                                            // </MealContainer>
-
-                                        ))
-                                        .filter((meal) => {if (searchText === "") {
-                                            return meal;
-                                        } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
-                                            return meal;
-                                        }})
-                                        // .filter((meal) => {if (filterText === "All") {
-                                        //     return meal;
-                                        // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
-                                        //     return meal;
-                                        // }})
-                                    }
+                                {meals.map((meal, index) => (
+                                        <MealCard 
+                                            img={meal.image || mealimg} 
+                                            name={meal.name}
+                                            season={meal.season}
+                                            count={meal.eaten}
+                                            key={index}
+                                            onClick={() => {
+                                                setCreateMeal(false);
+                                                handleViewMeal(meal._id);
+                                            }}
+                                        />
+                                    ))
+                                    .filter((meal) => {if (searchText === "") {
+                                        return meal;
+                                    } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
+                                        return meal;
+                                    }})
+                                    // .filter((meal) => {if (filterText === "All") {
+                                    //     return meal;
+                                    // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
+                                    //     return meal;
+                                    // }})
+                                }
                                 
                             </MealsContainer>
+
+                            <Button
+                                primary
+                                width="100%"
+                                height="4rem"
+                                fontSize={FontSizes.Regular}
+                                onClick={() => {
+                                    setViewMeal(false);
+                                    setCreateMeal(true);
+                                }}
+                                margin="1rem 0 0 0"
+                            >
+                                Create Meal
+                            </Button>
 
                         </Container>
 
                     ) : (
-                        <div
-                            style={{ display: 'flex', alignItems: 'center'}}
-                        >
-                            <Loader />
-                            <Text
-                                color="black"
-                                fontSize={FontSizes.Smaller}
-                            >
-                                Loading...
-                            </Text>
-                        </div>
+                    
+                        <Loader 
+                            spinnerColor={colors.black}
+                            size="35px"
+                            label="Loading..."
+                        />
+                            
                     )
 
                 }
                 </LeftWrapper>
                 <RightWrapper>
 
-                    {viewMeal && 
-                        <MealDetail 
-                            mealId={mealId}
-                            onClose={() => setViewMeal(false)}
+                    {!loading ? (
+                        <>
+                            {viewMeal && 
+                                <MealDetail 
+                                    mealId={mealId}
+                                    onClose={() => setViewMeal(false)}
+                                />
+                            }
+        
+                            {createMeal && 
+                                <CreateMeal 
+                                    onClose={() => setCreateMeal(false)}
+                                />
+                            }
+                        </>
+                    ) : (
+                        <Loader 
+                            spinnerColor={colors.white}
+                            color={colors.white}
+                            size="35px"
+                            label="Loading..."
                         />
-                    }
+                    )}
+
                     
                 </RightWrapper>
                 
@@ -187,13 +202,13 @@ export const Meals = () => {
 };
 
 const MealsContainer = styled.div`
-    display: Flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-evenly;
-    /* align-items: center; */
     width: 100%;
-    /* height: 100%; */
     flex-wrap: wrap;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
+    padding: 0 0 0 1.5rem;
 `
 const Container = styled.div`
     display: Flex;

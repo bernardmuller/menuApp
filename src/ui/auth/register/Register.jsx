@@ -69,11 +69,11 @@ export const Register = () => {
         setPasswordError(data.errors.password);
       }
       if(data.user) {
-        history.push('/dashboard')
+        history.push('/menus')
       }
       // console.log(ret)
 
-      // history.push("/dashboard");
+      // history.push(/menus");
 
     } catch (err) {
       setError(`Failed to log in`);

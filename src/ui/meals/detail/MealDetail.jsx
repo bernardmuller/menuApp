@@ -25,6 +25,7 @@ import {
 export const MealDetail = props => {
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useState({})
+    const [mealId, setMealId] = useState(props.mealId);
     
     useEffect(() => {
         async function getMeal(url) {
@@ -45,15 +46,19 @@ export const MealDetail = props => {
               referrerPolicy: 'no-referrer',
             });
             return response.json();
-          }
+        }
         setLoading(true);
-        getMeal(`https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${props.mealId}`)
+        getMeal(`https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${mealId}`)
         .then(data => setMeal(data))
         .finally(() => {
             setLoading(false);
         })
         .catch(err => console.log(err))
-    }, [])
+    }, [mealId])
+
+    useEffect(() => {
+        setMealId(props.mealId)
+    });
 
     return (
         <Container>
@@ -89,4 +94,5 @@ export const MealDetail = props => {
 
 const Container = styled.div`
     width: 100%;
+    padding: 0 2rem;
 `

@@ -72,7 +72,7 @@ export const Login = () => {
       await DataStore.set("LOGGED_IN_USER", data)
       
       if(data.user) {
-        history.push('/dashboard')
+        history.push('/menus')
       }
 
     } catch (err) {

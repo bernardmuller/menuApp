@@ -1,41 +1,44 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { 
-  useContext, 
-  useEffect 
+    useContext, 
+    useEffect 
 } from 'react';
 
 import styled from 'styled-components';
 
 import { 
-  ActiveViewContext 
+    ActiveViewContext 
 } from "contexts/ActiveViewContext";
 
+// import { ThemeContext } from 'contexts/ThemeContext';
 import { 
-  PrivateContainer,
-  colors
+    PrivateContainer,
+    colors
 } from 'common';
 
-export const Settings = () => {  
-  const activeContext = useContext(ActiveViewContext);
+export const Menus = () => {  
+
+    const activeContext = useContext(ActiveViewContext);
     
     useEffect(() => {
-        activeContext.dispatch({ type: "SETTINGS" });
+        activeContext.dispatch({ type: "MENUS" });
     }, [])
-  return (
-    <PrivateContainer>
-      <LeftWrapper>
+
+    return (
+        <PrivateContainer>
+            <LeftWrapper>
                 <h1
                     style={{color: "black"}}
-                >Settings Left</h1>
+                >Menus Left</h1>
             </LeftWrapper>
             <RightWrapper>
                 <h1
                     style={{color: "white"}}
-                >Settings Right</h1>
-            </RightWrapper>    
-    </PrivateContainer>
-  )
+                >Menus Right</h1>
+            </RightWrapper>
+        </PrivateContainer>
+    )
 };
-
 
 const LeftWrapper = styled.div`
     height: 100%;
@@ -46,5 +49,3 @@ const RightWrapper = styled.div`
     height: 100%;
     width: auto;
 `
-
-

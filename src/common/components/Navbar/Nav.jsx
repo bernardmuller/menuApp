@@ -67,10 +67,10 @@ const Settings = styled.div`
 
 export const Nav = () => {
 
-  const [dashActive, setDashActive] = useState(false)
+  const [menuActive, setMenuActive] = useState(false)
   const [mealsActive, setMealsActive] = useState(false)
-  const [searchActive, setSearchActive] = useState(false)
-  const [plannerActive, setPlannerActive] = useState(false)
+  const [profileActive, setProfileActive] = useState(false)
+  const [settingsActive, setSettingsActive] = useState(false)
 
   const activeContext = useContext(ActiveViewContext);
   const active = activeContext.state.active;  
@@ -105,25 +105,25 @@ export const Nav = () => {
 
 
   useEffect(() => {        
-    if(active === "DASHBOARD") {
-        setDashActive(true)
+    if(active === "MENUS") {
+        setMenuActive(true)
     } else {
-        setDashActive(false)
+        setMenuActive(false)
     }
     if(active === "MEALS") {
         setMealsActive(true)
     } else {
         setMealsActive(false)
     }
-    if(active === "SEARCH") {
-        setSearchActive(true)
+    if(active === "PROFILE") {
+        setProfileActive(true)
     } else {
-        setSearchActive(false)
+        setProfileActive(false)
     }
-    if(active === "PLANNER") {
-        setPlannerActive(true)
+    if(active === "SETTINGS") {
+        setSettingsActive(true)
     } else {
-        setPlannerActive(false)
+        setSettingsActive(false)
     }
 
   }, [active])
@@ -136,10 +136,10 @@ export const Nav = () => {
       <NavOptions>
 
         <NavOption 
-            title={Routes.dashboard.title}
-            Icon={Routes.dashboard.icon} 
-            path={Routes.dashboard.path} 
-            active={dashActive}
+            title={Routes.menus.title}
+            Icon={Routes.menus.icon} 
+            path={Routes.menus.path} 
+            active={menuActive}
         />
 
         <NavOption
@@ -150,17 +150,17 @@ export const Nav = () => {
         />
 
         <NavOption 
-          title={Routes.search.title}
-            Icon={Routes.search.icon} 
-            path={Routes.search.path}
-            active={searchActive}
+          title={Routes.profile.title}
+            Icon={Routes.profile.icon} 
+            path={Routes.profile.path}
+            active={profileActive}
         />
 
         <NavOption 
-            title={Routes.planner.title}
-            Icon={Routes.planner.icon} 
-            path={Routes.planner.path}
-            active={plannerActive}
+            title={Routes.settings.title}
+            Icon={Routes.settings.icon} 
+            path={Routes.settings.path}
+            active={settingsActive}
         />
 
       </NavOptions>

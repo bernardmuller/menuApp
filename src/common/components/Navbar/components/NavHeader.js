@@ -57,7 +57,7 @@ const NavHeader = (props) => {
     return (
         
         <Header 
-            onClick= {() => {history.push('/dashboard')}} 
+            onClick= {() => {history.push('/menus')}} 
             darkMode={darkMode}
         >
             <div>Menu</div><div>Manager</div>

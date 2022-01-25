@@ -10,14 +10,14 @@ const initialState = {
   
 const activeReducer = (state, action) => {
     switch (action.type) {
-        case "DASHBOARD":
-            return { active: "DASHBOARD" };
+        case "MENUS":
+            return { active: "MENUS" };
         case "MEALS":
             return { active: "MEALS" };
-        case "SEARCH":
-            return { active: "SEARCH" };
-        case "PLANNER":
-            return { active: "PLANNER" };
+        case "PROFILE":
+            return { active: "PROFILE" };
+        case "SETTINGS":
+            return { active: "SETTINGS" };
         default:
             return state;
     }

@@ -11,7 +11,6 @@ import {
 } from 'common'
 
 export const MealDirections = props => {
-    console.log(props.meal)
     return (
         <Container>
 

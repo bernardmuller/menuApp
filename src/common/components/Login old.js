@@ -29,7 +29,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(enteredEmail, enteredPassword);
-      history.push("/dashboard");
+      history.push(/menus");
     } catch (err) {
       setError(`Failed to log in: ${err}`);
     }

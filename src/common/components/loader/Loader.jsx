@@ -12,6 +12,10 @@ import {
   FontSizes,
 } from 'common';
 
+import {
+  Text
+} from 'common/components';
+
 const Animation = size => keyframes`
     0% {
     transform: rotate(0deg);
@@ -22,26 +26,30 @@ const Animation = size => keyframes`
 `;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   margin: ${props => props.margin};
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 const LoadingContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
 
     :after {
         content: " ";
         display: block;
-        width: 20px;
-        height: 20px;
+        width: ${props => props.size};
+        height: ${props => props.size};
         margin: 8px;
         border-radius: 50%;
-        border: 3px solid #fff;
-        border-color: #fff transparent #fff transparent;
+        border: 3px solid ${props => props.spinnerColor};
+        border-color: ${props => props.spinnerColor} transparent ${props => props.spinnerColor} transparent;
         animation: ${Animation} 1.2s linear infinite;
     }
 `;
@@ -61,10 +69,14 @@ export const Loader = props => (
     <LoadingContainer
       backgroundColor={props.backgroundColor || colors.White}
       spinnerColor={props.spinnerColor || colors.grey}
-      size={props.size || 70}
+      size={props.size || '20px'}
     />
 
-    
+    <Text
+      color={props.color}
+    >
+      {props.label}
+    </Text>
 
   </Container>
   

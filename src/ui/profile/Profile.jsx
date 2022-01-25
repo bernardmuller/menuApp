@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { 
     useContext, 
     useEffect 
@@ -10,35 +9,35 @@ import {
     ActiveViewContext 
 } from "contexts/ActiveViewContext";
 
-// import { ThemeContext } from 'contexts/ThemeContext';
 import { 
     PrivateContainer,
     colors
 } from 'common';
 
-export const Dashboard = () => {  
-
+export const Profile = () => {
+    
     const activeContext = useContext(ActiveViewContext);
     
     useEffect(() => {
-        activeContext.dispatch({ type: "DASHBOARD" });
+        activeContext.dispatch({ type: "PROFILE" });
     }, [])
 
     return (
         <PrivateContainer>
             <LeftWrapper>
                 <h1
-                    style={{color: "white"}}
-                >Dashboard Left</h1>
+                    style={{color: "black"}}
+                >Profile Left</h1>
             </LeftWrapper>
             <RightWrapper>
                 <h1
                     style={{color: "white"}}
-                >Dashboard Right</h1>
+                >Profile Right</h1>
             </RightWrapper>
         </PrivateContainer>
     )
 };
+
 
 const LeftWrapper = styled.div`
     height: 100%;
@@ -49,3 +48,4 @@ const RightWrapper = styled.div`
     height: 100%;
     width: auto;
 `
+

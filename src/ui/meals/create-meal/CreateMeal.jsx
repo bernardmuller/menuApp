@@ -31,14 +31,23 @@ import {
 } from "react-icons/io5";
 import { useHistory } from 'react-router';
 
+import { DataStore } from 'common/dataStore';
+
+
 const Container = styled.div`
     display: Flex;
     flex-direction: column;
+    align-items: center;
     top: 0;
-    width: 60%;
-    padding: 2.5rem;
+    width: 100%;
+    padding: 0 2.5rem ;
     background-color: ${colors.secondary};
-    border-radius: 1rem;
+    border-radius: 1rem; 
+     &> div {
+         width: 100%;
+         display: flex;
+         justify-content: space-between;
+     }
 `
 const ContentContainer = styled.div`
     margin-top: 1rem;
@@ -151,7 +160,7 @@ const Close = styled.button`
     border: none;
 `
 
-export const CreateMeal = () => {
+export const CreateMeal = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
@@ -160,7 +169,8 @@ export const CreateMeal = () => {
     const [input, setInput] = useState('');
     const [tags, setTags] = useState([]);
     const [isKeyReleased, setIsKeyReleased] = useState(false);
-    const [ingredientsError, setIngredientsError] = useState(false)
+    const [ingredientsError, setIngredientsError] = useState(false);
+    const user = DataStore.get("LOGGED_IN_USER")
 
     const [mealData, setMealData] = useState({
         season: "",
@@ -219,38 +229,43 @@ export const CreateMeal = () => {
 
     const [submit, setSubmit] = useState(false)
 
-    
-    useEffect(async() => {
-        if(!submit) return;
 
+    useEffect(() => {
+        if(!submit) return;
+        console.log("submit")
         try {      
             // setError("");
             setLoading(true);
       
-            var headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            headers.append('Accept', 'application/json');
-            headers.append('Access-Control-Allow-Origin', '*');
-      
-            console.log(headers)
-
-            const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/create', {
-                method: 'POST',
-                mode: 'cors',
-                redirect: 'follow',
-                credentials: 'include',
-                headers: headers,
-                body: mealData
-            });
-            const data = await res.json();
-            console.log(data);
-      
-      
-            if(data.errors) {
-              console.log(data.errors)
+            async function createMeal(url) {
+                const user = DataStore.get("LOGGED_IN_USER")
+            
+                let headers = new Headers();
+                headers.append('Content-Type', 'application/json');
+                headers.append('Accept', 'application/json');
+                headers.append('Access-Control-Allow-Origin', 'true');
+                headers.append('Authorization', `Bearer ${user.token}`);
+            
+                const response = await fetch(url, {
+                  method: 'POST', 
+                  mode: 'cors', 
+                  credentials: 'include', 
+                  headers: headers,
+                  redirect: 'follow', 
+                  referrerPolicy: 'no-referrer',
+                })
+                .catch(err => console.log(err))
+                return response.json();
             }
             
-            history.push('/meals');
+            createMeal(`http://localhost:4001/meals/create`)
+            .then(data => console.log(data))
+            .finally(() => {
+                setLoading(false);
+            })
+            .catch(err => console.log("err......." + err))
+            
+            // history.push('/meals');
       
         } catch (err) {
             console.log(err)
@@ -276,11 +291,9 @@ export const CreateMeal = () => {
         setSubmit(true)
     }
 
-    console.log(mealData)
-
     return (
-        <PrivateContainer>
-            <ContentContainer>
+        // <PrivateContainer>
+            // <ContentContainer>
 
                 <Container>
                     
@@ -295,9 +308,7 @@ export const CreateMeal = () => {
                         </H3>
 
                         <Close
-                            onClick={() => {
-                                history.goBack();
-                            }}
+                            onClick={() => props.onClose()}
                         >
                             <IoClose
                                 size={40}
@@ -595,7 +606,8 @@ export const CreateMeal = () => {
 
                 </Container>
 
-            </ContentContainer>
-        </PrivateContainer>
+
+            // {/* </ContentContainer> */}
+        // {/* </PrivateContainer> */}
     )
 }
