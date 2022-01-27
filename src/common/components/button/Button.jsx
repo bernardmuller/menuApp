@@ -37,11 +37,11 @@ const Primary = styled(ButtonBase)`
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
-        /* background-color: ${props => props.disabled ? `${colors.grey_light}` : "#283361"}; */
+        background-color: ${props => props.disabled ? colors.grey_light : colors.primary_dark};
     }
 
     &:active {
-        background-color: #283361; 
+        background-color: ${colors.primary_light}; 
     }
 `;
 
