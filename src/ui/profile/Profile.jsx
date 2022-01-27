@@ -14,6 +14,12 @@ import {
     colors
 } from 'common';
 
+import {
+    UserInfo,
+    Favourites,
+    EditProfile
+} from './components'
+
 export const Profile = () => {
     
     const activeContext = useContext(ActiveViewContext);
@@ -24,15 +30,15 @@ export const Profile = () => {
 
     return (
         <PrivateContainer>
+
             <LeftWrapper>
-                <h1
-                    style={{color: "black"}}
-                >Profile Left</h1>
+                <UserInfo />
+
+                <Favourites />
             </LeftWrapper>
+
             <RightWrapper>
-                <h1
-                    style={{color: "white"}}
-                >Profile Right</h1>
+                
             </RightWrapper>
         </PrivateContainer>
     )

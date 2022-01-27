@@ -1,4 +1,4 @@
-export const appVersion = "v0.1.5"
+export const appVersion = "v0.1.6"
 
 export const colors = {
     primary: "#68BF50",    
@@ -38,10 +38,11 @@ export const FontFamilies = {
 
 export const Images = {
     Backgrounds: {
-      Meal: `assets/images/meal.png` 
+      Meal: `assets/images/meal.png`,
+      Profile: 'assets/images/profile.jpg'
     },
     Icons: {
-      home: `assets/svg/home.svg`
+      home: `assets/svg/home.svg`,
     },
     Logo: "",
     LogoMobile: ``,
