@@ -2,29 +2,22 @@ export const appVersion = "v0.1.4"
 
 export const colors = {
     primary: "#68BF50",    
+    primary_light: "#7BC766",    
+    primary_dark: "#5EAB49",    
     secondary: "#181C18",
-    tertiary: "#FFFFFF",
-    green: "#50D1AA",
-    jetBlack: "#000000",
-    black: "#0E0E0F",
+    secondary_light: "#1B221A",
+    secondary_dark: "#161916",
+    tertiary: "#E6E66E",
+    tertiary_light: "#EBEB89",
+    tertiary_dark: "#DEDE6A",
+    grey: "#ADB0AC",
+    grey_light: "#B7BCB5",
+    grey_dark: "#9E9F9E",
+    black: "#000000",
     white: "#FFFFFF",
-    lightGrey: "#C4C4C4",
-    grey: "#999999",
     danger: "#CF5A30",
     success: "#84C971",
-    info: "#E6E66E",
     transparent: "rgba(255, 255, 255, 0)",
-    dark: {
-        primary: "#265902",
-        secondary: "#A62F03",
-        grey: "#4F4F4F",
-    },
-    light : {
-        primary: "#7CD164",
-        grey: "#ABBBC2",
-        black: "#212020",
-        green: "#50D1AA"
-    },
 };
 
 export const FontSizes = {

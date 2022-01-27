@@ -26,18 +26,18 @@ const ButtonBase = styled.button`
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
-        /* background-color: ${props => props.disabled ? `${colors.lightGrey}` : "#283361"}; */
+        /* background-color: ${props => props.disabled ? `${colors.grey_light}` : "#283361"}; */
     }
 `;
 
 const Primary = styled(ButtonBase)`   
     color: ${props => props.disabled? `${colors.black}` : `${colors.white}`};
     border: ${colors.white};
-    background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.primary}` };
+    background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.primary}` };
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
-        /* background-color: ${props => props.disabled ? `${colors.lightGrey}` : "#283361"}; */
+        /* background-color: ${props => props.disabled ? `${colors.grey_light}` : "#283361"}; */
     }
 
     &:active {
@@ -58,12 +58,12 @@ const Secondary = styled(ButtonBase)`
 
     color: ${props => props.disabled ? `${colors.white}` : `${colors.black}` };
     border: ${props => props.disabled ? `${colors.black}` : `${colors.white}`};
-    background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.white}`};
+    background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white}`};
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
         color: ${props => props.disabled ? "black" : "#fff" };
-        background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.white}`};
+        background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white}`};
     }
 
 `;
@@ -76,7 +76,7 @@ const Tertiary = styled(ButtonBase)`
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
         color: ${props => props.disabled ? "black" : "black" };
-        background-color: ${props => props.disabled ? `${colors.lightGrey}` : `${colors.white}`};
+        background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white}`};
     }
 `;
 

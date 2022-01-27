@@ -29,7 +29,7 @@ const AppContainer = styled.div`
   min-height: 100vh;
   /* height: 100vh; */
   width: 100%;    
-  background-color: ${colors.tertiary};
+  background-color: ${colors.white};
   z-index: -10;
 `
 

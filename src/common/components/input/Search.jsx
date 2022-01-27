@@ -12,7 +12,7 @@ import {
 const SearchInput = styled.input`
     border: none;
     border-radius: 0.5rem;
-    background-color: ${colors.light.grey};
+    background-color: ${colors.grey_light};
     color: ${colors.secondary};
 
 `

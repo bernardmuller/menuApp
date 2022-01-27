@@ -208,7 +208,7 @@ export const Login = () => {
           <Version>
             <Text
               fontSize={FontSizes.Small}
-              color={colors.lightGrey}
+              color={colors.grey_light}
             >
               {appVersion}
             </Text>

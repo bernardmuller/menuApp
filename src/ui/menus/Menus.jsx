@@ -43,7 +43,7 @@ export const Menus = () => {
 const LeftWrapper = styled.div`
     height: 100%;
     width: 30%;
-    background-color: ${colors.tertiary};
+    background-color: ${colors.white};
 `
 const RightWrapper = styled.div`
     height: 100%;

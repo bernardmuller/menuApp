@@ -217,7 +217,7 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
     padding: 1.2rem;
-    background-color: ${colors.tertiary};
+    background-color: ${colors.white};
     /* overflow-y: scroll; */
 `
 
@@ -228,7 +228,7 @@ const AddMeal = styled.button`
     border: 3px dashed ${colors.secondary};
     border-radius: 1rem;
     background: none;
-    color:${colors.dark.grey};
+    color:${colors.grey_dark};
     font-size: ${FontSizes.Small};
     font-weight: bold;
     display: flex;
@@ -246,7 +246,7 @@ const AddMeal = styled.button`
 const LeftWrapper = styled.div`
     height: 100%;
     width: 30%;
-    background-color: ${colors.tertiary};
+    background-color: ${colors.white};
 `
 const RightWrapper = styled.div`
     height: 100%;

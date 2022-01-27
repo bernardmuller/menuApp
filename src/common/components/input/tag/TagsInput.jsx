@@ -31,7 +31,7 @@ const TagInput = styled.div`
   height: ${props => props.height || "3.5rem"};
   border-radius: 0.6rem;
   padding: 0.3rem 1rem ;
-  border: 1px solid ${colors.lightGrey};
+  border: 1px solid ${colors.grey_light};
   margin: ${props => props.margin || ""};
   position: relative;
 

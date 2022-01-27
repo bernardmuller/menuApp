@@ -14,7 +14,7 @@ const DropdownMenu = styled.select`
     width: ${props => props.width || "100%"};
     height: ${props => props.height || "4rem"};
     border-radius: 10px;
-    border: 1px solid ${colors.lightGrey};
+    border: 1px solid ${colors.grey_light};
     padding-left: 0.7rem;
     padding-right: 1rem;
     font-size: ${props => props.fontSize};

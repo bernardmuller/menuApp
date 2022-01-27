@@ -31,7 +31,7 @@ const NavIcon = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: ${props => props.active? colors.tertiary : colors.secondary};
+    background-color: ${props => props.active? colors.white : colors.secondary};
     border-radius: 1rem 0 0 1rem ;
 
     span {        

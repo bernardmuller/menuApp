@@ -11,7 +11,7 @@ import {
 export const Input = styled.input`
     width: ${props => props.width || "100%"};
     height: ${props => props.height || "3rem"};
-    border: ${props => props.error ? `1px solid red` : `1px solid ${colors.lightGrey}`};
+    border: ${props => props.error ? `1px solid red` : `1px solid ${colors.grey_light}`};
     border-radius: 6px;
     font-size: ${FontSizes.Small};
     padding: ${props => props.padding || "0 0 0 1rem"};
