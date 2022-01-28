@@ -130,7 +130,6 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 1.5rem 1rem;
 `
 
 const StatsContainer = styled.div`

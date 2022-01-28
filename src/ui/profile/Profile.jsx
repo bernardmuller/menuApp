@@ -46,9 +46,13 @@ export const Profile = () => {
 
 
 const LeftWrapper = styled.div`
-    height: 100%;
+    
     width: 30%;
     background-color: ${colors.white};
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
 `
 const RightWrapper = styled.div`
     height: 100%;

@@ -15,6 +15,7 @@ export const colors = {
     grey_dark: "#9E9F9E",
     black: "#000000",
     white: "#FFFFFF",
+    white_dark: '#e3e3e3',
     danger: "#CF5A30",
     success: "#84C971",
     transparent: "rgba(255, 255, 255, 0)",
