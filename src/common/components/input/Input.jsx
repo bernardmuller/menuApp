@@ -23,6 +23,19 @@ export const Input = styled.input`
         margin: 0;
     }
 
+    &:focus {
+        outline: 2px solid ${colors.primary};
+    }
+`
+
+export const TextArea = styled.textarea`
+    width: 100%;
+    border-radius: ${props => props.borderRadius || "8px"};
+    padding: ${props => props.padding || "0.5rem 1rem"};
+    font-size: ${props => props.fontSize || FontSizes.Small};
+    &:focus {
+        outline: 2px solid ${colors.primary};
+    }
 `
 
 const TextContainer = styled.div`

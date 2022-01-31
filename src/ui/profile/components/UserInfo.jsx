@@ -17,7 +17,8 @@ import {
     PrivateContainer,
     colors,
     Images,
-    FontSizes
+    FontSizes,
+    DeviceMediaQueries
 } from 'common';
 
 import {
@@ -130,6 +131,10 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+    /* @media ${DeviceMediaQueries.laptop} {
+        flex-direction: row;
+    } */
 `
 
 const StatsContainer = styled.div`

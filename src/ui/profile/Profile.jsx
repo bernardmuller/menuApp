@@ -11,7 +11,8 @@ import {
 
 import { 
     PrivateContainer,
-    colors
+    colors,
+    DeviceMediaQueries
 } from 'common';
 
 import {
@@ -30,20 +31,31 @@ export const Profile = () => {
 
     return (
         <PrivateContainer>
+            <Container>
 
-            <LeftWrapper>
-                <UserInfo />
+                <LeftWrapper>
+                    <UserInfo />
+                    <Favourites />
+                </LeftWrapper>
 
-                <Favourites />
-            </LeftWrapper>
+                <RightWrapper>
+                    <EditProfile />
+                </RightWrapper>
 
-            <RightWrapper>
-                
-            </RightWrapper>
+            </Container>
         </PrivateContainer>
     )
 };
 
+const Container = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    @media ${DeviceMediaQueries.laptop} {
+        flex-direction: column;
+    }
+`
 
 const LeftWrapper = styled.div`
     
@@ -53,9 +65,14 @@ const LeftWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 3rem;
+
+    @media ${DeviceMediaQueries.laptop} {
+        width: 100%;
+    }
 `
 const RightWrapper = styled.div`
-    height: 100%;
     width: auto;
+    padding: 1.5rem 5%; 
+    flex-grow: 1;
 `
 

@@ -166,32 +166,20 @@ export const Meals = () => {
                 }
                 </LeftWrapper>
                 <RightWrapper>
-
-                    {!loading ? (
-                        <>
-                            {viewMeal && 
-                                <MealDetail 
-                                    mealId={mealId}
-                                    onClose={() => setViewMeal(false)}
-                                />
-                            }
-        
-                            {createMeal && 
-                                <CreateMeal 
-                                    onClose={() => setCreateMeal(false)}
-                                />
-                            }
-                        </>
-                    ) : (
-                        <Loader 
-                            spinnerColor={colors.white}
-                            color={colors.white}
-                            size="35px"
-                            label="Loading..."
+                      
+                    {viewMeal && 
+                        <MealDetail 
+                            mealId={mealId}
+                            onClose={() => setViewMeal(false)}
                         />
-                    )}
+                    }
 
-                    
+                    {createMeal && 
+                        <CreateMeal 
+                            onClose={() => setCreateMeal(false)}
+                        />
+                    }
+                        
                 </RightWrapper>
                 
 

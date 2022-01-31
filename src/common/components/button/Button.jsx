@@ -23,6 +23,7 @@ const ButtonBase = styled.button`
     margin: ${props => props.margin || ''};
     box-shadow: rgba(104, 191, 80, 0.50) 0px 5px 15px;
     align-self: ${props => props.alignSelf || "" };
+    justify-self: ${props => props.justifySelf || "" };
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 

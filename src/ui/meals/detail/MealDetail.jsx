@@ -10,7 +10,8 @@ import {
 } from 'common/components';
 
 import {
-    FontSizes
+    FontSizes,
+    colors
 } from 'common';
 
 import { 
@@ -76,17 +77,12 @@ export const MealDetail = props => {
 
                 ) : (
 
-                    <div
-                        style={{ display: 'flex', alignItems: 'center'}}
-                    >
-                        <Loader />
-                        <Text
-                            color="white"
-                            fontSize={FontSizes.Smaller}
-                        >
-                            Loading...
-                        </Text>
-                    </div>
+                <Loader 
+                    spinnerColor={colors.white}
+                    size="35px"
+                    label="Loading..."
+                    color={colors.white}
+                  />
             )}
         </Container>
     )
