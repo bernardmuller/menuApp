@@ -19,10 +19,9 @@ const Header = styled.div`
     width: 100%;
 `
 
-const Section1 = styled.div`
+const Heading = styled.div`
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    padding: 0 0 1rem 0;
 
     input {
         height: 3rem;
@@ -30,18 +29,20 @@ const Section1 = styled.div`
     }
 `
 
-const Section2 = styled.div`
+const Sort = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    border-top: 1px solid ${colors.grey};
-    padding-top: 1rem;
+    justify-content: flex-end;
+    border-bottom: 1px solid ${colors.grey};
     padding-bottom: 1rem;
+    gap: 0.5rem;
+    align-items: center;
 
     select {
-        height: 3rem;
+        height: 2rem;
         width: 6rem;
-        padding: 5px
+        padding: 5px;
+        border-radius: 4px;
     }
 `
 
@@ -61,67 +62,50 @@ export const MealsCollectionHeading = (props) => {
     return (
         <Header>
 
-            <Section1>
+            <Heading>
                 <div>
                     <H2
                         color={colors.secondary}
                         margin="0 0 0.5rem 0"
+                        fontSize={FontSizes.Big}
                     >
                         Meals Collection
                     </H2>
-                    <Text
-                        color={colors.secondary}
-                        margin="0 0 3rem 0"
-                        fontFamily='Roboto'
-                    >
-                        Tuesday, 3 Feb 2021 - Sunday, 7 Feb 2021
-                    </Text>
                     
                 </div>
 
                 {/* Turn into component */}
                 <Searchbar
                     onSearch={handleSearch}
+                    placeholder="Search Meal"
                 />
 
-            </Section1>
+            </Heading>
 
-            <Section2>
+            <Sort>
 
-                <H3
-                    color={colors.secondary}
-                    fontSize={FontSizes.Regular}
-                    margin="0 0 0.5rem 0"
+                <Text
+                    fontSize={FontSizes.Small}
+                >Sort:</Text>
+                
+                <select 
+                    name="grid-list" id="" 
+                    style={{width: "120px"}}
+                    onChange={handleFilter}
                 >
-                    Total meals: {props.count}
-                </H3>
+                    <option value="All">All</option>
+                    <option value="Winter">Winter</option>
+                    <option value="Spring">Spring</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Autumn">Autumn</option>
+                </select>
 
-
-
-                <div>
-
-                    {/* Change to Component */}
-                    <select 
-                        name="grid-list" id="" 
-                        style={{width: "120px"}}
-                        onChange={handleFilter}
-                    >
-                        <option value="All">All</option>
-                        <option value="Winter">Winter</option>
-                        <option value="Spring">Spring</option>
-                        <option value="Summer">Summer</option>
-                        <option value="Autumn">Autumn</option>
-                    </select>
-
-                    {/* Change to Component */}
-                    <select name="grid-list" id="">
-                        <option value="">Grid</option>
-                        <option value="">List</option>
-                    </select>
-
-                </div>
-
-            </Section2>
+                <select name="grid-list" id="">
+                    <option value="">Grid</option>
+                    <option value="">List</option>
+                </select>
+                
+            </Sort>
 
         </Header>
     )

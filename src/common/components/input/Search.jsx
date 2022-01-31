@@ -9,16 +9,33 @@ import {
     colors
 } from 'common';
 
+import { IoSearchSharp } from "react-icons/io5";
+
+
 const SearchInput = styled.input`
     border: none;
-    border-radius: 0.5rem;
-    background-color: ${colors.grey_light};
+    background: none;
     color: ${colors.secondary};
+    width: 100%;
 
+    &:focus {
+        outline: none;
+    }
+`
+
+const Container = styled.div`
+    width: 100%;
+    height: 3rem;
+    border: ${props => props.focus ? `1px solid ${colors.secondary}` : `1px solid ${colors.grey_light}`};
+    padding: 0 0 0 0.7rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
 `
 
 export const Searchbar = props => {
-    const [searchText, setSearchText] = useState("")
+    const [searchText, setSearchText] = useState("");
+    const [focus, setFocus] = useState(false);
 
     const handleChange = (e) => {
         setSearchText(e.target.value)
@@ -29,11 +46,23 @@ export const Searchbar = props => {
     }, [searchText])
 
     return (
-        <SearchInput
-            type="text"
-            placeholder="Search"
-            onChange={handleChange}
-        />
+        <Container
+            focus={focus}
+        >
+
+            <IoSearchSharp 
+                size={25}
+            />
+
+            <SearchInput
+                type="text"
+                placeholder={props.placeholder|| "Search"}
+                onChange={handleChange}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
+            />
+
+        </Container>
     )
 };
 

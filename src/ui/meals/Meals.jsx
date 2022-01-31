@@ -208,7 +208,7 @@ const MealsContainer = styled.div`
     width: 100%;
     flex-wrap: wrap;
     overflow-y: scroll;
-    padding: 0 0 0 1.5rem;
+    padding: 1rem 0 0 0;
 `
 const Container = styled.div`
     display: Flex;
@@ -252,4 +252,5 @@ const RightWrapper = styled.div`
     height: 100%;
     width: calc(100% - 30%);
     padding: 1.5rem;
+    overflow-y:scroll;
 `

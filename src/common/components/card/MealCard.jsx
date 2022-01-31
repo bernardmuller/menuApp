@@ -22,7 +22,6 @@ const Container = styled.div`
     position: relative;
     margin: 0 0 1rem 0;
     justify-self: center;
-    
 
     &:hover {
         cursor: pointer;
@@ -37,15 +36,16 @@ const Background = styled.div`
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    background-color: #1B221A;
+    background-color: ${colors.secondary};
     position: relative;
     bottom: 0; 
     padding: 1.5rem;
     transition: box-shadow 0.4 ease-in-out;
+    border: 1px solid ${colors.tertiary_light};
 
     &:hover {
         cursor: pointer;
-        transform: translateY(-0.05rem);
+        background-color: ${colors.secondary_light};
         box-shadow: ${props => props.hover ? "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px" : ""};
     }
 `
@@ -104,13 +104,6 @@ export const MealCard = props => {
 
                 >
                     {props.season}
-                </Text>
-
-                <Text
-                    color="#ABBBC2"
-                    fontSize={FontSizes.Smaller}
-                >
-                    {`Times eaten: 1`}
                 </Text>
 
             </Background>
