@@ -74,5 +74,6 @@ const RightWrapper = styled.div`
     width: auto;
     padding: 1.5rem 5%; 
     flex-grow: 1;
+    background-color: ${colors.secondary};
 `
 

@@ -69,7 +69,7 @@ export const MealsCollectionHeading = (props) => {
                         margin="0 0 0.5rem 0"
                         fontSize={FontSizes.Big}
                     >
-                        Meals Collection
+                        {props.heading || "heading"}
                     </H2>
                     
                 </div>
@@ -77,35 +77,37 @@ export const MealsCollectionHeading = (props) => {
                 {/* Turn into component */}
                 <Searchbar
                     onSearch={handleSearch}
-                    placeholder="Search Meal"
+                    placeholder={props.searchPlaceholder || "Search"}
                 />
 
             </Heading>
 
-            <Sort>
+            {props.sort &&
+                <Sort>
 
-                <Text
-                    fontSize={FontSizes.Small}
-                >Sort:</Text>
-                
-                <select 
-                    name="grid-list" id="" 
-                    style={{width: "120px"}}
-                    onChange={handleFilter}
-                >
-                    <option value="All">All</option>
-                    <option value="Winter">Winter</option>
-                    <option value="Spring">Spring</option>
-                    <option value="Summer">Summer</option>
-                    <option value="Autumn">Autumn</option>
-                </select>
+                    <Text
+                        fontSize={FontSizes.Small}
+                    >Sort:</Text>
+                    
+                    <select 
+                        name="grid-list" id="" 
+                        style={{width: "120px"}}
+                        onChange={handleFilter}
+                    >
+                        <option value="All">All</option>
+                        <option value="Winter">Winter</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Autumn">Autumn</option>
+                    </select>
 
-                <select name="grid-list" id="">
-                    <option value="">Grid</option>
-                    <option value="">List</option>
-                </select>
-                
-            </Sort>
+                    <select name="grid-list" id="">
+                        <option value="">Grid</option>
+                        <option value="">List</option>
+                    </select>
+                    
+                </Sort>
+            }
 
         </Header>
     )

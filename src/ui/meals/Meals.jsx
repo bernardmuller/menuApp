@@ -106,6 +106,9 @@ export const Meals = () => {
                                 onSearch={(text) => {setSearchText(text)}}
                                 onFilter={(filter) => {setFilterText(filter)}}
                                 // count={meals.length}
+                                heading="Meals"
+                                searchPlaceholder="Search Meals"
+                                sort
                             />
 
                             <MealsContainer>
