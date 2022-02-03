@@ -36,12 +36,12 @@ const Background = styled.div`
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    background-color: ${colors.secondary};
+    background-color: ${props => props.secondary ? colors.secondary_light : colors.secondary};
     position: relative;
     bottom: 0; 
     padding: 1.5rem;
     transition: box-shadow 0.4 ease-in-out;
-    border: 1px solid ${colors.tertiary_light};
+    /* border: 1px solid ${colors.tertiary_light}; */
 
     &:hover {
         cursor: pointer;
@@ -87,6 +87,7 @@ export const MealCard = props => {
 
             <Background
                 hover={hover}
+                secondary={props.secondary}
             >
 
                 <H4

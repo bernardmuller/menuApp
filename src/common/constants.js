@@ -1,4 +1,4 @@
-export const appVersion = "v0.1.9"
+export const appVersion = "v0.1.10"
 
 export const colors = {
     primary: "#68BF50",    

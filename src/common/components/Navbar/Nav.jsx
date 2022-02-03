@@ -156,12 +156,12 @@ export const Nav = () => {
             active={profileActive}
         />
 
-        <NavOption 
+        {/* <NavOption 
             title={Routes.settings.title}
             Icon={Routes.settings.icon} 
             path={Routes.settings.path}
             active={settingsActive}
-        />
+        /> */}
 
       </NavOptions>
 

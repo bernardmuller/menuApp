@@ -14,11 +14,12 @@ import {
 import { 
     IoChevronDownOutline,
     IoChevronUpOutline,
-    IoEllipsisVerticalSharp
+    IoEllipsisVerticalSharp,
+    IoCheckboxOutline,
+    IoCheckbox
  } from "react-icons/io5";
 
-export const MenuGroup = props => {
-    const menus = [{"name":"Menu 1"}, {"name":"Menu 2"}, {"name":"Menu 3"}, {"name":"Menu 4"}];
+export const IngredientsList = props => {
     const [expand, setExpand] = useState(false);
     return (
         <Container>
@@ -29,26 +30,30 @@ export const MenuGroup = props => {
             >
                 <Text
                     fontSize={FontSizes.Small}
-                    fontWeight="bold"
-                    fontFamily="Arial"
+                    color={colors.grey_light}
                 >
-                    Group name
+                    {props.name}
                 </Text>
                 {expand ? (
                     <IoChevronUpOutline 
                         size={24}
+                        style={{ color: colors.grey_light}}
                     />
                 ) : (
                     <IoChevronDownOutline 
                         size={24}
+                        style={{ color: colors.grey_light}}
                     />
                 )}
                 
             </ButtonContainer>
             {expand &&
                 <ItemsContainer>
-                    {menus.map((item, index) => (
-                        <GroupItem />
+                    {props.data.map((item, index) => (
+                        <GroupItem
+                            key={index}
+                            data={item}
+                        />
                     ))}
                 </ItemsContainer>
             }
@@ -59,23 +64,42 @@ export const MenuGroup = props => {
 const GroupItem = props => {
     const [hover, setHover] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [checked, setChecked] = useState(false)
     return (
         <Item
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onClick={() => {}}
-        >
-            <Text
-                fontSize={FontSizes.Small}
-            >
-                Menu name
-            </Text>
+        >   
+            <div>
+                {checked ? (
+                    <IoCheckbox 
+                        color={colors.primary}
+                        onClick={() => setChecked(prev => !prev)}
+                        size={22}
+                    />
+                ) : (
+                    <IoCheckboxOutline 
+                        color={colors.grey_light}
+                        onClick={() => setChecked(prev => !prev)}
+                        size={22}
+                    />
+                )}
+                <Text
+                    fontSize={FontSizes.Small}
+                    color={colors.grey_dark}
+                    margin="0 0 0 0.5rem"
+                >
+                    {props.data.name}
+                </Text>
+            </div>
             {hover &&
                 <UtilButton
                     onClick={() => setShowMenu(prev => !prev)}
                 >
                     <IoEllipsisVerticalSharp 
                         size={22}
+                        color={colors.white}
                     />
                     {showMenu &&
                         <OptionsMenu 
@@ -127,8 +151,8 @@ const ButtonContainer = styled.button`
     outline: none;
     background: none;
     border: none;
-    border-bottom: 1px solid ${colors.grey}; 
-    border-top: 1px solid ${colors.grey}; 
+    border-bottom: 1px solid ${colors.grey_dark}; 
+    border-top: 1px solid ${colors.grey_dark}; 
 `
 
 const ItemsContainer = styled.div`
@@ -139,16 +163,16 @@ const ItemsContainer = styled.div`
 const Item = styled.button`
     outline: none;
     border: none;
-    background: ${colors.white};
+    background: none;
     width: 100%;
-    height: 2rem;
+    height: 2.5rem;
     padding: 0.3rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     &:hover {
-        background-color: ${colors.white_dark};
+        background-color: ${colors.secondary_dark};
     }
 `
 

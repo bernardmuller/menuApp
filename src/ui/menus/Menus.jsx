@@ -12,15 +12,24 @@ import {
 
 import { 
     PrivateContainer,
-    colors
+    colors,
+    FontSizes
 } from 'common';
 
 import { 
     MealsCollectionHeading,
-    Button 
+    Button,
+    H2,
+    H4,
+    Text
 } from 'common/components';
 
 import { MenuGroup } from './components';
+import { MealCard } from 'common/components/card/MealCard';
+
+import mealimg from 'assets/images/meal.png';
+import { GroceryList } from './components/GroceryList';
+
 
 export const Menus = () => {  
 
@@ -30,7 +39,8 @@ export const Menus = () => {
         activeContext.dispatch({ type: "MENUS" });
     }, [])
 
-    const menuGroups = ["1", "2", "3"]
+    const menuGroups = ["1", "2", "3"];
+    const meals = ["1", "2", "3", "1", "2", "3"];
 
     return (
         <PrivateContainer>
@@ -62,9 +72,47 @@ export const Menus = () => {
 
             </LeftWrapper>
             <RightWrapper>
-                <h1
-                    style={{color: "white"}}
-                >Menus Right</h1>
+
+                <H2
+                    color={colors.white}
+                    fontSize={FontSizes.Big}
+                    margin="0"
+                >
+                    Menu Name
+                </H2>
+
+                <Text
+                    color={colors.grey_dark}
+                >
+                    Menu period / Date
+                </Text>
+
+                <H4
+                    color={colors.grey_dark}
+                    fontSize={FontSizes.Regular}
+                    margin="0"
+                >
+                    created by
+                </H4>
+
+                <WeekContainer>
+                    {meals.map((meal, index) => (
+                        <MealCard 
+                            img={meal.image || mealimg} 
+                            name={"Meal name"}
+                            season={"Season"}
+                            count={2}
+                            key={index}
+                            secondary
+                            onClick={() => {
+                                
+                            }}
+                        />
+                    ))}
+                </WeekContainer>
+
+                <GroceryList />
+
             </RightWrapper>
         </PrivateContainer>
     )
@@ -82,6 +130,8 @@ const LeftWrapper = styled.div`
 const RightWrapper = styled.div`
     height: 100%;
     width: auto;
+    flex-grow: 1;
+    padding: 2rem 4rem;
 `
 
 const Container = styled.div`
@@ -93,4 +143,13 @@ const Container = styled.div`
     overflow-y: scroll;
     position: relative;
     height: 100%;
+`
+
+const WeekContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
 `
