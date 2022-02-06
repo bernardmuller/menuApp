@@ -53,18 +53,21 @@ const Secondary = styled(ButtonBase)`
     align-items: center;  
     width: ${(props) => props.width};
     height: ${(props) => props.height};     
-    border-radius: 3rem;
     border: none;
     font-size: ${props => props.fontSize};
+    box-shadow: none;
 
-    color: ${props => props.disabled ? `${colors.white}` : `${colors.black}` };
+
+    color: ${props => props.disabled ? `${colors.white}` : `${colors.secondary}` };
     border: ${props => props.disabled ? `${colors.black}` : `${colors.white}`};
     background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white}`};
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
-        color: ${props => props.disabled ? "black" : "#fff" };
-        background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white}`};
+        color: ${props => props.disabled ? `${colors.black}` : `${colors.secondary}` };
+        background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white_dark}`};
+        box-shadow: #ffffff7f 0px 5px 15px;
+
     }
 
 `;

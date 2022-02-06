@@ -88,7 +88,7 @@ export const Meals = () => {
 
     }
 
-    // console.log(mealId)
+    console.log(meals)
     
     return (
 
@@ -113,7 +113,7 @@ export const Meals = () => {
 
                             <MealsContainer>
 
-                                {meals.map((meal, index) => (
+                                {meals && meals.map((meal, index) => (
                                         <MealCard 
                                             img={meal.image || mealimg} 
                                             name={meal.name}

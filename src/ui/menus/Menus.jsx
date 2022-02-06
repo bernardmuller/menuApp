@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { 
     useContext, 
-    useEffect 
+    useEffect,
+    useState
 } from 'react';
 
 import styled from 'styled-components';
@@ -24,14 +25,78 @@ import {
     Text
 } from 'common/components';
 
-import { MenuGroup } from './components';
 import { MealCard } from 'common/components/card/MealCard';
 
 import mealimg from 'assets/images/meal.png';
-import { GroceryList } from './components/GroceryList';
+import { 
+    MenuGroup,
+    GroceryList,
+    AddMealsTab
+} from './components';
+
+
+const MenusTab = props => {
+    const meals = props.meals;
+    return (
+            <>
+                <H2
+                    color={colors.white}
+                    fontSize={FontSizes.Big}
+                    margin="0"
+                >
+                    Menu Name
+                </H2>
+
+                <Text
+                    color={colors.grey_dark}
+                >
+                    Menu period / Date
+                </Text>
+
+                <H4
+                    color={colors.grey_dark}
+                    fontSize={FontSizes.Regular}
+                    margin="0"
+                >
+                    created by
+                </H4>
+
+                <WeekContainer>
+                    {meals.map((meal, index) => (
+                        <MealCard 
+                            img={meal.image || mealimg} 
+                            name={"Meal name"}
+                            season={"Season"}
+                            count={2}
+                            key={index}
+                            secondary
+                            onClick={() => {
+                                
+                            }}
+                        />
+                    ))}
+
+                    <AddMeal
+                        onClick={() => props.onAddMeals()}
+                    >
+                        <Text
+                            fontSize={FontSizes.Bigger}
+                        >+</Text>
+                        Add Meal
+                    </AddMeal>
+                    
+                </WeekContainer>
+
+                <GroceryList />
+            </>
+                
+    )
+}
 
 
 export const Menus = () => {  
+    const [showMenusTab, setShowMenusTab] = useState(true);
+    const [showAddMealsTab, setShowAddMealsTab] = useState(false);
 
     const activeContext = useContext(ActiveViewContext);
     
@@ -73,45 +138,28 @@ export const Menus = () => {
             </LeftWrapper>
             <RightWrapper>
 
-                <H2
-                    color={colors.white}
-                    fontSize={FontSizes.Big}
-                    margin="0"
-                >
-                    Menu Name
-                </H2>
+                {showAddMealsTab &&
 
-                <Text
-                    color={colors.grey_dark}
-                >
-                    Menu period / Date
-                </Text>
+                    <AddMealsTab 
+                        onCancel={() => {
+                            setShowMenusTab(true);
+                            setShowAddMealsTab(false);
+                        }}
+                    />
 
-                <H4
-                    color={colors.grey_dark}
-                    fontSize={FontSizes.Regular}
-                    margin="0"
-                >
-                    created by
-                </H4>
+                }
 
-                <WeekContainer>
-                    {meals.map((meal, index) => (
-                        <MealCard 
-                            img={meal.image || mealimg} 
-                            name={"Meal name"}
-                            season={"Season"}
-                            count={2}
-                            key={index}
-                            secondary
-                            onClick={() => {
-                                
-                            }}
-                        />
-                    ))}
-                </WeekContainer>
+                {showMenusTab &&
+                    <MenusTab 
+                        meals={meals}
+                        onAddMeals={() => {
+                            setShowMenusTab(false);
+                            setShowAddMealsTab(true);
+                        }}
+                    />
+                }
 
-                <GroceryList />
+                
 
             </RightWrapper>
         </PrivateContainer>
@@ -121,6 +169,7 @@ export const Menus = () => {
 const LeftWrapper = styled.div`
     height: 100%;
     width: 30%;
+    min-width: 30%;
     background-color: ${colors.white};
     display: flex;
     flex-direction: column;
@@ -132,6 +181,7 @@ const RightWrapper = styled.div`
     width: auto;
     flex-grow: 1;
     padding: 2rem 4rem;
+    overflow-y: scroll;
 `
 
 const Container = styled.div`
@@ -147,9 +197,28 @@ const Container = styled.div`
 
 const WeekContainer = styled.div`
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
-    flex-wrap: wrap;
     margin-top: 2rem;
+
+`
+const AddMeal = styled.button`
+    width: 150px;
+    height: 200px;
+    padding: 1rem 1rem 2.5rem 1rem;
+    border: 2px dashed ${colors.grey_dark};
+    border-radius: 1rem;
+    background: none;
+    color:${colors.grey_dark};
+    font-size: ${FontSizes.Small};
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        cursor: pointer;
+    }
 `
