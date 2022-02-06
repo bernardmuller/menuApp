@@ -22,7 +22,11 @@ import {
     Button,
     H2,
     H4,
-    Text
+    Text,
+    Input,
+    SaveButton, 
+    EditButton,
+    CancelButton
 } from 'common/components';
 
 import { MealCard } from 'common/components/card/MealCard';
@@ -34,24 +38,110 @@ import {
     AddMealsTab
 } from './components';
 
+const Name = props => {
+    const [edit, setEdit] = useState(false);
+    const [hover, setHover] = useState(false);
+    return (
+        <Wrapper
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+        >
+            {!edit ? (
+                <>
+                    <H2
+                        color={colors.white}
+                        fontSize={FontSizes.Big}
+                        margin="0"
+                    >
+                        Menu Name
+                    </H2>
+                    {hover && !edit && 
+                        <EditButton 
+                            onClick={() => setEdit(true)}
+                        />
+                    }
+                </>
+            ) : (
+                <NameForm>
+                    <Input 
+                        placeholder="Menu name"
+                        height="2.5rem"
+                    />
+                    <SaveButton 
+                        onClick={() => {}}
+                    />
+                    <CancelButton 
+                        onClick={() => setEdit(false)}
+                    />
+                </NameForm>
+            )}
+            
+        </Wrapper>
+    )
+}
+
+const Period = props => {
+    const [edit, setEdit] = useState(false);
+    const [hover, setHover] = useState(false);
+    return (
+        <Wrapper
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            height="2rem"
+        >
+            {!edit ? (
+                <>
+                    <Text
+                        color={colors.grey_dark}
+                    >
+                        Menu period / Date
+                    </Text>
+
+                    {hover && !edit && 
+                        <EditButton 
+                            onClick={() => setEdit(true)}
+                        />
+                    }
+                </>
+            ) : (
+                <NameForm>
+                    <Input  
+                        type="date"
+                        height="2.5rem"
+                    />
+                    <Text
+                        color={colors.grey_light}
+                        margin="0 0.5rem 0 0.5rem"
+                    >
+                        to
+                    </Text>
+                    <Input  
+                        type="date"
+                        height="2.5rem"
+                    />
+                    <SaveButton 
+                        onClick={() => {}}
+                    />
+                    <CancelButton 
+                        onClick={() => setEdit(false)}
+                    />
+                </NameForm>
+            )}
+            
+        </Wrapper>
+    )
+}
+
 
 const MenusTab = props => {
     const meals = props.meals;
+    
     return (
-            <>
-                <H2
-                    color={colors.white}
-                    fontSize={FontSizes.Big}
-                    margin="0"
-                >
-                    Menu Name
-                </H2>
+            <>  
+                
+                <Name />
 
-                <Text
-                    color={colors.grey_dark}
-                >
-                    Menu period / Date
-                </Text>
+                <Period />
 
                 <H4
                     color={colors.grey_dark}
@@ -62,29 +152,37 @@ const MenusTab = props => {
                 </H4>
 
                 <WeekContainer>
-                    {meals.map((meal, index) => (
-                        <MealCard 
-                            img={meal.image || mealimg} 
-                            name={"Meal name"}
-                            season={"Season"}
-                            count={2}
-                            key={index}
-                            secondary
-                            onClick={() => {
-                                
-                            }}
-                        />
-                    ))}
-
-                    <AddMeal
-                        onClick={() => props.onAddMeals()}
-                    >
+                    <Header>
                         <Text
-                            fontSize={FontSizes.Bigger}
-                        >+</Text>
-                        Add Meal
-                    </AddMeal>
-                    
+                            fontSize={FontSizes.Big}
+                            color={colors.grey_light}
+                        >
+                            Meals
+                        </Text>
+                        <Button
+                            primary
+                            onClick={() => props.onEditMeals()}
+                            width="120px"
+                        >
+                            Edit
+                        </Button>
+                    </Header>
+
+                    <MealsContainer>
+                        {meals.map((meal, index) => (
+                            <MealCard 
+                                img={meal.image || mealimg} 
+                                name={"Meal name"}
+                                season={"Season"}
+                                count={2}
+                                key={index}
+                                secondary
+                                onClick={() => {
+                                    
+                                }}
+                            />
+                        ))}
+                    </MealsContainer>
                 </WeekContainer>
 
                 <GroceryList />
@@ -152,7 +250,7 @@ export const Menus = () => {
                 {showMenusTab &&
                     <MenusTab 
                         meals={meals}
-                        onAddMeals={() => {
+                        onEditMeals={() => {
                             setShowMenusTab(false);
                             setShowAddMealsTab(true);
                         }}
@@ -165,6 +263,17 @@ export const Menus = () => {
         </PrivateContainer>
     )
 };
+
+const Wrapper = styled.div`
+    display: flex;
+    align-items: center;
+    height: ${props => props.height || "3rem"};
+`
+
+const NameForm = styled.form`
+    display: flex;
+    align-items: center;
+`
 
 const LeftWrapper = styled.div`
     height: 100%;
@@ -197,28 +306,25 @@ const Container = styled.div`
 
 const WeekContainer = styled.div`
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
-
-`
-const AddMeal = styled.button`
-    width: 150px;
-    height: 200px;
-    padding: 1rem 1rem 2.5rem 1rem;
-    border: 2px dashed ${colors.grey_dark};
-    border-radius: 1rem;
-    background: none;
-    color:${colors.grey_dark};
-    font-size: ${FontSizes.Small};
-    font-weight: bold;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-top: 2rem;
+    background-color: ${colors.secondary_light};
+    padding: 1rem;
+    border-radius: 8px;
+`
 
-    &:hover {
-        cursor: pointer;
-    }
+const MealsContainer = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+`
+
+const Header = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
 `

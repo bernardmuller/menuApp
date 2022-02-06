@@ -94,7 +94,6 @@ export const Meals = () => {
 
         <PrivateContainer>
 
-            {/* <ContentContainer> */}
                 <LeftWrapper>
                 {
                     
@@ -186,11 +185,12 @@ export const Meals = () => {
                 </RightWrapper>
                 
 
-            {/* </ContentContainer> */}
         </PrivateContainer>
 
     )
 };
+
+
 
 const MealsContainer = styled.div`
     display: grid;
@@ -210,28 +210,6 @@ const Container = styled.div`
     padding: 1.2rem;
     background-color: ${colors.white};
     /* overflow-y: scroll; */
-`
-
-const AddMeal = styled.button`
-    width: 150px;
-    height: 200px;
-    padding: 1rem 1rem 2.5rem 1rem;
-    border: 3px dashed ${colors.secondary};
-    border-radius: 1rem;
-    background: none;
-    color:${colors.grey_dark};
-    font-size: ${FontSizes.Small};
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-        transform: translateY(-0.05rem);
-        box-shadow:  rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset;
-        cursor: pointer;
-    }
 `
 
 const LeftWrapper = styled.div`

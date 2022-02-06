@@ -16,7 +16,7 @@ export const CancelButton = props => {
         >
             <IoClose 
                 size={28} 
-                color={colors.grey_light}
+                color={props.color || colors.grey_light}
             />
         </Button>
     )
@@ -31,6 +31,7 @@ const Button = styled.button`
     border: none;
     background: none;
     margin: ${props => props.margin || ""};
+    padding-top: 6px;
 
     img {
         width: 100%;

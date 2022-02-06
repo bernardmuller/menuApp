@@ -3,7 +3,11 @@ import styled from 'styled-components';
 
 import {
     Text,
-    Button
+    Button,
+    Input,
+    SaveButton, 
+    EditButton,
+    CancelButton
 } from 'common/components';
 
 import {
@@ -18,6 +22,8 @@ import {
     IoCheckboxOutline,
     IoCheckbox
  } from "react-icons/io5";
+
+import {useForm} from 'react-hook-form';
 
 export const IngredientsList = props => {
     const [expand, setExpand] = useState(false);
@@ -55,6 +61,7 @@ export const IngredientsList = props => {
                             data={item}
                         />
                     ))}
+                    <AddItem />
                 </ItemsContainer>
             }
         </Container>
@@ -64,7 +71,7 @@ export const IngredientsList = props => {
 const GroupItem = props => {
     const [hover, setHover] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
         <Item
             onMouseEnter={() => setHover(true)}
@@ -135,7 +142,74 @@ const OptionsMenu = props => {
             </MenuButton>
         </MenuContainer>    
     )
-}
+};
+
+const AddItem = props => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [add, setAdd] = useState(false);
+
+    const onSubmit = data => {
+        console.log(data)
+    }
+    return (
+        <Wrapper>
+            {!add ? (
+                <Button
+                    inline
+                    onClick={() => setAdd(true)}
+                >
+                    <Text
+                        fontSize={FontSizes.Small}
+                        color={colors.grey_dark}
+                    >
+                        + Add item
+                    </Text>
+                </Button>
+            ):(
+                <Form
+                    onSubmit={handleSubmit(onSubmit)}
+                >
+                    <Input 
+                        height="2rem"
+                        width="20rem"
+                        placeholder="Item Name"
+                    />
+                    <UtilityWrapper>
+                        <SaveButton 
+                            onClick={() => {}}
+                        />
+
+                        <CancelButton 
+                            onClick={() => setAdd(false)}
+                        />
+                    </UtilityWrapper>
+                </Form>
+            )}
+        </Wrapper>
+    )
+};
+
+const Wrapper = styled.div`
+    width: 100%;
+    display: flex;
+    margin: 0 0 0.5rem 0;
+
+    &:hover {
+        background-color: ${colors.secondary_dark};
+    }
+`
+
+const Form = styled.form`
+    display: flex;
+    width: 100%;
+    align-items: center;
+`   
+
+const UtilityWrapper = styled.div`
+    display: flex;
+    align-items:center;
+    margin-left: 0.5rem;
+`
 
 const Container = styled.div`
     width: 100%;

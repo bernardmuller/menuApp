@@ -10,19 +10,85 @@ import {
     TextArea,
     EditButton,
     SaveButton,
-    CancelButton
+    CancelButton,
+    Input,
+    Button
 } from 'common/components';
 
 import {
-    FontSizes
+    FontSizes,
+    colors
 } from 'common';
 
 import { useForm } from 'react-hook-form';
+
+const Item = props => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const [edit, setEdit] = useState(false);
+    const [hover, setHover] = useState(false);
+
+    const onSubmit = data => {
+
+    }
+
+    if(edit) {
+        return (
+            <ItemContainerForm
+                onSubmit={handleSubmit(onSubmit)}
+            >   
+                <Input 
+                    value={props.data}
+                    height="2rem"
+                />  
+                <UtilityWrapper>
+                    <SaveButton 
+                        onClick={() => {}}
+                    />
+
+                    <CancelButton 
+                        onClick={() => setEdit(false)}
+                    />
+                </UtilityWrapper>
+            </ItemContainerForm>
+        )
+    };
+
+    return (
+        <ItemContainer
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+        >   
+            <Text
+                fontSize={FontSizes.Regular}
+                color={colors.grey}
+            >
+                {props.data}
+            </Text>
+
+            {hover && !edit && 
+                <UtilityWrapper>
+                    <EditButton 
+                        onClick={() => {
+                            setEdit(true)
+                        }}
+                    />
+                    <CancelButton 
+                        color={colors.danger}
+                        onClick={() => {}}
+                    />
+                </UtilityWrapper>
+            }
+        </ItemContainer>
+    )
+};
 
 export const MealDirections = props => {
     const [edit, setEdit] = useState(false);
     const [hover, setHover] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const items = ["item", "item", "item", "item", "item"]
 
     const onSubmit = data => {
         console.log(data)
@@ -32,20 +98,24 @@ export const MealDirections = props => {
         <Container>
 
             <IngredientsContainer>
+                <Header>
+                    <H3
+                        color="white"
+                    >
+                        Ingredients
+                    </H3>
+                </Header>
 
-                <H3
-                    color="white"
-                >
-                    Ingredients
-                </H3>
+                <Items>
+                    {items.map((item, index)=> (
+                        <Item 
+                            data={item}
+                        />
+                    ))}
 
-                <ul>
-                    {/* {props.meal.ingredients.map((item)=> (
-                        <li>
-                            {item}
-                        </li>
-                    ))} */}
-                </ul>
+                    <AddItem />
+
+                </Items>
 
             </IngredientsContainer>
 
@@ -62,11 +132,12 @@ export const MealDirections = props => {
                     </H3>
 
                     {hover && !edit && 
-                        <EditButton 
-                            onClick={() => {
-                                setEdit(true)
-                            }}
-                        />
+                            <EditButton 
+                                onClick={() => {
+                                    setEdit(true)
+                                }}
+                            />
+                        
                     }
 
                     {edit && 
@@ -109,6 +180,68 @@ export const MealDirections = props => {
     )
 };
 
+const AddItem = props => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [add, setAdd] = useState(false);
+
+    const onSubmit = data => {
+        console.log(data)
+    }
+    return (
+        <Wrapper>
+            {!add ? (
+                <Button
+                    inline
+                    onClick={() => setAdd(true)}
+                >
+                    <Text
+                        fontSize={FontSizes.Small}
+                        color={colors.grey_dark}
+                    >
+                        + Add Ingredient
+                    </Text>
+                </Button>
+            ):(
+                <Form
+                    onSubmit={handleSubmit(onSubmit)}
+                >
+                    <Input 
+                        height="2rem"
+                        width="20rem"
+                        placeholder="Ingredient Name"
+                    />
+                    <UtilityWrapper>
+                        <SaveButton 
+                            onClick={() => {}}
+                        />
+
+                        <CancelButton 
+                            onClick={() => setAdd(false)}
+                        />
+                    </UtilityWrapper>
+                </Form>
+            )}
+        </Wrapper>
+    )
+};
+
+const Wrapper = styled.div`
+    width: 100%;
+    display: flex;
+    margin: 0 0 0.5rem 0;
+
+    &:hover {
+        background-color: ${colors.secondary_dark};
+    }
+`
+
+const Form = styled.form`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+` 
+
 const Container = styled.div`
     width: 100%;
     padding: 2rem 0;
@@ -117,13 +250,14 @@ const Container = styled.div`
 
 const DirectionContainer = styled.div`
     width: 100%;
-    display: grid;
+    display: flex;
+    flex-direction: column;
 `
 
 const IngredientsContainer = styled.div`
     width: 100%;
-    padding: 0 0 0 2.5rem;
     display: grid;
+    padding:0 1rem 0 0;
 `
 
 const Header = styled.div`
@@ -140,4 +274,33 @@ const UtilityWrapper = styled.div`
 
 const DirectionsForm = styled.form`
     width: 100%;
+`
+
+const Items = styled.div`
+    width: 100%;
+    
+`
+
+const ItemContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+    padding: 0 0 0 1rem;
+
+    &:hover {
+        background-color: ${colors.secondary_dark};
+    }
+`
+
+const ItemContainerForm = styled.form`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+    padding: 0 0 0 1rem;
+
+    &:hover {
+        background-color: ${colors.secondary_dark};
+    }
 `

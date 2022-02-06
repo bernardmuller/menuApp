@@ -1,18 +1,67 @@
-import React from 'react';
+import React, {
+    useState
+} from 'react';
 import styled from 'styled-components'
 
 import {
     H2,
     Button,
-    Text
+    Text,
+    SaveButton,
+    EditButton,
+    CancelButton,
+    Input
 } from 'common/components';
 
 import { 
-    FontSizes
+    FontSizes,
+    colors
 } from 'common';
 
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
+
+const Name = props => {
+    const [edit, setEdit] = useState(false);
+    const [hover, setHover] = useState(false);
+    return (
+        <Wrapper
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+        >
+            {!edit ? (
+                <>
+                    <H2
+                        color={colors.white}
+                        fontSize={FontSizes.Big}
+                        margin="0"
+                    >
+                        {props.data}
+                    </H2>
+                    {hover && !edit && 
+                        <EditButton 
+                            onClick={() => setEdit(true)}
+                        />
+                    }
+                </>
+            ) : (
+                <NameForm>
+                    <Input 
+                        placeholder="Meal name"
+                        height="2.5rem"
+                    />
+                    <SaveButton 
+                        onClick={() => {}}
+                    />
+                    <CancelButton 
+                        onClick={() => setEdit(false)}
+                    />
+                </NameForm>
+            )}
+            
+        </Wrapper>
+    )
+};
 
 export const MealInfo = props => {
     return (
@@ -22,13 +71,9 @@ export const MealInfo = props => {
 
             <InfoContainer>
                 <Header>
-                    <H2
-                        color="white"
-                        fontWeight="bold"
-                        margin="0"
-                    >
-                        {props.meal.name || "meal name"}
-                    </H2>
+                    <Name 
+                        data={props.meal.name}
+                    />
                 </Header>
 
                 <ButtonsContainer>
@@ -142,6 +187,17 @@ const MealStats = props => {
         </StatsContainer>
     )
 };
+
+const Wrapper = styled.div`
+    display: flex;
+    align-items: center;
+    height: ${props => props.height || "3rem"};
+`
+
+const NameForm = styled.form`
+    display: flex;
+    align-items: center;
+`
 
 const StatsContainer = styled.div`
     height: 6rem;
