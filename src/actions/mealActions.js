@@ -29,7 +29,7 @@ export const createMeal = async(data) => {
 };
 
 export const updateMeal = async(id, data) => {
-    const url = `http://localhost:8080/meals/${id}`;
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
   
     try { 
         const response = await Api.put(url, data);
@@ -61,7 +61,7 @@ export const getMeals = async() => {
 };
 
 export const getMeal = async(id) => {
-    const url = `http://localhost:8080/meals/${id}`;
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
     
     try {
         const response = await Api.get(url);
@@ -77,7 +77,7 @@ export const getMeal = async(id) => {
 };
 
 export const removeIngredient = async(id, ingredient_id) => {
-    const url = `http://localhost:8080/meals/${id}/remove`;
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}/remove`;
   
     try { 
         const response = await Api.post(url, {"ingredient_id": ingredient_id});
@@ -93,7 +93,7 @@ export const removeIngredient = async(id, ingredient_id) => {
 };
 
 export const addIngredient = async(id, ingredient_id) => {
-    const url = `http://localhost:8080/meals/${id}/add`;
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}/add`;
   
     try { 
         const response = await Api.post(url, {"ingredient_id": ingredient_id});
