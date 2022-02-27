@@ -11,8 +11,7 @@ export const SaveButton = props => {
     return (
         <Button
             {...props}
-            type="button"
-            onClick={() => props.onClick()}
+            type="submit"
         >
             <IoSave 
                 size={22} 

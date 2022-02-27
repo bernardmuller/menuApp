@@ -23,56 +23,51 @@ import {
     DataStore
 } from 'common/dataStore';
 
+import {
+    getMeal
+} from 'actions';
+
 export const MealDetail = props => {
     const [loading, setLoading] = useState(false);
-    const [meal, setMeal] = useState({})
+    const [meal, setMeal] = useState(null)
     const [mealId, setMealId] = useState(props.mealId);
     
-    useEffect(() => {
-        async function getMeal(url) {
-            const user = DataStore.get("LOGGED_IN_USER")
-        
-            let headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            headers.append('Accept', 'application/json');
-            headers.append('Access-Control-Allow-Origin', 'true');
-            headers.append('Authorization', `Bearer ${user.token}`);
-        
-            const response = await fetch(url, {
-              method: 'GET', 
-              mode: 'cors', 
-              credentials: 'include', 
-              headers: headers,
-              redirect: 'follow', 
-              referrerPolicy: 'no-referrer',
-            });
-            return response.json();
-        }
+    const fetchMeal = async() => {
         setLoading(true);
-        getMeal(`https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${mealId}`)
+        await getMeal(mealId)
         .then(data => setMeal(data))
-        .finally(() => {
-            setLoading(false);
-        })
         .catch(err => console.log(err))
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        
+        fetchMeal()
+        
     }, [mealId])
 
     useEffect(() => {
         setMealId(props.mealId)
     });
-
+    
     return (
         <Container>
             {!loading ? ( 
                     <>
-                        <MealInfo 
-                            meal={meal}
-                            onClose={props.onClose}
-                        />
+                        {meal && 
+                            <>
+                                <MealInfo 
+                                    meal={meal}
+                                    onClose={props.onClose}
+                                    onReload={() => props.onReload()}
+                                />
 
-                        <MealDirections 
-                            meal={meal}
-                        />
+                                <MealDirections 
+                                    meal={meal}
+                                    onReload={() => fetchMeal()}
+                                />
+                            </>
+                        }
                     </>
 
                 ) : (

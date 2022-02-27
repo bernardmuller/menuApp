@@ -44,6 +44,7 @@ export const Images = {
     },
     Icons: {
       home: `assets/svg/home.svg`,
+      food_ph: `assets/imanges/food_ph.png`,
     },
     Logo: "",
     LogoMobile: ``,

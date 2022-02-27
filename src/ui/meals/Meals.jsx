@@ -6,8 +6,9 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 
-import mealimg from 'assets/images/meal.png';
+// import mealimg from 'assets/images/meal.png';
 import meal2 from 'assets/images/pizza_bg.jpg';
+import food from 'assets/images/food_ph.png';
 
 import { 
     ActiveViewContext 
@@ -33,7 +34,12 @@ import {
     DataStore
 } from 'common/dataStore';
 
-import {CreateMeal} from './create-meal'
+import {
+    createMeal,
+    getMeals
+} from 'actions';
+
+// import {CreateMeal} from './create-meal'
 
 import { useHistory } from 'react-router';
 import { MealDetail } from './detail';
@@ -49,55 +55,39 @@ export const Meals = () => {
     const [viewMeal, setViewMeal] = useState(false);
     const [mealId, setMealId] = useState();
     const [user, setUser] = useState(DataStore.get("LOGGED_IN_USER"))
-    const [createMeal, setCreateMeal] = useState(false);
+    const [creatingMeal, setCreatingMeal] = useState(false);
+
+    const fetchData = async() => {
+        setLoading(true)
+        const res = await getMeals()
+        setMeals(res)
+        setLoading(false)
+    };
 
     useEffect(() => {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-        headers.append('Access-Control-Allow-Origin', 'true');
-        headers.append('Authorization', `Bearer ${user.token}`);
-
-        async function getData(url) {
-            const response = await fetch(url, {
-                method: 'GET',
-                mode: 'cors',
-                redirect: 'follow',
-                credentials: 'include',
-                headers: headers,  
-            })
-            return response.json();
-        }
-
-        setLoading(true);
-        getData('https://munchies-api-5fqmkwna4q-nw.a.run.app/meals')
-        .then(data => setMeals(data))
-        .finally(() => {
-            setLoading(false)
-        })
-        .catch(err => console.log(err))
-        
-
+        fetchData();
         activeContext.dispatch({ type: "MEALS" });
-    }, [])
+    }, []);
 
     const handleViewMeal = id => {
-        setViewMeal(false)
-        setMealId(id)
-        setViewMeal(true)
+        setViewMeal(false);
+        setMealId(id);
+        setViewMeal(true);
+    };
 
-    }
+    const handleCreateMeal = async() => {
+        setCreatingMeal(true);
+        const res = await createMeal();
+        if(res) fetchData();
+        setCreatingMeal(false);
+    };
 
-    console.log(meals)
-    
     return (
 
         <PrivateContainer>
 
                 <LeftWrapper>
-                {
-                    
-                    !loading ? ( 
+                
                     
                         <Container>
 
@@ -110,78 +100,79 @@ export const Meals = () => {
                                 sort
                             />
 
-                            <MealsContainer>
+                            {!loading ? (
 
-                                {meals && meals.map((meal, index) => (
-                                        <MealCard 
-                                            img={meal.image || mealimg} 
-                                            name={meal.name}
-                                            season={meal.season}
-                                            count={meal.eaten}
-                                            key={index}
-                                            onClick={() => {
-                                                setCreateMeal(false);
-                                                handleViewMeal(meal._id);
-                                            }}
-                                        />
-                                    ))
-                                    .filter((meal) => {if (searchText === "") {
-                                        return meal;
-                                    } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
-                                        return meal;
-                                    }})
-                                    // .filter((meal) => {if (filterText === "All") {
-                                    //     return meal;
-                                    // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
-                                    //     return meal;
-                                    // }})
-                                }
-                                
-                            </MealsContainer>
+                                    <MealsContainer>
+                                        {meals && meals.map((meal, index) => (
+                                                <MealCard 
+                                                    img={meal.image} 
+                                                    name={meal.name}
+                                                    season={meal.season}
+                                                    count={meal.eaten}
+                                                    key={index}
+                                                    onClick={() => handleViewMeal(meal._id)}
+                                                />
+                                            ))
+                                            .filter((meal) => {if (searchText === "") {
+                                                return meal;
+                                            } else if(meal.name.toLowerCase().includes(searchText.toLowerCase())) {
+                                                return meal;
+                                            }})
+                                            // .filter((meal) => {if (filterText === "All") {
+                                            //     return meal;
+                                            // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
+                                            //     return meal;
+                                            // }})
+                                        }
+                                    </MealsContainer>
+
+                                ) : (
+                                    <Loader 
+                                        spinnerColor={colors.black}
+                                        size="35px"
+                                        label="Loading..."
+                                    />
+                                )
+                            }
 
                             <Button
+                                disabled={creatingMeal}
                                 primary
                                 width="100%"
                                 height="4rem"
                                 fontSize={FontSizes.Regular}
-                                onClick={() => {
-                                    setViewMeal(false);
-                                    setCreateMeal(true);
-                                }}
+                                onClick={handleCreateMeal}
                                 margin="1rem 0 0 0"
                             >
-                                Create Meal
+                                {creatingMeal ? (
+                                    <Loader 
+                                        spinnerColor={colors.white}
+                                        size="35px"
+                                        label="Loading..."
+                                    />
+                                ) : (
+                                    <Text
+                                        fontSize={FontSizes.Small}
+                                        color={colors.white}
+                                    >
+                                        Create Meal
+                                    </Text>
+                                )}
                             </Button>
 
                         </Container>
-
-                    ) : (
                     
-                        <Loader 
-                            spinnerColor={colors.black}
-                            size="35px"
-                            label="Loading..."
-                        />
-                            
-                    )
-
-                }
                 </LeftWrapper>
                 <RightWrapper>
                       
                     {viewMeal && 
                         <MealDetail 
                             mealId={mealId}
+                            onReload={() => fetchData()}
                             onClose={() => setViewMeal(false)}
                         />
                     }
 
-                    {createMeal && 
-                        <CreateMeal 
-                            onClose={() => setCreateMeal(false)}
-                        />
-                    }
-                        
                 </RightWrapper>
                 
 
@@ -216,6 +207,7 @@ const LeftWrapper = styled.div`
     height: 100%;
     width: 30%;
     background-color: ${colors.white};
+    min-width: 400px;
 `
 const RightWrapper = styled.div`
     height: 100%;

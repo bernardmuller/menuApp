@@ -12,6 +12,8 @@ import {
     H4
 } from 'common/components';
 
+import food from 'assets/images/food_ph.png';
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -62,6 +64,7 @@ const ImageContainer = styled.div`
     object-fit: contain;
     overflow: hidden;
     top: 0;
+    background-color: ${colors.grey_dark};
 
     img {
         height: 100%;
@@ -69,6 +72,13 @@ const ImageContainer = styled.div`
         object-fit: cover;
     }
 `
+
+const Placeholder = styled.div`
+    height: 100%;
+    width: 100%;
+    padding: 25%;
+`
+
 
 
 export const MealCard = props => {
@@ -82,7 +92,13 @@ export const MealCard = props => {
         >
             
             <ImageContainer>
-                <img src={props.img} alt="meal" />
+                {props.img ? (
+                        <img src={props.img} alt="meal" />
+                    ) : (
+                        <Placeholder>
+                            <img src={food} alt="meal" />  
+                        </Placeholder>
+                )}
             </ImageContainer>
 
             <Background

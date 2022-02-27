@@ -21,9 +21,31 @@ import {
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
 
+import { useForm } from 'react-hook-form';
+
+import { 
+    updateMeal,
+} from 'actions';
+
 const Name = props => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [edit, setEdit] = useState(false);
     const [hover, setHover] = useState(false);
+    const [name, setName] = useState(props.data.name)
+
+    const handleUpdateName = async(data) => {
+        await updateMeal(props.data._id, data)
+        .then(async() => {
+            setEdit(false)
+            props.onReload();
+        })
+        .catch(err => console.log(err));
+    };
+
+    const onSubmit = (data) => {
+        handleUpdateName(data);
+    };
+
     return (
         <Wrapper
             onMouseEnter={() => setHover(true)}
@@ -36,7 +58,7 @@ const Name = props => {
                         fontSize={FontSizes.Big}
                         margin="0"
                     >
-                        {props.data}
+                        {name}
                     </H2>
                     {hover && !edit && 
                         <EditButton 
@@ -45,14 +67,18 @@ const Name = props => {
                     }
                 </>
             ) : (
-                <NameForm>
+                <NameForm
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <Input 
                         placeholder="Meal name"
                         height="2.5rem"
+                        value={name}
+                        {...register("name", {
+                            onChange: e => {setName(e.target.value)}
+                        })}
                     />
-                    <SaveButton 
-                        onClick={() => {}}
-                    />
+                    <SaveButton />
                     <CancelButton 
                         onClick={() => setEdit(false)}
                     />
@@ -67,12 +93,13 @@ export const MealInfo = props => {
     return (
         <Container>
 
-            
-
             <InfoContainer>
                 <Header>
                     <Name 
-                        data={props.meal.name}
+                        data={props.meal}
+                        onReload={() => {
+                            props.onReload();
+                        }}
                     />
                 </Header>
 
@@ -145,7 +172,7 @@ const MealStats = props => {
                     color="white"
                     fontSize={FontSizes.Bigger}
                 >
-                    3
+                    {props.meal && props.meal.ingredients.length} 
                 </Text>
                 <Text
                     color="#ABBBC2"

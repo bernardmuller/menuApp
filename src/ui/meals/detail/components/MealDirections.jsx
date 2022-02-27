@@ -1,8 +1,13 @@
 import React, {
-    useState
+    useState,
+    useEffect
 } from 'react';
 
+import "react-widgets/styles.css";
+
 import styled from 'styled-components';
+
+import DropdownList from "react-widgets/DropdownList";
 
 import {
     H3,
@@ -12,7 +17,8 @@ import {
     SaveButton,
     CancelButton,
     Input,
-    Button
+    Button,
+    Loader
 } from 'common/components';
 
 import {
@@ -22,15 +28,36 @@ import {
 
 import { useForm } from 'react-hook-form';
 
+import { 
+    updateIngredient,
+    getMeal,
+    removeIngredient,
+    updateMeal,
+    getIngredients,
+    addIngredient
+} from 'actions';
+
 const Item = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [edit, setEdit] = useState(false);
     const [hover, setHover] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [value, setValue] = useState(props.data.name)
 
-    const onSubmit = data => {
+    const onSubmit = async(data) => {
+        setEdit(false)
+        setLoading(true);
+        await updateIngredient(props.data._id, data)
+        .then(async() => {
+            await props.onReload()
 
+            setLoading(false);
+        })
+        .catch(err => console.log(err))
     }
+
+    
 
     if(edit) {
         return (
@@ -38,12 +65,14 @@ const Item = props => {
                 onSubmit={handleSubmit(onSubmit)}
             >   
                 <Input 
-                    value={props.data}
+                    value={value}
                     height="2rem"
+                    {...register("name")}
+                    onChange={e => setValue(e.target.value)}
                 />  
                 <UtilityWrapper>
                     <SaveButton 
-                        onClick={() => {}}
+                        // onClick={() => {}}
                     />
 
                     <CancelButton 
@@ -59,12 +88,19 @@ const Item = props => {
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >   
-            <Text
-                fontSize={FontSizes.Regular}
-                color={colors.grey}
-            >
-                {props.data}
-            </Text>
+            {loading ? (
+                <Loader 
+                    spinnerColor={colors.white}
+                />
+            ) : (
+                <Text
+                    fontSize={FontSizes.Regular}
+                    color={colors.grey}
+                >
+                    {props.data.name}
+                </Text>
+            )}
+            
 
             {hover && !edit && 
                 <UtilityWrapper>
@@ -75,7 +111,7 @@ const Item = props => {
                     />
                     <CancelButton 
                         color={colors.danger}
-                        onClick={() => {}}
+                        onClick={() => props.onDelete(props.data._id)}
                     />
                 </UtilityWrapper>
             }
@@ -87,17 +123,45 @@ export const MealDirections = props => {
     const [edit, setEdit] = useState(false);
     const [hover, setHover] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [meal, setMeal] = useState(props.meal)
+    const [ingredients, setIngredients] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [directions, setDirections] = useState(props.meal.directions)
 
-    const items = ["item", "item", "item", "item", "item"]
+    const fetchIngredients = async() => {
+        await getMeal(props.meal._id)
+        .then(data => setIngredients(data.ingredients))
+        .catch(err => console.log(err))
+    };
 
-    const onSubmit = data => {
-        console.log(data)
+    const handleDeleteIngredient = async(id) => {
+        await removeIngredient(props.meal._id, id)
+        .then(async() => {
+            fetchIngredients()
+        })
+        .catch(err => console.log(err))
     }
+
+    const handleUpdateDirections = async(data) => {
+        await updateMeal(props.meal._id, data)
+        .then(async() => {
+            props.onReload()
+        })
+        .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        fetchIngredients()
+    }, [])
+
+    const onDirectionsSubmit = data => {
+        handleUpdateDirections(data)
+    };
 
     return (
         <Container>
 
-            <IngredientsContainer>
+            <SubContainer>
                 <Header>
                     <H3
                         color="white"
@@ -105,74 +169,99 @@ export const MealDirections = props => {
                         Ingredients
                     </H3>
                 </Header>
-
-                <Items>
-                    {items.map((item, index)=> (
-                        <Item 
-                            data={item}
-                        />
-                    ))}
-
-                    <AddItem />
-
-                </Items>
-
-            </IngredientsContainer>
-
-            <DirectionContainer>
-                    
-                <Header
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                >
-                    <H3
-                        color="white"
-                    >
-                        Directions
-                    </H3>
-
-                    {hover && !edit && 
-                            <EditButton 
-                                onClick={() => {
-                                    setEdit(true)
-                                }}
-                            />
-                        
-                    }
-
-                    {edit && 
-                        <UtilityWrapper>
-                            <SaveButton 
-                                onClick={() => {}}
-                            />
-
-                            <CancelButton 
-                                onClick={() => setEdit(false)}
-                            />
-                        </UtilityWrapper>
-
-                    }
-
-                </Header>
-
-                {!edit ? (
-                    <Text
-                        color="#ABBBC2"
-                        fontSize={FontSizes.Small}
-                    >
-                        {props.meal.directions}
-                    </Text>
+                {loading ? (
+                    <Loader 
+                        spinnerColor={colors.white}
+                    />
                 ) : (
+                    <Items>
+                        {ingredients && ingredients.map((item, index)=> (
+                            <Item 
+                                data={item}
+                                onDelete={(id) => handleDeleteIngredient(id)}
+                                onReload={() => fetchIngredients()}
+                            />
+                        ))}
+
+                        <AddItem 
+                            meal={props.meal}
+                            onReload={() => fetchIngredients()}
+                        />
+
+                    </Items>
+                )}
+                
+
+            </SubContainer>
+
+            <SubContainer>
+                {!edit ? (
+                    <>
+                        <Header
+                            onMouseEnter={() => setHover(true)}
+                            onMouseLeave={() => setHover(false)}
+                        >
+                            <H3
+                                color="white"
+                            >
+                                Directions
+                            </H3>
+
+                            {hover && !edit && 
+                                    <EditButton 
+                                        onClick={() => {
+                                            setEdit(true)
+                                        }}
+                                    />
+                                
+                            }
+
+                        </Header>
+                        <Text
+                            color="#ABBBC2"
+                            fontSize={FontSizes.Small}
+                        >
+                            {directions}
+                        </Text>
+                    </>
+                ) : (
+
                     <DirectionsForm
-                        onSubmit={handleSubmit(onSubmit)}
+                        onSubmit={handleSubmit(onDirectionsSubmit)}
                     >
+                        <Header
+                            onMouseEnter={() => setHover(true)}
+                            onMouseLeave={() => setHover(false)}
+                        >
+                            <H3
+                                color="white"
+                            >
+                                Directions
+                            </H3>
+
+                            {edit && 
+                                <UtilityWrapper>
+                                    <SaveButton 
+                                        onClick={() => handleSubmit(onDirectionsSubmit)}
+                                    />
+
+                                    <CancelButton 
+                                        onClick={() => setEdit(false)}
+                                    />
+                                </UtilityWrapper>
+
+                            }
+
+                        </Header>
                         <TextArea 
-                            value={props.meal.directions}
-                            {...register("directions")}
+                            value={directions}
+                            {...register("directions", {
+                                onChange: e => {setDirections(e.target.value)}
+                            })}
                         />
                     </DirectionsForm>
                 )}
-            </DirectionContainer>
+            </SubContainer>
 
             
 
@@ -183,10 +272,29 @@ export const MealDirections = props => {
 const AddItem = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [add, setAdd] = useState(false);
+    const [ingredients, setIngredients] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedIngredient, setSelectedIngredient] = useState(null);
 
-    const onSubmit = data => {
-        console.log(data)
+    const fetchIngredients = async() => {
+        const ingredients = await getIngredients()
+        setIngredients(ingredients)
+    };
+
+    useEffect(() => {
+        fetchIngredients()
+    }, [])
+
+    const onAddIngredient = async(e) => {
+        e.preventDefault();
+        await addIngredient(props.meal._id, selectedIngredient._id)
+        .then(res => {
+            setSelectedIngredient(null);
+            props.onReload()
+        })
+        .catch(err => console.log(err))
     }
+
     return (
         <Wrapper>
             {!add ? (
@@ -203,17 +311,20 @@ const AddItem = props => {
                 </Button>
             ):(
                 <Form
-                    onSubmit={handleSubmit(onSubmit)}
+                    onSubmit={onAddIngredient}
                 >
-                    <Input 
-                        height="2rem"
-                        width="20rem"
-                        placeholder="Ingredient Name"
+
+                    <DropdownList
+                        // defaultValue="Yellow"
+                        placeholder="Search for ingredient"
+                        data={ingredients}
+                        dataKey='id'
+                        textField='name'
+                        onChange={(val) => setSelectedIngredient(val)}
+                        busy={loading}
                     />
                     <UtilityWrapper>
-                        <SaveButton 
-                            onClick={() => {}}
-                        />
+                        <SaveButton  />
 
                         <CancelButton 
                             onClick={() => setAdd(false)}
@@ -246,18 +357,11 @@ const Container = styled.div`
     width: 100%;
     padding: 2rem 0;
     display:flex;
+    gap: 2rem;
 `
 
-const DirectionContainer = styled.div`
+const SubContainer = styled.div`
     width: 100%;
-    display: flex;
-    flex-direction: column;
-`
-
-const IngredientsContainer = styled.div`
-    width: 100%;
-    display: grid;
-    padding:0 1rem 0 0;
 `
 
 const Header = styled.div`
