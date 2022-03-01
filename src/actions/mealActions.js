@@ -61,7 +61,7 @@ export const getMeals = async() => {
 };
 
 export const getMeal = async(id) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
+    const url = `http://localhost:8080/meals/${id}`;
     
     try {
         const response = await Api.get(url);

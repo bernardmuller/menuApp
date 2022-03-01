@@ -36,6 +36,7 @@ import {
     getIngredients,
     addIngredient
 } from 'actions';
+import { IoFlashOffOutline } from 'react-icons/io5';
 
 const Item = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -127,6 +128,9 @@ export const MealDirections = props => {
     const [ingredients, setIngredients] = useState(null)
     const [loading, setLoading] = useState(false);
     const [directions, setDirections] = useState(props.meal.directions)
+    const [addStep, setAddStep] = useState(false);
+    const [newStep, setNewStep] = useState("")
+    const [editIndex, setEditIndex] = useState(null);
 
     const fetchIngredients = async() => {
         await getMeal(props.meal._id)
@@ -138,6 +142,17 @@ export const MealDirections = props => {
         await removeIngredient(props.meal._id, id)
         .then(async() => {
             fetchIngredients()
+        })
+        .catch(err => console.log(err))
+    }
+
+    const handleAddStep = async(e) => {
+        e.preventDefault()
+        let Arr = directions;
+        Arr.push(newStep)
+        await updateMeal(props.meal._id, {"directions": Arr})
+        .then(async() => {
+            props.onReload()
         })
         .catch(err => console.log(err))
     }
@@ -165,6 +180,7 @@ export const MealDirections = props => {
                 <Header>
                     <H3
                         color="white"
+                        fontSize={FontSizes.Big}
                     >
                         Ingredients
                     </H3>
@@ -195,72 +211,114 @@ export const MealDirections = props => {
             </SubContainer>
 
             <SubContainer>
-                {!edit ? (
-                    <>
-                        <Header
-                            onMouseEnter={() => setHover(true)}
-                            onMouseLeave={() => setHover(false)}
-                        >
-                            <H3
-                                color="white"
-                            >
-                                Directions
-                            </H3>
-
-                            {hover && !edit && 
-                                    <EditButton 
-                                        onClick={() => {
-                                            setEdit(true)
-                                        }}
-                                    />
-                                
-                            }
-
-                        </Header>
-                        <Text
-                            color="#ABBBC2"
-                            fontSize={FontSizes.Small}
-                        >
-                            {directions}
-                        </Text>
-                    </>
-                ) : (
-
-                    <DirectionsForm
-                        onSubmit={handleSubmit(onDirectionsSubmit)}
+                 <Header
+                            
+                >
+                    <H3
+                        color="white"
+                        fontSize={FontSizes.Big}
                     >
-                        <Header
-                            onMouseEnter={() => setHover(true)}
-                            onMouseLeave={() => setHover(false)}
-                        >
-                            <H3
-                                color="white"
-                            >
-                                Directions
-                            </H3>
+                        Directions
+                    </H3>
 
-                            {edit && 
-                                <UtilityWrapper>
-                                    <SaveButton 
-                                        onClick={() => handleSubmit(onDirectionsSubmit)}
+                    {/* {hover && !edit && 
+                            <EditButton 
+                                onClick={() => {
+                                    setEdit(true)
+                                }}
+                            />
+                        
+                    } */}
+
+                </Header>
+                    <>
+                        <Steps>
+                            {directions.map((step, index) => (
+                                <Step
+                                    onMouseEnter={() => setHover(true)}
+                                    onMouseLeave={() => setHover(false)}
+                                >
+                                    {!edit ? (
+                                        <>
+                                            <Text
+                                                color="#ABBBC2"
+                                                fontSize={FontSizes.Small}
+                                            >
+                                                {step}
+                                            </Text>
+                                            {hover && !edit && 
+                                                <>
+                                                    <EditButton 
+                                                        onClick={() => {
+                                                            setEdit(true);
+                                                            setEditIndex(index)
+                                                        }}
+                                                    />
+                                                    <CancelButton 
+                                                        color={colors.danger}
+                                                        onClick={() => props.onDelete()}
+                                                    />
+                                                </>
+                                            }
+                                        </>
+                                    ) : (
+
+                                        <DirectionsForm
+                                            onSubmit={handleSubmit(onDirectionsSubmit)}
+                                        >
+                                            <TextArea 
+                                                value={directions[editIndex]}
+                                                {...register("directions", {
+                                                    onChange: e => {setDirections(e.target.value)}
+                                                })}
+                                            />
+                                            <UtilityWrapper>
+                                                <SaveButton  />
+                    
+                                                <CancelButton 
+                                                    onClick={() => setEdit(false)}
+                                                />
+                                            </UtilityWrapper>
+                                        </DirectionsForm>
+                                    )}
+
+                                </Step>
+                            ))}
+                        </Steps>
+                        <>
+                            {!addStep ? (
+                                <Button
+                                    inline
+                                    onClick={() => setAddStep(true)}
+                                >
+                                    <Text
+                                        fontSize={FontSizes.Small}
+                                        color={colors.grey_dark}
+                                    >
+                                        + Add Step
+                                    </Text>
+                                </Button>
+                            ):(
+                                <Form
+                                    onSubmit={handleAddStep}
+                                >
+                                    <TextArea 
+                                        placeholder="Step directions"
+                                        onChange={(e) => setNewStep(e.target.value)}
                                     />
+                                    
+                                    <UtilityWrapper>
+                                        <SaveButton  />
 
-                                    <CancelButton 
-                                        onClick={() => setEdit(false)}
-                                    />
-                                </UtilityWrapper>
-
-                            }
-
-                        </Header>
-                        <TextArea 
-                            value={directions}
-                            {...register("directions", {
-                                onChange: e => {setDirections(e.target.value)}
-                            })}
-                        />
-                    </DirectionsForm>
-                )}
+                                        <CancelButton 
+                                            onClick={() => {setAddStep(false)}}
+                                        />
+                                    </UtilityWrapper>
+                                </Form>
+                            )}
+                        </>
+                    </>
+                
             </SubContainer>
 
             
@@ -358,6 +416,19 @@ const Container = styled.div`
     padding: 2rem 0;
     display:flex;
     gap: 2rem;
+`
+
+const Steps = styled.div`
+    width: 100%;
+    list-style-position: outside;
+    color: white;
+`
+
+const Step = styled.div`
+    width: 100%;
+    display: flex;
+    margin: 0 0 0.5rem 0;
+    gap: 0.3rem;
 `
 
 const SubContainer = styled.div`

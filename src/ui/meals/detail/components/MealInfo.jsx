@@ -18,7 +18,7 @@ import {
     colors
 } from 'common';
 
-import { IoAlertCircleOutline } from "react-icons/io5";
+import { IoAlertCircleOutline, IoFlaskOutline } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
 
 import { useForm } from 'react-hook-form';
@@ -26,6 +26,8 @@ import { useForm } from 'react-hook-form';
 import { 
     updateMeal,
 } from 'actions';
+
+import food from 'assets/images/food_ph.png';
 
 const Name = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -55,7 +57,7 @@ const Name = props => {
                 <>
                     <H2
                         color={colors.white}
-                        fontSize={FontSizes.Big}
+                        fontSize={FontSizes.Bigger}
                         margin="0"
                     >
                         {name}
@@ -90,6 +92,7 @@ const Name = props => {
 };
 
 export const MealInfo = props => {
+    const [buttonHover, setButtonHover] = useState(false);
     return (
         <Container>
 
@@ -141,7 +144,22 @@ export const MealInfo = props => {
             </InfoContainer>
 
             <MealImageContainer>
-                <img src={props.meal.image} alt="Meal Image" />
+                {props.meal.image ? (
+                    <>
+                        <img src={props.meal.image} />
+                        <UploadButton>lekker</UploadButton>
+                    </>
+                ) : (
+                    <Placeholder
+                        onMouseEnter={() => setButtonHover(true)}
+                        onMouseLeave={() => setButtonHover(false)}
+                    >
+                        <img src={food} alt="meal" />  
+                        {buttonHover &&
+                            <UploadButton>Upload Image</UploadButton>
+                        }
+                    </Placeholder>
+                )}
             </MealImageContainer>
 
         </Container>
@@ -253,11 +271,14 @@ const MealImageContainer = styled.div`
     height: 20rem;
     overflow: hidden;
     border-radius: 10px;
+    background-color: ${colors.grey};
+    position: relative;
+    min-width: 300px;
 
     img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 `
 
@@ -295,3 +316,29 @@ const TagWrapper = styled.div`
     justify-content: center;
     align-items: center;
 ` 
+
+const Placeholder = styled.div`
+    height: 100%;
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 10%; */
+
+    img {
+        width: 170px;
+    }
+`
+
+const UploadButton = styled.button`
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(104, 191, 80, 0.9);
+    z-index: 100;
+    bottom: 0;
+    font-size: ${FontSizes.Small};
+    color: ${colors.white};
+    outline: none;
+    border: none;
+`
