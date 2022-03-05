@@ -18,16 +18,20 @@ import {
     colors
 } from 'common';
 
-import { IoAlertCircleOutline, IoFlaskOutline } from "react-icons/io5";
+import { IoAlertCircleOutline, IoFlaskOutline, IoTrashOutline} from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
+import DropdownList from "react-widgets/DropdownList";
+import Multiselect from "react-widgets/Multiselect";
 
 import { useForm } from 'react-hook-form';
 
 import { 
     updateMeal,
+    deleteMeal
 } from 'actions';
 
 import food from 'assets/images/food_ph.png';
+import { Confirmation } from './Confirmation';
 
 const Name = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -93,8 +97,24 @@ const Name = props => {
 
 export const MealInfo = props => {
     const [buttonHover, setButtonHover] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
+    const removeMeal = async() => {
+        setShowConfirmation(false)
+        await deleteMeal(props.meal._id)
+        .then(() => props.onHardReload())
+    };
+
     return (
         <Container>
+
+            {showConfirmation && 
+                <Confirmation 
+                    text="Are you sure you want to delete this meal?"
+                    onConfirm={removeMeal}
+                    onCancel={() => setShowConfirmation(false)}
+                />
+            }
 
             <InfoContainer>
                 <Header>
@@ -119,22 +139,27 @@ export const MealInfo = props => {
                         primary
                         width="3rem"
                         height="3rem"
+                        onClick={() => setShowConfirmation(true)}
                     >
-                        <IoAlertCircleOutline
-                            size={30} 
+                        <IoTrashOutline
+                            size={25} 
                         />
                     </Button>
                 </ButtonsContainer>
 
-                <Tags
-                    season={props.meal.season}
+                <Seasons
+                    meal={props.meal}
+                    id={props.meal._id}
+                    onReload={() => {
+                        props.onReload();
+                    }}
                 />
 
                 <Text 
                     color="#ABBBC2" 
                     fontSize={FontSizes.Small}
                 >
-                    Times eaten: 3
+                    Creator: {props.meal.createdBy.firstname}
                 </Text>
 
                 <MealStats 
@@ -145,9 +170,10 @@ export const MealInfo = props => {
 
             <MealImageContainer>
                 {props.meal.image ? (
-                    <>
-                        <img src={props.meal.image} />
-                        <UploadButton>lekker</UploadButton>
+                    <>  
+                        <Image>
+                            <img src={props.meal.image} />
+                        </Image>
                     </>
                 ) : (
                     <Placeholder
@@ -169,14 +195,32 @@ export const MealInfo = props => {
 const Tags = props => {
     return (
         <TagsContainer>
-            <TagWrapper>
-                <Text 
-                    color="#B4D5AB"
-                    fontSize={FontSizes.Small}
-                >
-                    {props.season}
-                </Text>
-            </TagWrapper>
+            {props.tags ? (
+                props.tags.map((tag, index) => (
+                    <TagWrapper
+                        key={index}
+                    >
+                        <Text 
+                            color="#B4D5AB"
+                            fontSize={FontSizes.Small}
+                        >
+                            {tag}
+                        </Text>
+                    </TagWrapper>
+                ))
+            ) : (
+                // <TagWrapper>
+                    <Button 
+                        color="#B4D5AB"
+                        fontSize={FontSizes.Small}
+                        margin="0"
+                        primary
+                        style={{borderRadius: '20px'}}
+                    >
+                        Select seasons
+                    </Button>
+                // </TagWrapper>
+            )}
         </TagsContainer>
     )
 }
@@ -190,7 +234,7 @@ const MealStats = props => {
                     color="white"
                     fontSize={FontSizes.Bigger}
                 >
-                    {props.meal && props.meal.ingredients.length} 
+                    {props.meal.ingredients.length || "0"} 
                 </Text>
                 <Text
                     color="#ABBBC2"
@@ -233,6 +277,78 @@ const MealStats = props => {
     )
 };
 
+const Seasons = props => {
+    const [seasons, setSeasons] = useState(props.meal.seasons);
+    const [edit, setEdit] = useState(false);
+    const [hover, setHover] = useState(false);
+
+    const handleUpdateSeason = async(e) => {
+        e.preventDefault();
+        await updateMeal(props.id, {'seasons' : seasons})
+        .then(async() => {
+            setEdit(false)
+            props.onReload();
+        })
+        .catch(err => console.log(err));
+    };
+
+    return (
+        <Container>
+            {!edit ? (
+                <Container
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                >
+                    {seasons.length > 0 ? (
+                        <>
+                            <Tags 
+                                tags={seasons}
+                            />
+                            {hover && !edit && 
+                                <EditButton 
+                                    onClick={() => setEdit(true)}
+                                />
+                            }
+                        </>
+                    ):(
+                        <Button 
+                            color="#B4D5AB"
+                            fontSize={FontSizes.Small}
+                            margin="0"
+                            tertiary
+                            height="2rem"
+                            borderRadius="1rem"
+                            onClick={() => setEdit(true)}
+                        >
+                            Select seasons
+                        </Button>
+                    )}
+                    
+                </Container>
+            ) : (
+                <SeasonForm
+                    onSubmit={handleUpdateSeason}
+                >
+                    <Multiselect 
+                        placeholder="Select season/s"
+                        value={seasons}
+                        data={["Summer", "Autumn", "Winter", "Spring", "All Year"]}
+                        onChange={val => setSeasons(val)}
+                    />
+                    <SaveButton 
+                        margin="0 0 0 0.5rem"
+                    />
+                    <CancelButton 
+                        onClick={() => setEdit(false)}
+                    />
+                </SeasonForm>
+            )}
+        </Container>
+    )
+};
+
+
+
 const Wrapper = styled.div`
     display: flex;
     align-items: center;
@@ -259,7 +375,6 @@ const Stat = styled.div`
     padding: 1rem;
 `
 
-
 const Container = styled.div`
     width: 100%;
     display: flex;
@@ -270,10 +385,13 @@ const MealImageContainer = styled.div`
     width: 50%;
     height: 20rem;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: ${colors.grey};
     position: relative;
     min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     img {
         width: 100%;
@@ -305,12 +423,14 @@ const ButtonsContainer = styled.div`
 const TagsContainer = styled.div`
     display:flex;
     width: 100%;
-    gap: 1rem;
+    gap: 0.3rem;
+    /* height: 2.5rem; */
 ` 
 const TagWrapper = styled.div`
-    height: 2rem;
-    width: 80px;
-    border-radius: 1rem;
+    /* height: 2rem; */
+    /* width: 80px; */
+    padding: 0 1rem;
+    border-radius: 1.25rem;
     background-color: rgb(104, 191, 80, 0.5);
     display: flex;
     justify-content: center;
@@ -341,4 +461,13 @@ const UploadButton = styled.button`
     color: ${colors.white};
     outline: none;
     border: none;
+`
+
+const Image = styled.div`
+    
+`
+
+const SeasonForm = styled.form`
+    width: 100%;
+    display: flex;
 `

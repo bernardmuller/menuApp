@@ -30,7 +30,7 @@ const Container = styled.div`
   flex-direction: column;
   position: relative;
   margin: ${props => props.margin};
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -52,13 +52,6 @@ const LoadingContainer = styled.div`
         border-color: ${props => props.spinnerColor} transparent ${props => props.spinnerColor} transparent;
         animation: ${Animation} 1.2s linear infinite;
     }
-`;
-
-const Label = styled.div`
-  position: absolute;
-  bottom: 10px;
-  font-size: ${FontSizes.Regular};
-  font-weight: bold;
 `;
 
 export const Loader = props => (

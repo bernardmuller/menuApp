@@ -43,7 +43,7 @@ const NavContainer = styled.div`
   min-width: 60px;
   max-width: 80px;
   min-height: 100%;
-  z-index: 999; 
+  z-index: 99; 
   background-color: ${colors.secondary};
 `
 

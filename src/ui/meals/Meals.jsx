@@ -15,7 +15,7 @@ import {
 } from "contexts/ActiveViewContext";
 
 import {
-    MealCard,
+    MealCardList,
     MealsCollectionHeading,
     Text,
     H3,
@@ -46,8 +46,8 @@ import { MealDetail } from './detail';
 
 
 export const Meals = () => {
-    const [loading, setLoading] = useState(false);
-    const [meals, setMeals] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [meals, setMeals] = useState(undefined);
     const [searchText, setSearchText] = useState('');
     const [filterText, setFilterText] = useState('');
     const history = useHistory();
@@ -65,7 +65,10 @@ export const Meals = () => {
     };
 
     useEffect(() => {
+        // setLoading(true)
         fetchData();
+        // setLoading(false)
+
         activeContext.dispatch({ type: "MEALS" });
     }, []);
 
@@ -82,6 +85,10 @@ export const Meals = () => {
         setCreatingMeal(false);
     };
 
+    const hardReload = async() => {
+        setViewMeal(false);
+        fetchData();
+    };
     return (
 
         <PrivateContainer>
@@ -95,19 +102,19 @@ export const Meals = () => {
                                 onSearch={(text) => {setSearchText(text)}}
                                 onFilter={(filter) => {setFilterText(filter)}}
                                 // count={meals.length}
-                                heading="Meals"
+                                heading="My Meals"
                                 searchPlaceholder="Search Meals"
-                                sort
+                                // sort
+                                loading={loading}
                             />
-
-                            {!loading ? (
-
-                                    <MealsContainer>
-                                        {meals && meals.map((meal, index) => (
-                                                <MealCard 
+                            <MealsContainer>
+                                {!loading &&
+                                    <>
+                                        {meals.length > 0 ? ( meals.map((meal, index) => (
+                                                <MealCardList 
                                                     img={meal.image} 
                                                     name={meal.name}
-                                                    season={meal.season}
+                                                    seasons={meal.seasons}
                                                     count={meal.eaten}
                                                     key={index}
                                                     onClick={() => handleViewMeal(meal._id)}
@@ -123,17 +130,27 @@ export const Meals = () => {
                                             // } else if(meal.season.toLowerCase().includes(filterText.toLowerCase())) {
                                             //     return meal;
                                             // }})
-                                        }
-                                    </MealsContainer>
-
-                                ) : (
-                                    <Loader 
-                                        spinnerColor={colors.black}
-                                        size="35px"
-                                        label="Loading..."
-                                    />
-                                )
-                            }
+                                        ) : (
+                                            <>
+                                                <Text
+                                                    fontSize={FontSizes.Small}
+                                                    color={colors.grey_light}
+                                                    textAlign="center"
+                                                >
+                                                    You don't have any meals in your collection.
+                                                </Text>
+                                                <Text
+                                                    fontSize={FontSizes.Small}
+                                                    color={colors.grey_light}
+                                                    textAlign="center"
+                                                >
+                                                    Create one below.
+                                                </Text>
+                                            </>
+                                        )}
+                                    </>
+                                }
+                            </MealsContainer>
 
                             <Button
                                 disabled={creatingMeal}
@@ -147,12 +164,11 @@ export const Meals = () => {
                                 {creatingMeal ? (
                                     <Loader 
                                         spinnerColor={colors.white}
-                                        size="35px"
-                                        label="Loading..."
+                                        size="25px"
                                     />
                                 ) : (
                                     <Text
-                                        fontSize={FontSizes.Small}
+                                        fontSize={FontSizes.Regular}
                                         color={colors.white}
                                     >
                                         Create Meal
@@ -169,6 +185,7 @@ export const Meals = () => {
                         <MealDetail 
                             mealId={mealId}
                             onReload={() => fetchData()}
+                            onHardReload={() => hardReload()}
                             onClose={() => setViewMeal(false)}
                         />
                     }
@@ -184,13 +201,15 @@ export const Meals = () => {
 
 
 const MealsContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
     width: 100%;
-    flex-wrap: wrap;
+    height: 100%;
+    /* flex-wrap: wrap; */
     overflow-y: scroll;
-    padding: 1rem 0 0 0;
+    padding: 1rem 0.5rem 0 1rem;
+    ::-webkit-scrollbar { width: 0 !important }
 `
 const Container = styled.div`
     display: Flex;
@@ -205,13 +224,13 @@ const Container = styled.div`
 
 const LeftWrapper = styled.div`
     height: 100%;
-    width: 30%;
+    width: 25%;
     background-color: ${colors.white};
     min-width: 400px;
 `
 const RightWrapper = styled.div`
     height: 100%;
-    width: calc(100% - 30%);
+    width: calc(100% - 25%);
     padding: 1.5rem;
     overflow-y:scroll;
 `

@@ -52,17 +52,17 @@ export class Api {
   };
 
   static put = (url, data) => {
-    console.log(data)
-
     return this.sendRequest(url, {
       method: 'PUT',
       body: data,
     });
   };
 
-  static delete = (url) => {
+  static delete = (url, data = {}, options = {}) => {
     return this.sendRequest(url, {
       method: 'DELETE',
+      ...options,
+      body: data
     });
   };
 };

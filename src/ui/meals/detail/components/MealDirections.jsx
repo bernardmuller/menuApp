@@ -233,7 +233,7 @@ export const MealDirections = props => {
                 </Header>
                     <>
                         <Steps>
-                            {directions.map((step, index) => (
+                            {directions && directions.map((step, index) => (
                                 <Step
                                     onMouseEnter={() => setHover(true)}
                                     onMouseLeave={() => setHover(false)}
@@ -351,6 +351,7 @@ const AddItem = props => {
             props.onReload()
         })
         .catch(err => console.log(err))
+        console.log(props.meal._id, selectedIngredient._id)
     }
 
     return (
@@ -376,7 +377,7 @@ const AddItem = props => {
                         // defaultValue="Yellow"
                         placeholder="Search for ingredient"
                         data={ingredients}
-                        dataKey='id'
+                        dataKey='_id'
                         textField='name'
                         onChange={(val) => setSelectedIngredient(val)}
                         busy={loading}

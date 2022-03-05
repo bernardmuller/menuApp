@@ -32,13 +32,13 @@ const ButtonBase = styled.button`
 `;
 
 const Primary = styled(ButtonBase)`   
-    color: ${props => props.disabled? `${colors.black}` : `${colors.white}`};
+    color: ${props => props.disabled ? `${colors.black}` : `${colors.white}`};
     border: ${colors.white};
-    background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.primary}` };
+    background-color: ${props => props.disabled ? `${colors.disabled}` : `${colors.primary}` };
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
-        background-color: ${props => props.disabled ? colors.grey_light : colors.primary_dark};
+        background-color: ${props => props.disabled ? colors.disabled : colors.primary_dark};
     }
 
     &:active {
@@ -73,14 +73,16 @@ const Secondary = styled(ButtonBase)`
 `;
 
 const Tertiary = styled(ButtonBase)`    
-    color: ${colors.black};
+    color: ${colors.white};
     border: 1px solid ${colors.grey};
-    background-color: ${colors.white};
+    background-color: ${colors.grey};
+    box-shadow: rgba(255, 255, 255, 0.30) 0px 2px 10px;
+
 
     &:hover {
         cursor: ${props => props.disabled ? "": "pointer"}; 
-        color: ${props => props.disabled ? "black" : "black" };
-        background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.white}`};
+        color: ${props => props.disabled ? "white" : "white" };
+        background-color: ${props => props.disabled ? `${colors.grey_light}` : `${colors.grey_light}`};
     }
 `;
 
@@ -123,7 +125,7 @@ export const Button = (props) => {
                     <Loader
                         backgroundColor={colors.Grey}
                         spinnerColor={colors.white}
-                        size={50}
+                        size={30}
                     />
 
                     : props.children

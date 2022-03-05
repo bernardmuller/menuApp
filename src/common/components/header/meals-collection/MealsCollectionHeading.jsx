@@ -14,6 +14,7 @@ import {
     FontSizes,
     FontFamilies
 } from 'common';
+import { Loader } from 'common/components/loader';
 
 const Header = styled.div`
     width: 100%;
@@ -63,7 +64,7 @@ export const MealsCollectionHeading = (props) => {
         <Header>
 
             <Heading>
-                <div>
+                <Wrapper>
                     <H2
                         color={colors.secondary}
                         margin="0 0 0.5rem 0"
@@ -71,8 +72,13 @@ export const MealsCollectionHeading = (props) => {
                     >
                         {props.heading || "heading"}
                     </H2>
-                    
-                </div>
+                    {props.loading &&
+                        <Loader 
+                            spinnerColor={colors.grey_light}
+                            size='20px'
+                        />
+                    }
+                </Wrapper>
 
                 {/* Turn into component */}
                 <Searchbar
@@ -112,3 +118,10 @@ export const MealsCollectionHeading = (props) => {
         </Header>
     )
 };
+
+
+const Wrapper = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+`

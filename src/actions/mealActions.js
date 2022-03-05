@@ -30,7 +30,7 @@ export const createMeal = async(data) => {
 
 export const updateMeal = async(id, data) => {
     const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
-  
+    console.log(data)
     try { 
         const response = await Api.put(url, data);
         return response;
@@ -61,10 +61,11 @@ export const getMeals = async() => {
 };
 
 export const getMeal = async(id) => {
-    const url = `http://localhost:8080/meals/${id}`;
-    
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
+
     try {
         const response = await Api.get(url);
+        console.log(response)
         // return resolveResponse(response);
         return response
     } catch (ex) {
@@ -97,6 +98,22 @@ export const addIngredient = async(id, ingredient_id) => {
   
     try { 
         const response = await Api.post(url, {"ingredient_id": ingredient_id});
+        return response;
+        //   return resolveResponse(response);
+    } catch (ex) {
+        let ret = resolveRejected(ex);
+        if (ex && ex.response && ex.response.status === 401) {
+            ret.message = 'Something went wrong';
+        };
+        return ex;
+    };
+};
+
+export const deleteMeal = async(id) => {
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
+  
+    try { 
+        const response = await Api.delete(url);
         return response;
         //   return resolveResponse(response);
     } catch (ex) {

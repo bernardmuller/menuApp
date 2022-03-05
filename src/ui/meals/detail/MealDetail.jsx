@@ -31,8 +31,11 @@ export const MealDetail = props => {
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useState(null)
     const [mealId, setMealId] = useState(props.mealId);
+
+    // console.log(mealId)
     
     const fetchMeal = async() => {
+        // debugger;
         setLoading(true);
         await getMeal(mealId)
         .then(data => setMeal(data))
@@ -41,7 +44,7 @@ export const MealDetail = props => {
     };
 
     useEffect(() => {
-        
+        // setMealId(props.mealId)
         fetchMeal()
         
     }, [mealId])
@@ -49,6 +52,8 @@ export const MealDetail = props => {
     useEffect(() => {
         setMealId(props.mealId)
     });
+
+    // console.log(meal)
     
     return (
         <Container>
@@ -60,6 +65,7 @@ export const MealDetail = props => {
                                     meal={meal}
                                     onClose={props.onClose}
                                     onReload={() => props.onReload()}
+                                    onHardReload={() => props.onHardReload()}
                                 />
 
                                 <MealDirections 

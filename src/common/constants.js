@@ -1,4 +1,4 @@
-export const appVersion = "v0.1.15"
+export const appVersion = "v0.1.16"
 
 export const colors = {
     primary: "#68BF50",    
@@ -19,6 +19,7 @@ export const colors = {
     danger: "#CF5A30",
     success: "#84C971",
     transparent: "rgba(255, 255, 255, 0)",
+    disabled: "#A4BD9C"
 };
 
 export const FontSizes = {
