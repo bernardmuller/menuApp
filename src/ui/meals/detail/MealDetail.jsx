@@ -79,10 +79,8 @@ export const MealDetail = props => {
                 ) : (
 
                 <Loader 
-                    spinnerColor={colors.white}
-                    size="35px"
-                    label="Loading..."
-                    color={colors.white}
+                    spinnerColor={colors.grey}
+                    size="25px"
                   />
             )}
         </Container>
@@ -91,5 +89,6 @@ export const MealDetail = props => {
 
 const Container = styled.div`
     width: 100%;
+    height: 100%;
     padding: 0 2rem;
 `

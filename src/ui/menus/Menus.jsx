@@ -26,7 +26,8 @@ import {
     Input,
     SaveButton, 
     EditButton,
-    CancelButton
+    CancelButton,
+    Loader
 } from 'common/components';
 
 import { MealCard } from 'common/components/card/MealCard';
@@ -38,9 +39,32 @@ import {
     AddMealsTab
 } from './components';
 
+import { 
+    getMenus,
+    createMenu,
+    getMenu,
+    updateMenu,
+    deleteMenu
+} from 'actions';
+
+import { useForm } from 'react-hook-form';
+import { CloseButton } from 'react-bootstrap';
+import { Confirmation } from 'ui/meals/detail/components/Confirmation';
+
 const Name = props => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
     const [edit, setEdit] = useState(false);
     const [hover, setHover] = useState(false);
+    const [name, setName] = useState(props.name);
+
+
+    const cancel =() => {
+        setName(props.name);
+        setEdit(false);
+    }
+    
+    console.log(props.name)
     return (
         <Wrapper
             onMouseEnter={() => setHover(true)}
@@ -53,7 +77,7 @@ const Name = props => {
                         fontSize={FontSizes.Big}
                         margin="0"
                     >
-                        Menu Name
+                        {name || "menu name"}
                     </H2>
                     {hover && !edit && 
                         <EditButton 
@@ -62,16 +86,21 @@ const Name = props => {
                     }
                 </>
             ) : (
-                <NameForm>
+                <NameForm
+                    onSubmit={handleSubmit(props.onRename)}
+                >
                     <Input 
                         placeholder="Menu name"
                         height="2.5rem"
+                        value={name}
+                        {...register("name", {
+                            
+                            onChange: e => {setName(e.target.value)}
+                        })}
                     />
-                    <SaveButton 
-                        onClick={() => {}}
-                    />
+                    <SaveButton />
                     <CancelButton 
-                        onClick={() => setEdit(false)}
+                        onClick={cancel}
                     />
                 </NameForm>
             )}
@@ -135,59 +164,138 @@ const Period = props => {
 
 const MenusTab = props => {
     const meals = props.meals;
+    const [loading, setLoading] = useState(true);
+    const [menu, setMenu] = useState({});
+    const [menuId, setMenuId] = useState(props.activeMenu)
+
+    const fetchMenu = async() => {
+        setLoading(true);
+        await getMenu(menuId)
+        .then(data => setMenu(data))
+        .catch((err) => console.log(err))
+        setLoading(false)
+    };
+
+    const handleRename = async(data) => {
+        setLoading(true);
+        await updateMenu(menuId, data)
+        // .then(res => setMenu(res))
+        .catch((err) => console.log(err))
+        await fetchMenu()
+        props.onReload()
+        setLoading(false)
+    };
+
+    useEffect(() => {
+        fetchMenu()
+    }, [menuId])
+
+    useEffect(() => {
+        setMenuId(props.activeMenu)
+    })
     
     return (
             <>  
-                
-                <Name />
+                {!loading ? (
+                    <>
 
-                <Period />
-
-                <H4
-                    color={colors.grey_dark}
-                    fontSize={FontSizes.Regular}
-                    margin="0"
-                >
-                    created by
-                </H4>
-
-                <WeekContainer>
-                    <Header>
-                        <Text
-                            fontSize={FontSizes.Big}
-                            color={colors.grey_light}
+                        <Name 
+                            name={menu && menu.name}
+                            onRename={handleRename}
+                        />
+        
+                        <Period 
+                            period={{}}
+                        />
+        
+                        <H4
+                            color={colors.grey_dark}
+                            fontSize={FontSizes.Regular}
+                            margin="0"
                         >
-                            Meals
-                        </Text>
-                        <Button
-                            primary
-                            onClick={() => props.onEditMeals()}
-                            width="120px"
-                        >
-                            Edit
-                        </Button>
-                    </Header>
-
-                    <MealsContainer>
-                        {meals.map((meal, index) => (
-                            <MealCard 
-                                img={meal.image || mealimg} 
-                                name={"Meal name"}
-                                season={"Season"}
-                                count={2}
-                                key={index}
-                                secondary
-                                onClick={() => {
-                                    
-                                }}
-                            />
-                        ))}
-                    </MealsContainer>
-                </WeekContainer>
-
-                <GroceryList />
+                            Creator: {menu && menu.createdBy.firstname || "username"}
+                        </H4>
+        
+                        <WeekContainer>
+                            <Header>
+                                <Text
+                                    fontSize={FontSizes.Big}
+                                    color={colors.grey_light}
+                                >
+                                    Meals
+                                </Text>
+                                <Button
+                                    primary
+                                    onClick={() => props.onEditMeals()}
+                                    width="120px"
+                                >
+                                    {menu && menu.meals.length > 0 ? "Edit" : "Add Meals"}
+                                </Button>
+                            </Header>
+        
+                            <MealsContainer>
+                                {menu && menu.meals.map((meal, index) => (
+                                    <MealCard 
+                                        img={meal.image || mealimg} 
+                                        name={"Meal name"}
+                                        season={"Season"}
+                                        count={2}
+                                        key={index}
+                                        secondary
+                                        onClick={() => {
+                                            
+                                        }}
+                                    />
+                                ))}
+                            </MealsContainer>
+                        </WeekContainer>
+        
+                        <GroceryList />
+                    </>
+                ):(
+                    <Loader 
+                        spinnerColor={colors.grey}
+                        size="25px"
+                    />
+                )}
             </>
                 
+    )
+}
+
+const MenuButton = props => {
+    const [menuHover, setMenuHover] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    return (
+        <>
+            {showConfirmation && 
+                <Confirmation 
+                    text={`Are you sure you want to delete "${props.menu.name}"?`}
+                    onConfirm={() => {
+                        props.onDelete();
+                        setShowConfirmation(false)
+                    }}
+                    onCancel={() => setShowConfirmation(false)}
+                />
+            }
+            <Wrapper
+                onMouseEnter={() => setMenuHover(true)}
+                onMouseLeave={() => setMenuHover(false)}
+                height="2rem"
+                style={{backgroundColor: menuHover && colors.white_dark}}
+            >
+                <Menu
+                    onClick={() => props.onClick()}
+                >   
+                    {props.menu.name}
+                </Menu>
+                {menuHover &&
+                    <CancelButton 
+                        onClick={() => setShowConfirmation(true)}
+                    />
+                }
+            </Wrapper>
+        </>
     )
 }
 
@@ -195,12 +303,41 @@ const MenusTab = props => {
 export const Menus = () => {  
     const [showMenusTab, setShowMenusTab] = useState(true);
     const [showAddMealsTab, setShowAddMealsTab] = useState(false);
-
+    const [loading, setLoading] = useState(false);
+    const [creating, setCreating] = useState(false);
     const activeContext = useContext(ActiveViewContext);
+    const [menus, setMenus] = useState([]);
+    const [activeMenu,setActiveMenu] = useState(null);
+
+    const newMenu = async() => {
+        setCreating(true)
+        await createMenu()
+        .catch(err => console.log(err))
+        setCreating(false)
+        fetchMenus()
+    };
     
+    const fetchMenus = async() => {
+        setLoading(true)
+        await getMenus()
+        .then(data => setMenus(data))
+        .catch(err => console.log(err))
+        setLoading(false)
+    };
+
+    const removeMenu = async(id) => {
+        setLoading(true)
+        setActiveMenu(null)
+        await deleteMenu(id)
+        .catch(err => console.log(err))
+        await fetchMenus()
+        setLoading(false)
+    };
+
     useEffect(() => {
+        fetchMenus()
         activeContext.dispatch({ type: "MENUS" });
-    }, [])
+    }, []);
 
     const menuGroups = ["1", "2", "3"];
     const meals = ["1", "2", "3", "1", "2", "3"];
@@ -213,24 +350,44 @@ export const Menus = () => {
                         onSearch={(text) => {}}
                         onFilter={(filter) => {}}
                         // count={meals.length}
-                        heading="Menus"
+                        heading="My Menus"
                         searchPlaceholder="Search Menus"
+                        loading={loading}
                     />
 
-                    {menuGroups.map((item, index) => (
-                        <MenuGroup />
+                    {menus.map((menu, index) => (
+                        // <MenuGroup />
+                        <MenuButton 
+                            menu={menu}
+                            key={index}
+                            onClick={() => setActiveMenu(menu._id)}
+                            onDelete={()=> removeMenu(menu._id)}
+                        />
                     ))}
 
                 </Container>
 
                 <Button
+                    disabled={creating}
                     primary
                     width="100%"
                     margin="1rem 0 0 0"
-                    height="3rem"
-                    onClick={() => {}}
+                    height="3.5rem"
+                    onClick={() => newMenu()}
                 >
-                    New Menu
+                    {creating ? (
+                        <Loader 
+                            spinnerColor={colors.white}
+                            size="25px"
+                        />
+                    ) : (
+                        <Text
+                            fontSize={FontSizes.Regular}
+                            color={colors.white}
+                        >
+                            Create Menu
+                        </Text>
+                    )}
                 </Button>
 
             </LeftWrapper>
@@ -247,8 +404,10 @@ export const Menus = () => {
 
                 }
 
-                {showMenusTab &&
+                {showMenusTab && activeMenu &&
                     <MenusTab 
+                        onReload={fetchMenus}
+                        activeMenu={activeMenu}
                         meals={meals}
                         onEditMeals={() => {
                             setShowMenusTab(false);
@@ -270,6 +429,11 @@ const Wrapper = styled.div`
     height: ${props => props.height || "3rem"};
 `
 
+const MenuWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`
+
 const NameForm = styled.form`
     display: flex;
     align-items: center;
@@ -277,8 +441,8 @@ const NameForm = styled.form`
 
 const LeftWrapper = styled.div`
     height: 100%;
-    width: 30%;
-    min-width: 30%;
+    width: 25%;
+    min-width: 400px;
     background-color: ${colors.white};
     display: flex;
     flex-direction: column;
@@ -327,4 +491,13 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 0 1rem;
+`
+const Menu = styled.button`
+    width: 100%;
+    padding: 0.3rem;
+    display: flex;
+    background: none;
+    border: none;
+
+    
 `

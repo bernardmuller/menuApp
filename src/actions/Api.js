@@ -24,6 +24,8 @@ export class Api {
     const data = params.body;
     delete params.body;
 
+    console.log(data)
+
     const response = await fetch(url, {
       headers: {...headers},
       body: JSON.stringify(data),
