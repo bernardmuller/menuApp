@@ -33,6 +33,33 @@ import {
 import food from 'assets/images/food_ph.png';
 import { Confirmation } from './Confirmation';
 
+const url = "https://api.cloudinary.com/v1_1/munchiesapp/meals/upload";
+// const form = document.querySelector("form");
+
+// form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+
+//   const files = document.querySelector("[type=file]").files;
+//   const formData = new FormData();
+
+//   for (let i = 0; i < files.length; i++) {
+//     let file = files[i];
+//     formData.append("file", file);
+//     formData.append("upload_preset", "docs_upload_example_us_preset");
+
+//     fetch(url, {
+//       method: "POST",
+//       body: formData
+//     })
+//       .then((response) => {
+//         return response.text();
+//       })
+//       .then((data) => {
+//         document.getElementById("data").innerHTML += data;
+//       });
+//   }
+// });
+
 const Name = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [edit, setEdit] = useState(false);
@@ -98,12 +125,30 @@ const Name = props => {
 export const MealInfo = props => {
     const [buttonHover, setButtonHover] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [uploadFile, setUploadFile] = useState(null)
 
     const removeMeal = async() => {
         setShowConfirmation(false)
         await deleteMeal(props.meal._id)
         .then(() => props.onHardReload())
     };
+
+    const handleUpload = async(e) => {
+        e.preventDefault()
+        console.log('check')
+
+        // const formData = new FormData();
+        // formData.append("file", uploadFile);
+        // formData.append("upload_preset", "docs_upload_example_us_preset");
+
+        // await fetch(url, {
+        //     method: "POST",
+        //     body: formData
+        // })
+        // .then((response) => {
+        //     return response.text();
+        // })
+    }
 
     return (
         <Container>
@@ -181,9 +226,19 @@ export const MealInfo = props => {
                         onMouseLeave={() => setButtonHover(false)}
                     >
                         <img src={food} alt="meal" />  
-                        {buttonHover &&
-                            <UploadButton>Upload Image</UploadButton>
-                        }
+                        {/* {buttonHover && */}
+                            <UploadButtonWrapper
+                                enctype="multipart/form-data"
+                                onSubmit={handleUpload}
+                            >
+                                <UploadButton
+                                    type="submit"
+                                    // onClick={handleUpload}
+                                >Upload Image</UploadButton>
+                                <input id="image-file" type="file" name="image" onChange={(e) => setUploadFile(e.target.files[0])} />
+                            </UploadButtonWrapper>
+                        {/* } */}
+
                     </Placeholder>
                 )}
             </MealImageContainer>
@@ -451,16 +506,12 @@ const Placeholder = styled.div`
 `
 
 const UploadButton = styled.button`
-    position: absolute;
     width: 100%;
-    height: 50px;
-    background-color: rgb(104, 191, 80, 0.9);
-    z-index: 100;
-    bottom: 0;
-    font-size: ${FontSizes.Small};
-    color: ${colors.white};
+    height: 100%;
+    background: none;
     outline: none;
     border: none;
+    color: ${colors.white};
 `
 
 const Image = styled.div`
@@ -470,4 +521,29 @@ const Image = styled.div`
 const SeasonForm = styled.form`
     width: 100%;
     display: flex;
+`
+
+const UploadButtonWrapper = styled.form`
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    background-color: rgb(104, 191, 80, 0.9);
+    z-index: 100;
+    bottom: 0;
+    font-size: ${FontSizes.Small};
+    color: ${colors.white};
+    /* outline: none; */
+    /* border: none; */
+
+    input[type="file"] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        /* width: 100%; */
+        /* height: 100%; */
+        &:hover {
+            cursor: pointer;
+        }
+    }
 `
