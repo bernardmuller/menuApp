@@ -13,7 +13,7 @@ import {
 } from 'common/dataStore';
 
 export const getUser = async(id) => {
-    const url = `http://localhost:8080/users/${id}`;
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/${id}`;
 
     try { 
         const response = await Api.get(url);
@@ -29,7 +29,7 @@ export const getUser = async(id) => {
 };
 
 export const updateUser = async(id, data) => {
-    const url = `http://localhost:8080/users/${id}`;
+    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/${id}`;
     try { 
         const response = await Api.put(url, data);
         return response;
