@@ -18,90 +18,88 @@ import {
   Loader
 } from 'common/components';
 
-export const EditProfile = () => {
-  const [loading, setLoading] = useState(true);
+export const EditProfile = props => {
 
-  useEffect(() => {
-    setInterval(() => {
-      setLoading(false);
-    }, 500)
-  },[])
+	// const [loading, setLoading] = useState(true);
+	const [user, setUser] = useState({
+		firstname: null,
+		lastname: null,
+		bio: null,
+		image: null
+	})
 
-  if(loading) {
-    return (
-      <Loader 
-        spinnerColor={colors.white}
-        size="35px"
-        label="Loading..."
-        color={colors.white}
-      />
-    )
-  }
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		// setLoading(true);
+		props.onUpdate(user);
+		// setLoading(false);
+	};
+
+	// useEffect(() => {
+	// 	setInterval(() => {
+	// 	setLoading(false);
+	// 	}, 500)
+	// },[])
+
+
+//   if(loading) {
+//     return (
+//       <Loader 
+//         spinnerColor={colors.white}
+//         size="35px"
+//         label="Loading..."
+//         color={colors.white}
+//       />
+//     )
+//   }
+
+	useEffect(() => {
+		setUser({
+			firstname: props.user.firstname,
+			lastname: props.user.lastname,
+			bio: props.user.bio,
+			image: props.user.image
+		})
+	},[props.loading])
 
   return (
-    <Container>
+    <Container
+      onSubmit={handleSubmit}
+    >
         <H3
           color={colors.white}
+		  maring="0"
         >
           Edit Profile
         </H3>
 
         <Group>
           <Wrapper>
-            <Label>Username</Label>
-            <Input 
-              placeholder="Username"
-            />
-          </Wrapper>
-          <Wrapper>
-            <Label>Email</Label>
-            <Input 
-              placeholder="Email"
-            />
-          </Wrapper>
-        </Group>
-
-        <Group>
-          <Wrapper>
             <Label>First Name</Label>
             <Input 
               placeholder="Firstname"
+              value={!props.loading ? `${user.firstname}` : ""}
+              onChange={e => setUser(prev => ({...prev, firstname: e.target.value}))}
             />
           </Wrapper>
           <Wrapper>
             <Label>Last Name</Label>
             <Input 
+              value={!props.loading ? user.lastname : ""}
               placeholder="Lastname"
+              onChange={e => setUser(prev => ({...prev, lastname: e.target.value}))}
+
             />
           </Wrapper>
         </Group>
 
         <Group>
           <Wrapper>
-            <Label>Address</Label>
+            <Label>Profile picture</Label>
             <Input 
-              placeholder="Home Address"
-            />
-          </Wrapper>
-        </Group>
-
-        <Group>
-          <Wrapper>
-            <Label>City</Label>
-            <Input 
-              placeholder="City"
-            />
-          </Wrapper>
-          <Wrapper>
-            <Label>Country</Label>
-            <Input 
-              placeholder="Country"
-            />
-          </Wrapper>
-          <Wrapper>
-            <Label>Postal Code</Label>
-            <Input 
-              placeholder="Zip"
+              placeholder="Picture URL"
+              value={!props.loading ? `${user.image}` : ""}
+              onChange={e => setUser(prev => ({...prev, image: e.target.value}))}
             />
           </Wrapper>
         </Group>
@@ -110,7 +108,9 @@ export const EditProfile = () => {
           <Wrapper>
             <Label>About Me</Label>
             <TextArea 
+              value={!props.loading ? `${user.bio}` : ""}
               placeholder="About Me"
+              onChange={e => setUser(prev => ({...prev, bio: e.target.value}))}
             />
           </Wrapper>
         </Group>
@@ -118,6 +118,7 @@ export const EditProfile = () => {
         <ButtonContainer>
           <Button
             primary
+            type="submit"
             justifySelf="center"
             width="200px"
 
@@ -151,7 +152,7 @@ const Wrapper = styled.div`
 
 const Label = styled.label`
   font-size: ${FontSizes.Small};
-  color: ${colors.grey_light};
+  color: ${colors.white_dark};
 `
 
 const ButtonContainer = styled.div`

@@ -1,22 +1,44 @@
-// import { ApiEndpoints } from "common";
+import {
+    Environment,
+    resolveResponse,
+    resolveRejected,
+} from 'common';
 
-// import { 
-//   get
-// } from 'common/dataStore';
+import {
+    Api
+} from 'actions';
 
+import {
+    DataStore
+} from 'common/dataStore';
 
-// export async function getAll(url = '', data = {}) {
+export const getUser = async(id) => {
+    const url = `http://localhost:8080/users/${id}`;
 
-//   const accessToken = get("ACCESS_TOKEN")
+    try { 
+        const response = await Api.get(url);
+        return response;
+        //   return resolveResponse(response);
+    } catch (ex) {
+        let ret = resolveRejected(ex);
+        if (ex && ex.response && ex.response.status === 401) {
+            ret.message = 'Something went wrong';
+        };
+        return ex;
+    };
+};
 
-//   const response = await fetch(url, {
-//     method: 'POST', 
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `${accessToken}`
-//     },
-//     body: JSON.stringify(data)
-//   });
-
-//   return response.json();
-// };
+export const updateUser = async(id, data) => {
+    const url = `http://localhost:8080/users/${id}`;
+    try { 
+        const response = await Api.put(url, data);
+        return response;
+        //   return resolveResponse(response);
+    } catch (ex) {
+        let ret = resolveRejected(ex);
+        if (ex && ex.response && ex.response.status === 401) {
+            ret.message = 'Something went wrong';
+        };
+        return ex;
+    };
+};

@@ -11,6 +11,7 @@ export class Api {
 
     if (user.token) {
       headers['authorization'] = `Bearer ${user.token}`;
+      headers['Access-Control-Allow-Methods']='GET, POST, PATCH, PUT, DELETE, OPTIONS';
     };
     
     headers['Content-Type'] = 'application/json';
@@ -20,6 +21,8 @@ export class Api {
 
   static sendRequest = async(url, params) => {
     const headers = this.setHeaders();
+
+    console.log("body..", params.body)
 
     const data = params.body;
     delete params.body;
@@ -53,10 +56,11 @@ export class Api {
     });
   };
 
-  static put = (url, data) => {
+  static put = (url, data, options = {}) => {
     return this.sendRequest(url, {
       method: 'PUT',
       body: data,
+      ...options
     });
   };
 

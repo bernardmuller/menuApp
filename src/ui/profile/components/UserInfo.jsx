@@ -1,5 +1,5 @@
 import React, { 
-    useContext, 
+    useState, 
     useEffect 
 } from 'react';
 
@@ -11,7 +11,7 @@ import {
 
 import { IoCloudUploadSharp } from "react-icons/io5";
 
-import pp from 'assets/images/profile.jpg'
+import pp from 'assets/images/user.png'
 
 import { 
     PrivateContainer,
@@ -25,33 +25,68 @@ import {
     H2,
     Text,
     H3,
+    Loader,
+    SaveButton,
+    Closebutton
 } from 'common/components'
 
-export const UserInfo = () => {
+export const UserInfo = props => {
+    const [meals, setMeals] = useState(props.user.meals);
+    const [editURL, setEditURL] = useState(false);
+    const [user, setUser] = useState({
+        menus : [],
+        meals: [],
+        firstname: "",
+        lastname: "",
+        email: ""
+    });
+
+    useEffect(()=> {
+        setUser({
+            menus: props.user.menus,
+            meals: props.user.meals,
+            firstname: props.user.firstname,
+            lastname: props.user.lastname,
+            image: props.user.image,
+            email: props.user.email
+        })
+    }, [props.loading])
+    console.log(props.user)
     return (
         <Container>
-            <ImageContainer>
-                <img src={pp} alt="profile picture" />
-                <Upload>
-                    <IoCloudUploadSharp size={20} />
-                </Upload>
-            </ImageContainer>
-
+                {!props.loading && user.image ? (
+                    <ImageContainer>
+                        <img src={user.image} alt="profile picture" />
+                    </ImageContainer>
+                ) : (
+                    <Placeholder>
+                        <img src={pp} alt="user image" />
+                    </Placeholder>
+                )}
             <H2
-                fontSize={FontSizes.Big}
+                fontSize={FontSizes.Bigger}
                 textAlign="center"
+                margin="1rem 0 0 0"
             >
-                John Smith
+                {!props.loading ? user.firstname && user.lastname && `${props.user.firstname || ""} ${props.user.lastname || ""}` : <Loader spinnerColor={colors.grey_light} size="18px" />}
             </H2>
+
+            <Text
+                fontSize={FontSizes.Smaller}
+                color={colors.grey}
+                margin="0 0 1rem 0"
+            >
+                {!props.loading && user.email}
+            </Text>
 
             
             <StatsContainer>
                 <Stat>
                     <Text
                         color={colors.black}
-                        fontSize={FontSizes.Bigger}
+                        fontSize={FontSizes.Big}
                     >
-                        6
+                        {!props.loading ? user.menus && user.menus.length : <Loader spinnerColor={colors.grey_light} size="18px" />}
                     </Text>
                     <Text
                         color={colors.grey}
@@ -65,9 +100,9 @@ export const UserInfo = () => {
                 >
                     <Text
                         color={colors.black}
-                        fontSize={FontSizes.Bigger}
+                        fontSize={FontSizes.Big}
                     >
-                        25
+                        {!props.loading ? user.meals && user.meals.length : <Loader spinnerColor={colors.grey_light} size="18px" />}
                     </Text>
                     <Text
                         color={colors.grey}
@@ -79,15 +114,15 @@ export const UserInfo = () => {
                 <Stat>
                     <Text
                         color={colors.black}
-                        fontSize={FontSizes.Bigger}
+                        fontSize={FontSizes.Big}
                     >
-                        4
+                        N/A
                     </Text>
                     <Text
                         color={colors.grey}
                         fontSize={FontSizes.Smaller}
                     >
-                        Favourite
+                        Favourites
                     </Text>
                 </Stat>
             </StatsContainer>
@@ -95,13 +130,37 @@ export const UserInfo = () => {
         </Container>
     );
 };
+const URLBackdrop = styled.button`
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: blue;
+    z-index: 800;
+`
+
+const URLContainer = styled.div`
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    border-radius: 1rem;
+    background-color: ${colors.primary};
+    display: flex;
+
+    button {
+        background: none;
+        border: none;
+    }
+`
 
 const ImageContainer = styled.div`
     height: 150px;
     width: 150px;
     overflow: hidden;
     position: relative;
-    
+    background-color: ${colors.grey};
+    border-radius: 50%;
+
     img {
         width: 100%;
         height: 100%;
@@ -110,7 +169,7 @@ const ImageContainer = styled.div`
     }
 `
 
-const Upload = styled.button`
+const Upload = styled.div`
     height: 1.8rem;
     width: 1.8rem;
     border: none;
@@ -124,6 +183,11 @@ const Upload = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+`
+
+const UploadButton = styled.button`
+    background: none;
+    border: none;
 `
 
 const Container = styled.div`
@@ -151,4 +215,21 @@ const Stat = styled.div`
     display: grid;
     text-align: center;
     padding: 0.5rem;
+`
+
+const Placeholder = styled.div`
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${colors.grey};
+    border-radius: 50%;
+    
+    img {
+        padding: 10%;
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+    }
 `

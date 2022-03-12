@@ -46,9 +46,13 @@ export const Favourites = props => {
             Favourites
         </Text>
 
-        {meals.map(meal => (
+        {/* {meals.map(meal => (
             <MealItem />
-        ))}
+        ))} */}
+        <Text
+            fontSize={FontSizes.Small}
+            color={colors.grey}
+        >🏗 Under Contruction 🏗</Text>
     </Container>
   )
 };

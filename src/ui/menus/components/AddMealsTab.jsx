@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+    useEffect,
+    useState
+} from 'react';
 import styled from 'styled-components';
 
 import {
@@ -13,13 +16,47 @@ import {
 import mealimg from 'assets/images/meal.png';
 import { 
     MealCard,
-    Button 
+    Button,
+    Text
 } from 'common/components';
+
+import {
+    getMeals,
+    addMealsToMenu
+} from 'actions';
+import { Loader } from 'common/components/loader/Loader';
 
 export const AddMealsTab = props => {
     //todo
     // integrate getAll Meals
-    const meals = ["1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"];
+    const [meals, setMeals] = useState([]);
+    const [fetching, setFetching] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [newMeals, setNewMeals] = useState([])
+
+    const addMeal = (id) => {
+        let temp = newMeals;
+        temp.push(id);
+        setNewMeals(temp);
+        console.log(temp)
+    };
+
+    const saveNewMeals = async() => {
+        setLoading(true)
+        await addMealsToMenu(props.id, {meals: newMeals})
+            .then(() => props.onCancel())
+            .catch((err) => console.log(err))
+        setLoading(false)
+    }
+
+    useEffect(async() => {
+            setFetching(true);
+            await getMeals()
+            .then(data => setMeals(data))
+            .catch((err) => console.log(err))
+            setFetching(false);
+
+    }, [])
 
     return (
         <Container>
@@ -42,29 +79,57 @@ export const AddMealsTab = props => {
                     <Button 
                         primary
                         width='120px'
-                        onCkick={() => props.onAddMeals()}
+                        onClick={saveNewMeals}
                     >
-                        Save
+                        {loading? (
+                            <Loader 
+                                spinnerColor={colors.white}
+                                size="20px"
+                            />
+                        ):(
+                            <Text
+                                fontSize={FontSizes.Small}
+                                color={colors.white}
+                            >
+                                Save
+                            </Text>
+                        )}
                     </Button>
                 </ButtonsContainer>
 
             </Header>
             <MealsContainer>
-                {meals.map((meal, index) => (
+                {!fetching ? (
+                    <>
+                        {meals.length > 0 ? (meals && meals.map((meal, index) => (
+                            <MealCard 
+                                img={meal.image || mealimg} 
+                                name={meal.name}
+                                season={meal.season}
+                                count={2}
+                                key={index}
+                                secondary
+                                onClick={() => {
 
-                    <MealCard 
-                        img={meal.image || mealimg} 
-                        name={"Meal name"}
-                        season={"Season"}
-                        count={2}
-                        key={index}
-                        secondary
-                        onClick={() => {
-                            
-                        }}
+                                        addMeal(meal._id)
+                                }}
+                            />
+                        ))):(
+                            <Container>
+                                <Text
+                                    fontSize={FontSizes.Small}
+                                    color={colors.grey}
+                                >
+                                    Yout don't have any meals in your collection to add to a menu.
+                                </Text>
+                            </Container>
+                        )}
+                    </>
+                ) : (
+                    <Loader
+                        spinnerColor={colors.grey}
                     />
-
-                ))}
+                )}
             </MealsContainer>
       </Container>
   );
@@ -87,7 +152,6 @@ const ButtonsContainer = styled.div`
 const Container = styled.div`
     width: 100%;
     display: grid;
-
 `
 
 const MealsContainer = styled.div`

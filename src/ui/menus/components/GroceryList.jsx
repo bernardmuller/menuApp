@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import styled from 'styled-components';
 
 import {
@@ -14,8 +17,21 @@ import {
 import { IngredientsList } from './IngredientsList';
 
 export const GroceryList = props => {
-  const items = [{"name":"Item"}, {"name":"Item"}, {"name":"Item"}, {"name":"Item"}];
+  const [items, setItems] = useState(props.meal_items);
   const misc = [{"name":"Misc Item"}, {"name":"Misc Item"}, {"name":"Misc Item"}, {"name":"Misc Item"}];
+
+  useEffect(() => {
+    let temp = [];
+    props.meal_items && props.meal_items.forEach((meal) => {
+      console.log(meal)
+      meal.ingredients.forEach((item)=> {
+        temp.push(item)
+      })
+    })
+    console.log(temp)
+    setItems(temp);
+  }, [])
+
   return (
       <Container>
           <H3

@@ -91,3 +91,21 @@ export const deleteMenu = async(id) => {
         return ret;
     };
 };
+
+
+export const addMealsToMenu = async(id, data) => {
+    const url = `http://localhost:8080/menus/${id}/meals`;
+    
+    try {
+        const response = await Api.post(url, data);
+        // return resolveResponse(response);
+        return response
+    } catch (ex) {
+        let ret = resolveRejected(ex);
+        if (ex && ex.response && ex.response.status === 401) {
+            ret.message = 'Something went wrong';
+        };
+        return ret;
+    };
+};
+

@@ -237,7 +237,7 @@ const MenusTab = props => {
                                 {menu && menu.meals.map((meal, index) => (
                                     <MealCard 
                                         img={meal.image || mealimg} 
-                                        name={"Meal name"}
+                                        name={meal.name}
                                         season={"Season"}
                                         count={2}
                                         key={index}
@@ -250,7 +250,9 @@ const MenusTab = props => {
                             </MealsContainer>
                         </WeekContainer>
         
-                        <GroceryList />
+                        <GroceryList 
+                            meal_items={menu.grocerylist.meal_items}
+                        />
                     </>
                 ):(
                     <Loader 
@@ -354,16 +356,37 @@ export const Menus = () => {
                         searchPlaceholder="Search Menus"
                         loading={loading}
                     />
-
-                    {menus.map((menu, index) => (
-                        // <MenuGroup />
-                        <MenuButton 
-                            menu={menu}
-                            key={index}
-                            onClick={() => setActiveMenu(menu._id)}
-                            onDelete={()=> removeMenu(menu._id)}
-                        />
-                    ))}
+                    {!loading &&
+                        <>
+                            {menus.length > 0 ? (menus.map((menu, index) => (
+                                    // <MenuGroup />
+                                    <MenuButton 
+                                        menu={menu}
+                                        key={index}
+                                        onClick={() => setActiveMenu(menu._id)}
+                                        onDelete={()=> removeMenu(menu._id)}
+                                    />
+                                ))
+                            ) : (
+                                <>
+                                    <Text
+                                        fontSize={FontSizes.Small}
+                                        color={colors.grey_light}
+                                        textAlign="center"
+                                    >
+                                        You don't have any menus in your collection.
+                                    </Text>
+                                    <Text
+                                        fontSize={FontSizes.Small}
+                                        color={colors.grey_light}
+                                        textAlign="center"
+                                    >
+                                        Create one below.
+                                    </Text>
+                                </>
+                            )}
+                        </>
+                    }
 
                 </Container>
 
@@ -396,6 +419,7 @@ export const Menus = () => {
                 {showAddMealsTab &&
 
                     <AddMealsTab 
+                        id={activeMenu}
                         onCancel={() => {
                             setShowMenusTab(true);
                             setShowAddMealsTab(false);
@@ -451,6 +475,7 @@ const LeftWrapper = styled.div`
 `
 const RightWrapper = styled.div`
     height: 100%;
+    width: 100%;
     width: auto;
     flex-grow: 1;
     padding: 2rem 4rem;
