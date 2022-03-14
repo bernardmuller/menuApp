@@ -52,7 +52,7 @@ export const Favourites = props => {
         <Text
             fontSize={FontSizes.Small}
             color={colors.grey}
-        >🏗 Under Contruction 🏗</Text>
+        >🏗 Under Construction 🏗</Text>
     </Container>
   )
 };

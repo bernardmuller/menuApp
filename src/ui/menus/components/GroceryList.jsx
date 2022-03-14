@@ -15,6 +15,7 @@ import {
   FontSizes
 } from 'common'
 import { IngredientsList } from './IngredientsList';
+import { ExtraItems } from './ExtraItems';
 
 export const GroceryList = props => {
   const [items, setItems] = useState(props.meal_items);
@@ -60,8 +61,8 @@ export const GroceryList = props => {
           name="Main Ingredients"
           data={items}
         />
-        <IngredientsList 
-          name="Miscellaneous Items"
+        <ExtraItems
+          name="Extra Items"
           data={misc}
         />
       </Container>

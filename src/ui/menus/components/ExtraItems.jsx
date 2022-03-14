@@ -25,7 +25,7 @@ import {
 
 import {useForm} from 'react-hook-form';
 
-export const IngredientsList = props => {
+export const ExtraItems = props => {
     const [expand, setExpand] = useState(false);
     return (
         <Container>
@@ -61,7 +61,7 @@ export const IngredientsList = props => {
                             data={item}
                         />
                     ))}
-                    {/* <AddItem /> */}
+                    <AddItem />
                 </ItemsContainer>
             }
         </Container>
@@ -100,10 +100,7 @@ const GroupItem = props => {
                     {props.data.name}
                 </Text>
             </div>
-            <Text>
-                {props.data}
-            </Text>
-            {/* {hover &&
+            {hover &&
                 <UtilButton
                     onClick={() => setShowMenu(prev => !prev)}
                 >
@@ -117,7 +114,7 @@ const GroupItem = props => {
                         />
                     }
                 </UtilButton>
-            } */}
+            }
         </Item>
     )
 }

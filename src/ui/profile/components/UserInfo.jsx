@@ -31,7 +31,7 @@ import {
 } from 'common/components'
 
 export const UserInfo = props => {
-    const [meals, setMeals] = useState(props.user.meals);
+    // const [meals, setMeals] = useState(props.user.meals);
     const [editURL, setEditURL] = useState(false);
     const [user, setUser] = useState({
         menus : [],
